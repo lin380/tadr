@@ -1,0 +1,9 @@
+destination: docs
+url: https://francojc.github.io/tadr/
+title: "Text as Data Textbook Resources"
+authors:
+  Jerid C. Francom:
+    href: https://francojc.github.io
+template:
+  params:
+    bootswatch: cosmo

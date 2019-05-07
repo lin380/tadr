@@ -6,6 +6,4 @@ r:
   - release
   - devel
 cache: packages
-os:
-  - osx
-  - windows
+os: osx
