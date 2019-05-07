@@ -4,6 +4,6 @@ pkgdown_sha: ~
 articles:
   example_vignette: example_vignette.html
 urls:
-  reference: https://francojc.github.io/tadr//reference
-  article: https://francojc.github.io/tadr//articles
+  reference: https://francojc.github.io/tadr/reference
+  article: https://francojc.github.io/tadr/articles
 
