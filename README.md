@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![Travis build
-status](https://travis-ci.org/francojc/tadr.svg?branch=master)](https://travis-ci.org/francojc/tadr)
+status](https://travis-ci.com/francojc/tadr.svg?branch=master)](https://travis-ci.com/francojc/tadr)
 <!-- badges: end -->
 
 The goal of `tadr` is to provide supporting resources for the textbook
