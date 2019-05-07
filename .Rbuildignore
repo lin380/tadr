@@ -2,3 +2,4 @@
 ^\.Rproj\.user$ # used for temporary files
 
 ^README\.Rmd$
+^data-raw$
