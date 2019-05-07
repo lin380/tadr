@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![Travis build
+status](https://travis-ci.org/francojc/tadr.svg?branch=master)](https://travis-ci.org/francojc/tadr)
 <!-- badges: end -->
 
 The goal of tadr is to …
