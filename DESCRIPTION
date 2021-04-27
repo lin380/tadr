@@ -1,10 +1,10 @@
 Package: tadr
 Type: Package
-Title: Text as Data Textbook Resources
+Title: Text as Data Resources
 Version: 0.1.0
 Author: Jerid C. Francom <francojc@wfu.edu>
 Maintainer: Jerid C. Francom <francojc@wfu.edu>
-Description: Support package for the Text as Data textbook. Includes access to interactive code exercises and demos, data, and misc functions.
+Description: Support package for the Text as Data coursebook. Includes access to interactive code exercises and demos, data, and misc functions.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true

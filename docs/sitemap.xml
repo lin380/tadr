@@ -4,12 +4,21 @@
     <loc>https://francojc.github.io/tadr/index.html</loc>
   </url>
   <url>
-    <loc>https://francojc.github.io/tadr/reference/hello.html</loc>
+    <loc>https://francojc.github.io/tadr/reference/brown.html</loc>
+  </url>
+  <url>
+    <loc>https://francojc.github.io/tadr/reference/get_compressed_data.html</loc>
   </url>
   <url>
     <loc>https://francojc.github.io/tadr/reference/pipe.html</loc>
   </url>
   <url>
-    <loc>https://francojc.github.io/tadr/articles/example_vignette.html</loc>
+    <loc>https://francojc.github.io/tadr/reference/swda.html</loc>
+  </url>
+  <url>
+    <loc>https://francojc.github.io/tadr/articles/articles/annotated.html</loc>
+  </url>
+  <url>
+    <loc>https://francojc.github.io/tadr/articles/articles/survey.html</loc>
   </url>
 </urlset>

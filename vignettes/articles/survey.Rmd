@@ -1,0 +1,17 @@
+---
+title: "Survey areas of research"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Survey areas of research}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Begin your research

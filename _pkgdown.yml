@@ -1,9 +1,46 @@
 destination: docs
 url: https://francojc.github.io/tadr
-title: "Text as Data Textbook Resources"
+title: "Text as Data Resources"
 authors:
   Jerid C. Francom:
     href: https://francojc.github.io
 template:
   params:
-    bootswatch: cosmo
+    bootstrap: 4
+navbar:
+  structure:
+    left:  [home, reference, worked, tutorials]
+    right: [github]
+  components:
+    articles:
+      text: Worked
+      menu:
+      - text: Foundations
+      - text: Survey areas of research
+        href: articles/articles/survey.html
+      - text: Orientation
+      - text: Annotated bibliography
+        href: articles/articles/annotated.html
+reference:
+- title: "Functions"
+  desc: >
+    Useful Functions
+- contents:
+  - get_compressed_data
+- title: "Data"
+  desc: >
+    Data and datasets
+- contents:
+  - brown
+  - swda
+tutorials:
+# These can be added via url
+- name: 00-setup
+  title: Setting up R
+  url: https://jjallaire.shinyapps.io/learnr-tutorial-00-setup/
+- name: 01-programming-basics
+  title: Programming basics
+  url: https://tutorials.shinyapps.io/04-Programming-Basics/
+- name: 02-working-with-tibbles
+  title: Working with Tibbles
+  url: https://tutorials.shinyapps.io/01-tibbles/

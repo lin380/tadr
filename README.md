@@ -10,7 +10,7 @@ status](https://travis-ci.com/francojc/tadr.svg?branch=master)](https://travis-c
 <!-- badges: end -->
 
 The goal of `tadr` is to provide supporting resources for the textbook
-[“Text as Data: An Introduction to Quantitative Analysis and
+[“Text as Data: An Introduction to Quantitative Text Analysis and
 Reproducible Research in R”](https://francojc.github.io/tad/).
 
 ## Installation
