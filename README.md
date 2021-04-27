@@ -6,12 +6,12 @@
 <!-- badges: start -->
 
 [![Travis build
-status](https://travis-ci.com/francojc/tadr.svg?branch=master)](https://travis-ci.com/francojc/tadr)
+status](https://travis-ci.com/lin380/tadr.svg?branch=master)](https://travis-ci.com/lin380/tadr)
 <!-- badges: end -->
 
 The goal of `tadr` is to provide supporting resources for the textbook
 [“Text as Data: An Introduction to Quantitative Text Analysis and
-Reproducible Research in R”](https://francojc.github.io/tad/).
+Reproducible Research in R”](https://lin380.github.io/coursebook/).
 
 ## Installation
 
@@ -22,7 +22,7 @@ You can install a development version of `tadr` from
 
 ``` r
 install.packages("devtools")
-devtools::install_github("francojc/tadr")
+devtools::install_github("lin380/tadr")
 ```
 
 ## Load
