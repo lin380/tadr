@@ -2,30 +2,26 @@
 % Please edit documentation in R/get_compressed_data.R
 \name{get_compressed_data}
 \alias{get_compressed_data}
-\title{Download and decompress .zip, .tar, .gz, and .tar.gz files}
+\title{Download a Compressed File and Decompress its Contents}
 \usage{
 get_compressed_data(url, target_dir, force = FALSE)
 }
 \arguments{
-\item{url}{The URL to the .zip file resource}
+\item{url}{A character vector representing the full url to the compressed file}
 
-\item{target_dir}{The directory where the .zip file should be extracted}
+\item{target_dir}{The directory where the compressed file should be downloaded}
 
-\item{force}{Should the data be downloaded even if it exists on disk? Default is FALSE.}
+\item{force}{An optional argument which forcefully overwrites existing data}
+}
+\value{
+Download and extract the compressed data file
 }
 \description{
-This function to download and decompress a file to a target directory
+Possible file types include .zip, .gz, and .tar
 }
 \examples{
+get_compressed_data(url = "http://www.test.com/file.zip", target_dir = "./")
 \dontrun{
-# Download/ extract the `switchboard.zip` file
-get_compressed_data(url = "https://raw.githubusercontent.com/nltk/nltk_data/gh-pages/packages/corpora/switchboard.zip",
-target_dir = "./data/scs/")
-
-# Download/ extract the `swb1_dialogact_annot.tar.gz` file
-get_compressed_data(url = "https://catalog.ldc.upenn.edu/docs/LDC97S62/swb1_dialogact_annot.tar.gz",
-target_dir = "./data/scd/")
+get_compressed_data(url = "http://www.test.com/file.zip", target_dir = "./")
 }
-get_compressed_data()
 }
-\keyword{tar}

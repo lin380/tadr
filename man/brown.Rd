@@ -4,14 +4,16 @@
 \name{brown}
 \alias{brown}
 \title{Brown Corpus}
-\format{A data frame with 223,506 rows and 11 variables:
+\format{
+A data frame with 223,506 rows and 11 variables:
 \describe{
   \item{document_id}{ID for each corpus document}
   \item{category}{Label code for each of the 15 corpus categories}
   \item{category_description}{Description label for the corpus categories}
   \item{words}{Tokenized words from the corpus}
   \item{pos}{Part of speech label for each word in the corpus}
-}}
+}
+}
 \source{
 \url{http://www.nltk.org/nltk_data/}
 }

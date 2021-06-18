@@ -4,7 +4,8 @@
 \name{swda}
 \alias{swda}
 \title{Switchboard Dialog Act Corpus}
-\format{A data frame with 223,506 rows and 11 variables:
+\format{
+A data frame with 223,506 rows and 11 variables:
 \describe{
   \item{doc_id}{ID for each conversation document}
   \item{damsl_tag}{DAMSL dialog act annotation labels}
@@ -17,7 +18,8 @@
   \item{birth_year}{Year that the speaker was born}
   \item{dialect_area}{Region from the US where the speaker spent first 10 years}
   \item{education}{Highest educational level attained}
-}}
+}
+}
 \source{
 \url{https://catalog.ldc.upenn.edu/docs/LDC97S62/}
 }

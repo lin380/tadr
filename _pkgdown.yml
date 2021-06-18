@@ -33,6 +33,7 @@ reference:
 - contents:
   - brown
   - swda
+  - sms
 tutorials:
 # These can be added via url
 - name: 00-setup

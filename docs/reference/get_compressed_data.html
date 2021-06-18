@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download and decompress .zip, .tar, .gz, and .tar.gz files — get_compressed_data • Text as Data Resources</title>
+<title>Download a Compressed File and Decompress its Contents — get_compressed_data • Text as Data Resources</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Download and decompress .zip, .tar, .gz, and .tar.gz files — get_compressed_data" />
-<meta property="og:description" content="This function to download and decompress a file to a target directory" />
+<meta property="og:title" content="Download a Compressed File and Decompress its Contents — get_compressed_data" />
+<meta property="og:description" content="Possible file types include .zip, .gz, and .tar" />
 
 
 
@@ -125,7 +125,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/francojc/tadr/">
+  <a href="https://github.com/lin380/tadr/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -143,13 +143,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download and decompress .zip, .tar, .gz, and .tar.gz files</h1>
-    <small class="dont-index">Source: <a href='https://github.com/francojc/tadr/blob/master/R/get_compressed_data.R'><code>R/get_compressed_data.R</code></a></small>
+    <h1>Download a Compressed File and Decompress its Contents</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lin380/tadr/blob/master/R/get_compressed_data.R'><code>R/get_compressed_data.R</code></a></small>
     <div class="hidden name"><code>get_compressed_data.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function to download and decompress a file to a target directory</p>
+    <p>Possible file types include .zip, .gz, and .tar</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_compressed_data</span><span class='op'>(</span><span class='va'>url</span>, <span class='va'>target_dir</span>, force <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
@@ -159,31 +159,28 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>url</th>
-      <td><p>The URL to the .zip file resource</p></td>
+      <td><p>A character vector representing the full url to the compressed file</p></td>
     </tr>
     <tr>
       <th>target_dir</th>
-      <td><p>The directory where the .zip file should be extracted</p></td>
+      <td><p>The directory where the compressed file should be downloaded</p></td>
     </tr>
     <tr>
       <th>force</th>
-      <td><p>Should the data be downloaded even if it exists on disk? Default is FALSE.</p></td>
+      <td><p>An optional argument which forcefully overwrites existing data</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Download and extract the compressed data file</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># Download/ extract the `switchboard.zip` file</span>
-<span class='fu'>get_compressed_data</span><span class='op'>(</span>url <span class='op'>=</span> <span class='st'>"https://raw.githubusercontent.com/nltk/nltk_data/gh-pages/packages/corpora/switchboard.zip"</span>,
-target_dir <span class='op'>=</span> <span class='st'>"./data/scs/"</span><span class='op'>)</span>
-
-<span class='co'># Download/ extract the `swb1_dialogact_annot.tar.gz` file</span>
-<span class='fu'>get_compressed_data</span><span class='op'>(</span>url <span class='op'>=</span> <span class='st'>"https://catalog.ldc.upenn.edu/docs/LDC97S62/swb1_dialogact_annot.tar.gz"</span>,
-target_dir <span class='op'>=</span> <span class='st'>"./data/scd/"</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='fu'>get_compressed_data</span><span class='op'>(</span>url <span class='op'>=</span> <span class='st'>"http://www.test.com/file.zip"</span>, target_dir <span class='op'>=</span> <span class='st'>"./"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Data already exists </div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>get_compressed_data</span><span class='op'>(</span>url <span class='op'>=</span> <span class='st'>"http://www.test.com/file.zip"</span>, target_dir <span class='op'>=</span> <span class='st'>"./"</span><span class='op'>)</span>
 <span class='op'>}</span>
-<span class='fu'>get_compressed_data</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in tools::file_ext(url): argument "url" is missing, with no default</span></div></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -195,7 +192,7 @@ target_dir <span class='op'>=</span> <span class='st'>"./data/scd/"</span><span 
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://francojc.github.io'>Jerid C. Francom</a>.</p>
+  <p>Developed by Jerid Francom.</p>
 </div>
 
 <div class="pkgdown">
