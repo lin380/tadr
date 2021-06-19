@@ -13,9 +13,13 @@ pacman::p_load(tidyverse, usethis, tadr)
 # _ Functions -------------------------------------------------------------
 
 extract_swda_metadata <- function(file) {
-  # Function: to read a Switchboard Corpus Dialogue file and extract metadata
+  # Function: to read a Switchboard Corpus Dialogue file (.utt) and extract
+  # various metadata features and text annotations
+
   cat("Reading", basename(file), "...")
   doc <- read_lines(file) # read file by lines
+
+  # Header info -------------------------------------------------------------
 
   # Extract `doc_id`, `speaker_a_id`, and `speaker_b_id`
   doc_speaker_info <-
@@ -26,6 +30,17 @@ extract_swda_metadata <- function(file) {
   doc_id <- doc_speaker_info[1] # extract `doc_id`
   speaker_a_id <- doc_speaker_info[2] # extract `speaker_a_id`
   speaker_b_id <- doc_speaker_info[3] # extract `speaker_b_id`
+
+  # Extract `topic_num`
+  topic_num <- doc[str_detect(doc, "^TOPIC#")] %>% str_extract("\\d+") %>% as.double()
+
+  # Extract `topicality`
+  topicality <- doc[str_detect(doc, "^TOPICALITY")] %>% str_extract("\\d+")
+
+  # Extract `naturalness`
+  naturalness <- doc[str_detect(doc, "^NATURALNESS")] %>% str_extract("\\d+")
+
+  # Text info ---------------------------------------------------------------
 
   # Extract `text`
   text_start_index <- # find where header info stops
@@ -40,7 +55,8 @@ extract_swda_metadata <- function(file) {
   text <- str_trim(text) # remove leading and trailing whitespace
   text <- text[text != ""] # remove blank lines
 
-  data <- data.frame(doc_id, text) # tidy format `doc_id` and `text`
+  # tidy format `doc_id`, `topic_num`, `topicality`, `naturalness` and `text`
+  data <- data.frame(doc_id, topic_num, topicality, naturalness, text)
 
   data <- # extract column information from `text`
     data %>%
@@ -64,8 +80,8 @@ extract_swda_metadata <- function(file) {
   data <- # link speaker with speaker_id
     data %>%
     mutate(speaker_id = case_when(
-      speaker == "A" ~ speaker_a_id,
-      speaker == "B" ~ speaker_b_id
+      speaker == "A" ~ as.numeric(speaker_a_id),
+      speaker == "B" ~ as.numeric(speaker_b_id)
     ))
   cat(" done.\n")
   return(data) # return the data frame object
@@ -94,8 +110,17 @@ swda <-
   map(extract_swda_metadata) %>% # read and tidy iteratively
   bind_rows() # bind the results into a single data frame
 
+### NOTE: speaker_id with value `155` is an annotation error. Checking the `swda_speaker_meta` and the `swda` (at this point) shows that there is a `1155` value in the `swda` and `swda_speaker_meta` but not a `1555`. So it appears that the annotator left off the trailing `5`.
 
-# Tidy SWDA meta-data -----------------------------------------------------
+swda <-
+  swda %>%
+  mutate(speaker_id = case_when(
+    speaker_id == 155 ~ 1555, # change from 155 to 1555
+    TRUE ~ as.numeric(speaker_id) #
+  ))
+
+
+# Tidy SWDA speaker meta-data ---------------------------------------------
 
 swda_speaker_meta <-
   read_csv(file = "https://catalog.ldc.upenn.edu/docs/LDC97S62/caller_tab.csv",
@@ -127,18 +152,27 @@ swda_speaker_meta <- # select columns of interest
   select(speaker_id, sex, birth_year, dialect_area, education)
 
 # Join `sdac` with `sdac_speaker_meta` by `speaker_id`
-swda$speaker_id <- swda$speaker_id %>% as.numeric() # convert to integer
 swda <- left_join(swda, swda_speaker_meta) # join by `speaker_id`
 
 glimpse(swda) # preview the joined dataset
 
+
+# Tidy SWDA topic meta-data -----------------------------------------------
+
+swda_topic_meta <-
+  read_csv(file = "https://catalog.ldc.upenn.edu/docs/LDC97S62/topic_tab.csv",
+         col_names = c("topic", "topic_num", "topic_prompt", "x", "y", "z")) %>%
+  mutate(topic = str_to_title(topic)) %>% # Change case to title
+  mutate(topic_prompt = str_to_sentence(topic_prompt)) %>% # Change case to sentence
+  select(topic_num, topic, topic_prompt)
+
+glimpse(swda_topic_meta) # preview the dataset
+
+# Join `sdac` with `sdac_topic_meta` by `speaker_id`
+swda <- left_join(swda, swda_topic_meta) # join by `topic_num`
+
 # Diagnostics
 swda[!complete.cases(swda), ] %>% glimpse # view incomplete cases
-swda[!complete.cases(swda), ] %>% select(speaker_id) %>% unique() # id speaker(s) with incomplete information
-
-swda <- # remove speaker 155
-  swda %>%
-  filter(speaker_id != 155)
 
 swda <- as_tibble(swda)
 
@@ -151,7 +185,7 @@ write_csv(x = swda, path = "data-raw/derived/swda.csv")
 write_csv(x = brown, path = "inst/extdata/swda.csv")
 
 # Write the curated dataset to the `data/` directory
-use_data(swda)
+usethis::use_data(swda)
 
 # CLEANUP -----------------------------------------------------------------
 

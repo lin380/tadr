@@ -1,6 +1,6 @@
 # ABOUT -------------------------------------------------------------------
 
-# Description: Aquire data for SMS Spam Collection
+# Description: Acquire data for SMS Spam Collection
 # Usage: Source this code with an internet connection
 # Author: Jerid Francom
 # Date: 2021-06-18

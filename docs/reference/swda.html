@@ -40,8 +40,8 @@
 
 
 <meta property="og:title" content="Switchboard Dialog Act Corpus — swda" />
-<meta property="og:description" content="A dataset containing the 1,1150 conversations of 440 speakers of American
-English." />
+<meta property="og:description" content="A dataset containing 1,155 5-minute conversations of 441 speakers of American
+English created in 1997 and tagged with a shallow discourse tagset of approximately 60 basic dialog act tags (DAMSL) and combinations." />
 
 
 
@@ -145,39 +145,57 @@ English." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Switchboard Dialog Act Corpus</h1>
-    <small class="dont-index">Source: <a href='https://github.com/lin380/tadr/blob/master/R/swda.R'><code>R/swda.R</code></a></small>
+    
     <div class="hidden name"><code>swda.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A dataset containing the 1,1150 conversations of 440 speakers of American
-English.</p>
+    <p>A dataset containing 1,155 5-minute conversations of 441 speakers of American
+English created in 1997 and tagged with a shallow discourse tagset of approximately 60 basic dialog act tags (DAMSL) and combinations.</p>
     </div>
 
-    <pre class="usage"><span class='va'>swda</span></pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"swda"</span><span class='op'>)</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data frame with 223,506 rows and 11 variables:</p><dl>
-  <dt>doc_id</dt><dd><p>ID for each conversation document</p></dd>
-  <dt>damsl_tag</dt><dd><p>DAMSL dialog act annotation labels</p></dd>
-  <dt>speaker</dt><dd><p>Label for each speaker in the conversation</p></dd>
-  <dt>turn_num</dt><dd><p>Number of contiguous utterance turns for a given speaker</p></dd>
-  <dt>utterance_num</dt><dd><p>The cumulative number of utterances in the conversation</p></dd>
-  <dt>utterance_text</dt><dd><p>The actual dialog utterance</p></dd>
-  <dt>speaker_id</dt><dd><p>Unique speaker identification code</p></dd>
-  <dt>sex</dt><dd><p>Sex of the speaker</p></dd>
-  <dt>birth_year</dt><dd><p>Year that the speaker was born</p></dd>
-  <dt>dialect_area</dt><dd><p>Region from the US where the speaker spent first 10 years</p></dd>
-  <dt>education</dt><dd><p>Highest educational level attained</p></dd>
-
+    <p>A data frame with 223,606 observations on the following 16 variables.</p><dl>
+    <dt><code>doc_id</code></dt><dd><p>ID for each conversation document</p></dd>
+    <dt><code>topic_num</code></dt><dd><p>Topic number associated with the conversation</p></dd>
+    <dt><code>topicality</code></dt><dd><p>Subjective rating of the annotator whether the callers conversed generally about what was suggested by the recorded prompt. Scale of 1 to 5, 1 being most on topic.</p></dd>
+    <dt><code>naturalness</code></dt><dd><p>Subjective rating of the annotator whether the the conversation sounded natural. Scale of 1 to 5, 1 being the most natural.</p></dd>
+    <dt><code>damsl_tag</code></dt><dd><p>DAMSL dialog act annotation labels</p></dd>
+    <dt><code>speaker</code></dt><dd><p>Label for each speaker in the conversation</p></dd>
+    <dt><code>turn_num</code></dt><dd><p>Number of contiguous utterance turns for a given speaker</p></dd>
+    <dt><code>utterance_num</code></dt><dd><p>The cumulative number of utterances in the conversation</p></dd>
+    <dt><code>utterance_text</code></dt><dd><p>The actual dialog utterance. Includes disfluency annotation (see details below)</p></dd>
+    <dt><code>speaker_id</code></dt><dd><p>ID for each speaker</p></dd>
+    <dt><code>sex</code></dt><dd><p>The biological sex of the speaker</p></dd>
+    <dt><code>birth_year</code></dt><dd><p>Year that the speaker was born</p></dd>
+    <dt><code>dialect_area</code></dt><dd><p>Region from the US where the speaker spent first 10 years</p></dd>
+    <dt><code>education</code></dt><dd><p>Highest educational level attained: values 0, 1, 2, 3, and 9</p></dd>
+    <dt><code>topic</code></dt><dd><p>Topic description</p></dd>
+    <dt><code>topic_prompt</code></dt><dd><p>Specific topic prompt for the conversation</p></dd>
+  
 </dl>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>More information on the metadata in this data can be found here: <a href='https://catalog.ldc.upenn.edu/docs/LDC97S62/swb1_manual.txt'>https://catalog.ldc.upenn.edu/docs/LDC97S62/swb1_manual.txt</a>.</p>
+<p>The SWBD-DAMSL manual can be found here: <a href='https://web.stanford.edu/~jurafsky/ws97/manual.august1.html'>https://web.stanford.edu/~jurafsky/ws97/manual.august1.html</a>.</p>
+<p>The Dysfluency Annotation Stylebook for the Switchboard Corpus can be found here: <a href='https://staff.fnwi.uva.nl/r.fernandezrovira/teaching/DM-materials/DFL-book.pdf'>https://staff.fnwi.uva.nl/r.fernandezrovira/teaching/DM-materials/DFL-book.pdf</a>.</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p><a href='https://catalog.ldc.upenn.edu/docs/LDC97S62/'>https://catalog.ldc.upenn.edu/docs/LDC97S62/</a></p>
+    <p>Switchboard-1 Release 2 <a href='https://catalog.ldc.upenn.edu/docs/LDC97S62/'>https://catalog.ldc.upenn.edu/docs/LDC97S62/</a></p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
+    <p>Godfrey, John J., and Edward Holliman. Switchboard-1 Release 2 LDC97S62. Web Download. Philadelphia: Linguistic Data Consortium, 1993.</p>
+<p>Jurafsky, Daniel, Elizabeth Shriberg, and Debra Biasca. 1997. "Switchboard SWBD-DAMSL Shallow-Discourse-Function Annotation Coders Manual, Draft 13"  University of Colorado, Boulder Institute of Cognitive Science Technical Report 97-02</p>
+<p>Meteer, Marie and Ann Taylor. 1995.  Dysfluency Annotation Stylebook for the Switchboard Corpus</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>swda</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
