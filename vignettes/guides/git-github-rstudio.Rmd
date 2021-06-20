@@ -1,0 +1,17 @@
+---
+title: "Git, GitHub, and RStudio"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Git, GitHub, and RStudio}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/kL6L2MNqPHg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

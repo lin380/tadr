@@ -15,3 +15,10 @@ knitr::opts_chunk$set(
 ```
 
 ## Begin your research
+
+### Survey the literature
+
+### Build bibliography
+
+#### Annotate bibliography
+

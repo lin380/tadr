@@ -6,21 +6,7 @@ authors:
     href: https://francojc.github.io
 template:
   params:
-    bootstrap: 4
-navbar:
-  structure:
-    left:  [home, reference, worked, tutorials]
-    right: [github]
-  components:
-    articles:
-      text: Worked
-      menu:
-      - text: Foundations
-      - text: Survey areas of research
-        href: articles/articles/survey.html
-      - text: Orientation
-      - text: Annotated bibliography
-        href: articles/articles/annotated.html
+    bootswatch: yeti
 reference:
 - title: "Functions"
   desc: >
@@ -34,6 +20,14 @@ reference:
   - brown
   - swda
   - sms
+articles:
+- title: Worked
+  contents:
+  - articles/survey
+  - articles/annotated
+- title: Guides
+  contents:
+  - guides/git-github-rstudio
 tutorials:
 # These can be added via url
 - name: 00-setup
