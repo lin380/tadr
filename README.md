@@ -9,9 +9,9 @@
 status](https://travis-ci.com/lin380/tadr.svg?branch=master)](https://travis-ci.com/lin380/tadr)
 <!-- badges: end -->
 
-The goal of `tadr` is to provide supporting resources for the textbook
-[“Text as Data: An Introduction to Quantitative Text Analysis and
-Reproducible Research in R”](https://lin380.github.io/coursebook/).
+The goal of `tadr` is to provide supporting resources for the coursebook
+[“Text as Data: An introduction to quantitative text analysis and
+reproducible research with R”](https://lin380.github.io/coursebook/).
 
 ## Installation
 

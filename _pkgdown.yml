@@ -6,21 +6,21 @@ authors:
     href: https://francojc.github.io
 template:
   params:
-    bootswatch: yeti
+    bootswatch: cosmo
+
 reference:
 - title: "Functions"
-  desc: >
-    Useful Functions
+  desc: ~
 - contents:
   - get_compressed_data
-- title: "Data"
-  desc: >
-    Data and datasets
+- title: "Datasets"
+  desc: ~
 - contents:
   - brown
   - swda
   - sms
   - europarle_sample
+
 articles:
 - title: Worked
   contents:
@@ -29,6 +29,7 @@ articles:
 - title: Guides
   contents:
   - guides/git-github-rstudio
+
 tutorials:
 # These can be added via url
 - name: 00-setup
@@ -40,3 +41,17 @@ tutorials:
 - name: 02-working-with-tibbles
   title: Working with Tibbles
   url: https://tutorials.shinyapps.io/01-tibbles/
+
+navbar:
+  left:
+    - icon: fa-home fa-lg
+      href: index.html
+    - text: "Recipes"
+      href: articles/index.html
+    - text: "Tutorials"
+      href: tutorials/index.html
+  right:
+    - text: "Reference"
+      href: reference/index.html
+    - icon: fa-github fa-lg
+      href: https://github.com/lin380/tadr
