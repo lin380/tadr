@@ -2,13 +2,11 @@ pandoc: 2.11.4
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
-  articles/annotated: annotated.html
-  articles/survey: survey.html
-  guides/git-github-rstudio: git-github-rstudio.html
-  lab_1: lab_1.html
-  lab_2: lab_2.html
-  lab_3: lab_3.html
-last_built: 2021-08-11T13:39Z
+  guide_1: guide_1.html
+  recipe_1: recipe_1.html
+  recipe_2: recipe_2.html
+  recipe_3: recipe_3.html
+last_built: 2021-08-11T16:29Z
 urls:
   reference: https://lin380.github.io/tadr/reference
   article: https://lin380.github.io/tadr/articles

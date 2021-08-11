@@ -1,0 +1,14 @@
+```{r common, include=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE,
+  out.width = "75%",
+  fig.align = 'center',
+  tidy = TRUE
+)
+pacman::p_load(tidyverse)
+theme_set(theme_minimal())
+
+options(digits = 3)
+```
+

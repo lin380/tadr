@@ -24,12 +24,12 @@ reference:
 articles:
 - title: Recipes
   contents:
-  - lab_1
-  - lab_2
-  - lab_3
+  - recipe_1
+  - recipe_2
+  - recipe_3
 - title: Guides
   contents:
-  - guides/git-github-rstudio
+  - guide_1
 
 tutorials:
 # These can be added via url

@@ -1,0 +1,24 @@
+---
+title: "2. Literate programming I"
+pkgdown:
+  as_is: true
+bibliography: bibliography.bib
+biblio-style: "apalike"
+link-citations: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Overview
+
+- Literate programming as a concept
+
+
+## Rmarkdown
+
+- Structure of an Rmarkdown document
+  - yaml header
+  - prose
+  - code chunks

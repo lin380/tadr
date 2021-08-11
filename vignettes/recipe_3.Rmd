@@ -1,0 +1,18 @@
+---
+title: "3. Literate programming II"
+pkgdown:
+  as_is: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Overview
+
+- Customizing yaml header
+  - title
+  - author
+  - date
+- Formatting prose (markdown syntax)
+- Customizing code chunks
