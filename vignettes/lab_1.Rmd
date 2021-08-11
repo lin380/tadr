@@ -1,0 +1,33 @@
+---
+title: "Orientation"
+pkgdown:
+  as_is: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Overview
+
+...
+
+# Programming environment
+
+## R
+
+## RStudio
+
+# Learning materials
+
+## Recipes
+
+## Swirl
+
+## Tutorials
+
+# Getting help
+
+- ...
+
+

@@ -22,10 +22,11 @@ reference:
   - europarle_sample
 
 articles:
-- title: Worked
+- title: Recipes
   contents:
-  - articles/survey
-  - articles/annotated
+  - lab_1
+  - lab_2
+  - lab_3
 - title: Guides
   contents:
   - guides/git-github-rstudio

@@ -1,0 +1,15 @@
+---
+title: "Literate programming II"
+pkgdown:
+  as_is: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Overvieew
+
+- Customizing yaml header
+- Formatting prose (markdown syntax)
+- Customizing code chunks

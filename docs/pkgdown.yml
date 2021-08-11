@@ -5,7 +5,10 @@ articles:
   articles/annotated: annotated.html
   articles/survey: survey.html
   guides/git-github-rstudio: git-github-rstudio.html
-last_built: 2021-08-10T16:58Z
+  lab_1: lab_1.html
+  lab_2: lab_2.html
+  lab_3: lab_3.html
+last_built: 2021-08-11T13:39Z
 urls:
   reference: https://lin380.github.io/tadr/reference
   article: https://lin380.github.io/tadr/articles

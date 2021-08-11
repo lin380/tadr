@@ -1,10 +1,5 @@
 ---
 title: "Survey areas of research"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Survey areas of research}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
@@ -12,9 +7,28 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+pacman::p_load(tidyverse)
 ```
 
 ## Begin your research
+
+```{r}
+head(mtcars)
+```
+
+```{r}
+1 + 1
+```
+
+This is a reference to a Figure \@ref(fig:test-figure).
+
+```{r test-figure, fig.cap='Test figure'}
+mtcars %>% 
+  ggplot(aes(x = mpg, y = drat)) + 
+  geom_point()
+```
+
+
 
 ### Survey the literature
 
