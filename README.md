@@ -13,7 +13,9 @@ The goal of `tadr` is to provide supporting resources for the coursebook
 [“Text as Data: An introduction to quantitative text analysis and
 reproducible research with R”](https://lin380.github.io/coursebook/).
 
-## Installation
+## `tadr` package
+
+### Installation
 
 <!-- You can install the released version of tadr from [CRAN](https://CRAN.R-project.org) with: -->
 
@@ -25,10 +27,32 @@ install.packages("devtools")
 devtools::install_github("lin380/tadr")
 ```
 
-## Load
+### Load
 
 Then load the package with:
 
 ``` r
 library(tadr)
 ```
+
+## `swirl` lessons
+
+### Installation
+
+The swirl lessons can be downloaded within an R console by running:
+
+``` r
+install.packages("swirl")
+library("swirl")
+install_course_github("lin380", "swirl")
+```
+
+### Load and run
+
+To load and start a lesson run:
+
+``` r
+swirl()
+```
+
+and follow the instructions to get started and to select a lesson.
