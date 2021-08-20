@@ -7,18 +7,40 @@ biblio-style: "apalike"
 link-citations: true
 ---
 
+```{r, child="_common.Rmd"}
+```
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Overview
+## Overview
 
 - Literate programming as a concept
 
+[@Knuth1984]
 
-## Rmarkdown
+- Reproducible research
 
-- Structure of an Rmarkdown document
-  - yaml header
+[@Gandrud2015]
+
+### Rmarkdown
+
+- Structure of an R Markdown document
+  - yaml front matter
   - prose
   - code chunks
+
+[@Xie2018]
+
+```yaml 
+---
+title: 
+date: 
+author:
+# ...
+---
+```
+
+## References
+

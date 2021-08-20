@@ -4,11 +4,14 @@ pkgdown:
   as_is: true
 ---
 
+```{r, child="_common.Rmd"}
+```
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Overview
+## Overview
 
 - Customizing yaml header
   - title
@@ -16,3 +19,27 @@ knitr::opts_chunk$set(echo = TRUE)
   - date
 - Formatting prose (markdown syntax)
 - Customizing code chunks
+
+## R Markdown `yaml` front matter 
+
+```yaml 
+title: 
+date: 
+author:
+# ...
+```
+
+## Bibliographic management
+
+### Software
+
+- Zotero
+- BetterBibTex
+
+### Connecting with RStudio
+
+- `citr` package
+  - Addin
+
+## References
+

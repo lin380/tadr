@@ -5,6 +5,7 @@ authors:
   Jerid C. Francom:
     href: https://francojc.github.io
 template:
+  bootstrap: 4
   params:
     bootswatch: cosmo
 
@@ -47,7 +48,7 @@ navbar:
   left:
     - icon: fa-home fa-lg
       href: index.html
-    - text: "Recipes"
+    - text: "Articles"
       href: articles/index.html
     - text: "Tutorials"
       href: tutorials/index.html

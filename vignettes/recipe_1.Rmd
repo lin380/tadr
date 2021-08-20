@@ -16,33 +16,7 @@ pacman::p_load(tidyverse)
 
 ## Overview
 
-In this Recipe, I will outline an powerful technology for creating reproducible analysis. 
-
-Test figure Figure \@ref(fig:test-figure).
-
-```{r test-figure, fig.cap='Test figure'}
-mtcars %>% 
-  ggplot(aes(x = mpg, y = drat)) +
-  geom_point()
-```
-
-
-This are some references [@Marwick2018; @Svartvik1980].
-
-
-Here's a reference to a Table \@ref(tab:test-table).
-
-```{r test-table}
-mtcars %>% 
-  dplyr::as_tibble() %>% 
-  knitr::kable(booktabs = TRUE, 
-               caption = "Test table")
-```
-Here is an image. 
-
-```{r test-image}
-knitr::include_graphics("images/lab_1/test-image.png")
-```
+In this Recipe, 
 
 
 ## Programming environment
@@ -57,9 +31,9 @@ Information about R
 
 ### Recipes
 
-### Swirl
-
 ### Tutorials
+
+### Swirl
 
 ## Getting help
 
