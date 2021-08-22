@@ -28,6 +28,8 @@ articles:
   - recipe_1
   - recipe_2
   - recipe_3
+  - recipe_4
+  - recipe_5
 - title: Guides
   contents:
   - guide_1

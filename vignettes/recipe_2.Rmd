@@ -1,5 +1,5 @@
 ---
-title: "2. Literate programming I"
+title: "2. Literate programming II"
 pkgdown:
   as_is: true
 bibliography: bibliography.bib
@@ -14,33 +14,44 @@ link-citations: true
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Overview
+Coming soon...
 
-- Literate programming as a concept
+<!-- Outline: 
 
-[@Knuth1984]
+Overview
 
-- Reproducible research
+- Customizing yaml header
+  - output
+  - bibliography
+    - bibliography
+- Formatting prose (markdown syntax)
+- Customizing code chunks
 
-[@Gandrud2015]
-
-### Rmarkdown
-
-- Structure of an R Markdown document
-  - yaml front matter
-  - prose
-  - code chunks
-
-[@Xie2018]
+## R Markdown `yaml` front matter 
 
 ```yaml 
----
 title: 
 date: 
 author:
 # ...
----
 ```
 
+## Bibliographic management
+
+### Software
+
+- Zotero
+- BetterBibTex
+
+### Connecting with RStudio
+
+- `citr` package
+  - Addin
+
 ## References
+
+-->
+
+
+
 

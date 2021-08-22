@@ -1,5 +1,5 @@
 ---
-title: "1. R, RStudio, and Git/GitHub"
+title: "4. Descriptive assessment of datasets"
 pkgdown:
   as_is: true
 bibliography: bibliography.bib
@@ -11,9 +11,11 @@ link-citations: true
 ```
 
 ```{r setup, include=FALSE}
-pacman::p_load(tidyverse)
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 Coming soon...
 
+<!-- Outline:
 
+-->

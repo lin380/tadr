@@ -1,5 +1,5 @@
 ---
-title: "1. Orientation"
+title: "1. Literate programming I"
 pkgdown:
   as_is: true
 bibliography: bibliography.bib
@@ -11,34 +11,53 @@ link-citations: true
 ```
 
 ```{r setup, include=FALSE}
-pacman::p_load(tidyverse) 
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Overview
+Coming soon...
 
-In this Recipe, 
+<!-- Outline:
 
+Overview
 
-## Programming environment
+- Literate programming as a concept [@Knuth1984]
+- Reproducible research [@Gandrud2015]
 
-### R
+R Markdown [@Xie2018]
 
-Information about R
+- Structure
+  - yaml front matter
+  - prose
+  - code chunks
 
-### RStudio
+- Customizing
+  - yaml
+    - title
+    - author
+    - date
+  - pose
+    - Markdown syntax
+  - code chunks
+    - title
+    - echo
 
-## Learning materials
-
-### Recipes
-
-### Tutorials
-
-### Swirl
-
-## Getting help
-
-- ...
+```yaml 
+---
+title: 
+date: 
+author:
+# ...
+---
+```
 
 ## References
+
+-->
+
+
+
+
+
+
 
 

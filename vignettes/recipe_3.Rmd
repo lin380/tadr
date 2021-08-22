@@ -1,7 +1,10 @@
 ---
-title: "3. Literate programming II"
+title: "3. Reading, inspecting, and writing data"
 pkgdown:
   as_is: true
+bibliography: bibliography.bib
+biblio-style: "apalike"
+link-citations: true
 ---
 
 ```{r, child="_common.Rmd"}
@@ -11,35 +14,32 @@ pkgdown:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Overview
+Coming soon...
 
-- Customizing yaml header
-  - title
-  - author
-  - date
-- Formatting prose (markdown syntax)
-- Customizing code chunks
+<!-- Outline: 
 
-## R Markdown `yaml` front matter 
+Overview
 
-```yaml 
-title: 
-date: 
-author:
-# ...
-```
+- Read data (readr, readtext, ..., packages)
+  - csv
+  - xml 
+  - txt
+  - json
 
-## Bibliographic management
+- Inspect data (dplyr, )
+  - glimpse
+  - str
+  - head/ tail
+  - slice_head/ _tail
+  - ...
 
-### Software
-
-- Zotero
-- BetterBibTex
-
-### Connecting with RStudio
-
-- `citr` package
-  - Addin
+- Write data
+  - 
 
 ## References
+
+-->
+
+
+
 

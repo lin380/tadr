@@ -1,6 +1,5 @@
 ^.*\.Rproj$ # added by RStudio
 ^\.Rproj\.user$ # used for temporary files
-
 ^README\.Rmd$
 ^data-raw$
 ^\.travis\.yml$
@@ -8,3 +7,4 @@
 ^docs$
 ^pkgdown$
 ^vignettes/articles$
+^\.httr-oauth$
