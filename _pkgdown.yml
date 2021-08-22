@@ -36,15 +36,43 @@ articles:
 
 tutorials:
 # These can be added via url
-- name: 00-setup
-  title: Setting up R
-  url: https://jjallaire.shinyapps.io/learnr-tutorial-00-setup/
-- name: 01-programming-basics
-  title: Programming basics
-  url: https://tutorials.shinyapps.io/04-Programming-Basics/
+- name: 01-r-programming-basics
+  title: R programming basics
+  url: https://rstudio.cloud/learn/primers/1.2
 - name: 02-working-with-tibbles
   title: Working with Tibbles
-  url: https://tutorials.shinyapps.io/01-tibbles/
+  url: https://rstudio.cloud/learn/primers/2.1
+- name: 03-isolating-data-with-dplyr
+  title: Isolating data with dplyr
+  url: https://rstudio.cloud/learn/primers/2.2
+- name: 04-deriving-info-with-dplyr
+  title: Deriving information with dplyr
+  url: https://rstudio.cloud/learn/primers/2.3
+- name: 05-data-visualization-basics
+  title: Data visualization basics
+  url: https://rstudio.cloud/learn/primers/1.1
+- name: 06-exploratory-data-analysis
+  title: Exploratory Data Analysis
+  url: https://rstudio.cloud/learn/primers/3.1
+- name: 07-intro-to-iteration
+  title: Introduction to iteration
+  url: https://rstudio.cloud/learn/primers/5.1
+- name: 08-map
+  title: Map
+  url: https://rstudio.cloud/learn/primers/5.2
+- name: 09-how-to-write-a-function
+  title: How to write a function
+  url: https://rstudio.cloud/learn/primers/6.2
+- name: 10-reshape-data
+  title: Reshape data
+  url: https://rstudio.cloud/learn/primers/4.1
+- name: 11-separate-and-unite-columns
+  title: Separate and unite columns
+  url: https://rstudio.cloud/learn/primers/4.2
+- name: 12-join-datasets
+  title: Join datasets
+  url: https://rstudio.cloud/learn/primers/4.3
+
 
 navbar:
   left:
