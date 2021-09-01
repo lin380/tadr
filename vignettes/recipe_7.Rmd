@@ -1,0 +1,26 @@
+---
+title: "7. Tidying data"
+pkgdown:
+  as_is: true
+bibliography: bibliography.bib
+biblio-style: "apalike"
+link-citations: true
+---
+
+```{r, child="_common.Rmd"}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Coming soon...
+
+<!-- Outline:
+
+
+NOTE:
+
+- Addin: https://github.com/gadenbuie/regexplain for building/ understanding Regular Expressions
+
+-->

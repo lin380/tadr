@@ -4,11 +4,17 @@ pkgdown_sha: ~
 articles:
   guide_1: guide_1.html
   recipe_1: recipe_1.html
+  recipe_10: recipe_10.html
+  recipe_11: recipe_11.html
   recipe_2: recipe_2.html
   recipe_3: recipe_3.html
   recipe_4: recipe_4.html
   recipe_5: recipe_5.html
-last_built: 2021-08-23T13:09Z
+  recipe_6: recipe_6.html
+  recipe_7: recipe_7.html
+  recipe_8: recipe_8.html
+  recipe_9: recipe_9.html
+last_built: 2021-09-01T18:43Z
 urls:
   reference: https://lin380.github.io/tadr/reference
   article: https://lin380.github.io/tadr/articles

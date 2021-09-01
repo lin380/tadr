@@ -1,0 +1,23 @@
+---
+title: "9. Statistical inference"
+pkgdown:
+  as_is: true
+bibliography: bibliography.bib
+biblio-style: "apalike"
+link-citations: true
+---
+
+```{r, child="_common.Rmd"}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Coming soon...
+
+<!-- Outline:
+
+infer package (tidymodels?)
+
+-->

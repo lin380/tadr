@@ -36,6 +36,14 @@ Overview
 - Write data
   - 
 
+NOTE:
+
+- Addin: devtools::install_github("RhoInc/CRANsearcher") for searching packages on CRAN
+- Data, datasets: 
+  - friends package
+  - sotu package
+
+
 ## References
 
 -->
