@@ -5,3 +5,4 @@ output:
     toc_depth: 2
     theme: cosmo
     highlight: tango
+    df_print: kable

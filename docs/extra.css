@@ -1,0 +1,10 @@
+/* Custom CSS styles */
+
+.tip {
+  border-radius: 10px;
+  border: 2px solid rgb(225,225,225);
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 10px;
+  background: rgb(144,235,249) no-repeat 5px center/3em;
+  background-image: url("articles/images/tip.png");
+}
