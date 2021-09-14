@@ -95,15 +95,590 @@
 
     
     
-<p>Coming soon…</p>
+<div id="overview" class="section level2">
+<h2 class="hasAnchor">
+<a href="#overview" class="anchor"></a>Overview</h2>
+<p>In this Recipe we will build on our R coding skills to implement descriptive assessment of datasets.</p>
+</div>
+<div id="setup" class="section level2">
+<h2 class="hasAnchor">
+<a href="#setup" class="anchor"></a>Setup</h2>
+<div id="packages" class="section level3">
+<h3 class="hasAnchor">
+<a href="#packages" class="anchor"></a>Packages</h3>
+<p>First let’s load some packages that will help us manipulate and create summaries of data.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>  <span class="co"># to manipulate and visualizae datasets</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sfirke/janitor">janitor</a></span><span class="op">)</span>  <span class="co"># to create (cross-)tabulations</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/skimr/">skimr</a></span><span class="op">)</span>  <span class="co"># to provide statistical summaries</span></code></pre></div>
+</div>
+<div id="dataset" class="section level3">
+<h3 class="hasAnchor">
+<a href="#dataset" class="anchor"></a>Dataset</h3>
+<p>We will be using a dataset drawn from the <a href="https://slabank.talkbank.org/access/English/BELC.html">Barcelona English Language Corpus</a> <span class="citation">(<a href="#ref-Munoz2007" role="doc-biblioref">Carmen Muñoz 2007</a>; <a href="#ref-Munoz2006" role="doc-biblioref">Carme Muñoz 2006</a>)</span>. The corpus includes a series of tasks that aim to provide data on the effects of age on the acquisition of English as a foreign language (EFL). The task selected here is the “Written composition” which comprises written essays by students from Barcelona ranging from 10 to 17 years of age.</p>
+<p>Let’s read the curated dataset<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. (If you want to access this data you can use <a href="">the remote dataset URL</a>.)</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># read the `belc` dataset from an .rds file</span>
+<span class="va">belc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html">read_rds</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"data/rds/belc.rds"</span><span class="op">)</span></code></pre></div>
+</div>
+</div>
+<div id="informational-values" class="section level2">
+<h2 class="hasAnchor">
+<a href="#informational-values" class="anchor"></a>Informational values</h2>
+<p>In R there is a set of fundamental vector types which are used for distinct informational value types and these vector types are associated with either categorical- (character and logical) and continuous-types (integer and double). A couple things to note: first, character and logical vectors can be re-typed as a more complex vector type called a factor. Factors allow us to encode order to the character vectors (say for ordinal variables) and assign numeric values to the character vector to allow for us to do mathematical operations. We will how factors work later. Second, both integer and doubles are also called numeric vectors. The difference between integer and doubles is that doubles allow for decimal places, whereas integers are whole numbers.</p>
+<p>The <code>belc</code> dataset reflects a summary of each of the essays by each of the students and includes the number of word tokens (<code>num_tokens</code>), the number of word types (<code>num_types</code>) and the ratio of tokens to types (<code>ttr</code>). The structure of the dataset (<code>belc</code>) is seen below.</p>
+<pre><code>## Rows: 79
+## Columns: 6
+## $ participant_id &lt;chr&gt; "L02", "L05", "L10", "L11", "L12", "L16", "L22", "L27",…
+## $ age_group      &lt;chr&gt; "10-year-olds", "10-year-olds", "10-year-olds", "10-yea…
+## $ sex            &lt;chr&gt; "female", "female", "female", "female", "female", "fema…
+## $ num_tokens     &lt;int&gt; 12, 18, 36, 10, 41, 13, 47, 8, 84, 53, 18, 16, 7, 24, 3…
+## $ num_types      &lt;int&gt; 12, 15, 26, 8, 23, 12, 30, 8, 34, 34, 13, 9, 5, 18, 23,…
+## $ ttr            &lt;dbl&gt; 1.000, 0.833, 0.722, 0.800, 0.561, 0.923, 0.638, 1.000,…</code></pre>
+<p>As we see from the overview of the <code>belc</code> dataset, we have character, integer and double vector types in the data frame. Therefore this dataset contains three categorical (<code>participant_id</code>, <code>age_group</code>, and <code>sex</code>) and three continuous variables (<code>num_tokens</code>, <code>num_types</code>, and <code>ttr</code>).</p>
+</div>
+<div id="summaries" class="section level2">
+<h2 class="hasAnchor">
+<a href="#summaries" class="anchor"></a>Summaries</h2>
+<p>Now let’s look at approaching descriptive summaries using the <code>belc</code> dataset. First we will look at single vector summaries and then we will look at multiple vector summaries. The type of summary that we will apply will depend on the type of values that a variable contains, that is whether the values are categorical or continuous.</p>
+<p>To prepare to work with the categorical data, let’s re-type the categorical variables (<code>participant_id</code>, <code>age_group</code> and <code>sex</code>) as factors. To apply the <code><a href="https://rdrr.io/r/base/factor.html">as.factor()</a></code> function to all the character vectors I make use of the <code><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if()</a></code> function which allows me to target only the vectors in the dataset that are of type character. Since the <code>age_group</code> variable is ordinal we will explicitly encode that order. Again, the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> function is called but only targets the <code>age_group</code> vector.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">belc</span> <span class="op">&lt;-</span> 
+  <span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.character</span>, <span class="va">as.factor</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># create factors from character variables</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>age_group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">age_group</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="co"># create ordered variable for age_group</span></code></pre></div>
+<p>Now let’s take a look at the dataset.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">belc</span><span class="op">)</span>  <span class="co"># dataset overview</span></code></pre></div>
+<pre><code>## Rows: 79
+## Columns: 6
+## $ participant_id &lt;fct&gt; L02, L05, L10, L11, L12, L16, L22, L27, L28, L29, L41, …
+## $ age_group      &lt;ord&gt; 10-year-olds, 10-year-olds, 10-year-olds, 10-year-olds,…
+## $ sex            &lt;fct&gt; female, female, female, female, female, female, female,…
+## $ num_tokens     &lt;int&gt; 12, 18, 36, 10, 41, 13, 47, 8, 84, 53, 18, 16, 7, 24, 3…
+## $ num_types      &lt;int&gt; 12, 15, 26, 8, 23, 12, 30, 8, 34, 34, 13, 9, 5, 18, 23,…
+## $ ttr            &lt;dbl&gt; 1.000, 0.833, 0.722, 0.800, 0.561, 0.923, 0.638, 1.000,…</code></pre>
+<p>Now we have factors instead of character vectors for our categorical variables.</p>
+<div id="single-vector" class="section level3">
+<h3 class="hasAnchor">
+<a href="#single-vector" class="anchor"></a>Single vector</h3>
+<p><strong>Categorical</strong></p>
+<p>To get a descriptive summary of the categorical variables I will use the skimr package <span class="citation">(<a href="#ref-R-skimr" role="doc-biblioref">Waring et al. 2021</a>)</span> and call the <code><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim()</a></code> function and then pipe these results to <code><a href="https://docs.ropensci.org/skimr/reference/partition.html">yank()</a></code> and target only the factor variables.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/partition.html">yank</a></span><span class="op">(</span><span class="st">"factor"</span><span class="op">)</span></code></pre></div>
+<p><strong>Variable type: factor</strong></p>
+<table class="table">
+<thead><tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">ordered</th>
+<th align="right">n_unique</th>
+<th align="left">top_counts</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">participant_id</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">36</td>
+<td align="left">L05: 3, L10: 3, L11: 3, L12: 3</td>
+</tr>
+<tr class="even">
+<td align="left">age_group</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">TRUE</td>
+<td align="right">4</td>
+<td align="left">10-: 24, 16-: 24, 12-: 16, 17-: 15</td>
+</tr>
+<tr class="odd">
+<td align="left">sex</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">fem: 48, mal: 31</td>
+</tr>
+</tbody>
+</table>
+<p>From this output we see a host of descriptive information about our categorical variables. What is important to note is that categorical variables are summarized by counts. The most common value for a categorical variable is called the mode. If we want to look at a specific variable, say <code>age_group</code> we can use the <code><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl()</a></code> function from the janitor package <span class="citation">(<a href="#ref-R-janitor" role="doc-biblioref">Firke 2021</a>)</span>.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">age_group</span><span class="op">)</span>  <span class="co"># create a tabulation of the `age_group` variable</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="left">age_group</th>
+<th align="right">n</th>
+<th align="right">percent</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">10-year-olds</td>
+<td align="right">24</td>
+<td align="right">0.304</td>
+</tr>
+<tr class="even">
+<td align="left">12-year-olds</td>
+<td align="right">16</td>
+<td align="right">0.203</td>
+</tr>
+<tr class="odd">
+<td align="left">16-year-olds</td>
+<td align="right">24</td>
+<td align="right">0.304</td>
+</tr>
+<tr class="even">
+<td align="left">17-year-olds</td>
+<td align="right">15</td>
+<td align="right">0.190</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>We see that the <code><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl()</a></code> function provides the counts but also the proportions of each of the values of the <code>age_group</code> variable. Note that when working with factors the values are often called ‘levels.’ We can see that this variable has two levels with the same count. This characterizes what is called a bimodal distribution as there are two most frequent levels.</p>
+<p>Tabular summaries are often the most effective way to assess categorical variables, but let’s set the stage for working with plotting in R.</p>
+<p>Among other package, the tidyverse package load the ggplot2 package <span class="citation">(<a href="#ref-R-ggplot2" role="doc-biblioref">Wickham 2016</a>)</span> which is a powerful package for creating plots in R. The ‘gg’ in ggplot2 refers to the use of “The Grammar of Graphics” approach to building plots. There are three basic elements for all ggplot2 plots: (1) data, (2) mappings, and (3) geometries. The data is, of course, the dataset that we want to use. The mappings used to select the variables to be used in the plot and how the variables are to be mapped to the plotting space. Finally the geometries specify how the mappings are organized.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p>Let’s create a simple plot for the <code>age_group</code> variable. First we pass the datset to <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>. The <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> function then requires that we provide the aesthetic mappings <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> in this case we have one variable and so we will want this variable to appear on the x axis. The <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code> function by default will then count the levels of our <code>age_group</code> factor variable and plot them on the y axis.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age_group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># map age_group to x</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># create a barplot</span></code></pre></div>
+<p><img src="recipe_4_files/figure-html/belc-age-group-plot-1.png" width="85%" style="display: block; margin: auto;">
+There we go. Not a particularly informative plot, given we are only looking at a single categorical variable, but we will build on this basic formula to creat more informative graphics.</p>
+<div class="tip">
+<p>Note that the equivalent of the <code>%&gt;%</code> for building ggplot2 plots is the <code>+</code> operator. This can be confusing, but it is important to recognize this distinction as it is easily overlooked and can cause unexpected errors.</p>
+</div>
+<p><strong>Continuous</strong></p>
+<p>Now let’s turn to continuous variables. Where tabular summaries of categorical variables makes sense, this is not the case for continuous variables as by definition a continuous variable is not count-based but rather the values range along a continuum. Let’s look at what the basic descriptives are for out continuous variables with <code><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim()</a></code> (this time selecting only the numeric variables).</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/partition.html">yank</a></span><span class="op">(</span><span class="st">"numeric"</span><span class="op">)</span></code></pre></div>
+<p><strong>Variable type: numeric</strong></p>
+<table class="table">
+<thead><tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">num_tokens</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">66.23</td>
+<td align="right">43.90</td>
+<td align="right">1.00</td>
+<td align="right">29.00</td>
+<td align="right">55.00</td>
+<td align="right">90.00</td>
+<td align="right">185</td>
+<td align="left">▇▇▇▃▁</td>
+</tr>
+<tr class="even">
+<td align="left">num_types</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">40.25</td>
+<td align="right">22.80</td>
+<td align="right">1.00</td>
+<td align="right">22.00</td>
+<td align="right">38.00</td>
+<td align="right">54.00</td>
+<td align="right">97</td>
+<td align="left">▆▇▇▃▂</td>
+</tr>
+<tr class="odd">
+<td align="left">ttr</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.67</td>
+<td align="right">0.13</td>
+<td align="right">0.41</td>
+<td align="right">0.57</td>
+<td align="right">0.64</td>
+<td align="right">0.73</td>
+<td align="right">1</td>
+<td align="left">▂▇▅▂▂</td>
+</tr>
+</tbody>
+</table>
+<p>Here we see that the type of summary information is not count-based, rather we have a new set of descriptives. The mean and sd (standard deviation) are easy to identify and straightforward. The summaries prefixed with <code>p</code> represent the percentiles, in this case we have five percentile points (0, 25, 50, 75, 100), which slice the percentile space in four ranges therefore we call these the quartiles. These values are often called the ‘five-number summary.’ The 50th percentile is also known as the median. The five number summary provides a numerical view of the distribution of a continuous variable. Another use of these quartiles. is to calculate the range between the 25th and 75th quantile, (50% of the values), known as the Interquartile Range (IQR). This gives us a more precise estimate of the distribution as it does not include extreme values (above or below the IQR).</p>
+<p>We can calculate this measure manually, or just apply the <code><a href="https://rdrr.io/r/stats/IQR.html">IQR()</a></code> function.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span><span class="op">(</span><span class="va">belc</span><span class="op">$</span><span class="va">num_types</span><span class="op">)</span>  <span class="co"># calculate iqr for `num_types`</span></code></pre></div>
+<pre><code>## [1] 32</code></pre>
+<p>Where with categorical variables tabular formats are often the most informative way to understand a variable, for continuous variables plots are the most informative. Let’s now create some plots which provide views of the distribution of the <code>num_types</code> variable.</p>
+<p>Picking up with the quantiles, we can create an Empirical Cumulative Distribution Frequency (ECDF) plot which will give us an understanding of the proportions of the values along a continuous percentile range.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">num_types</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># map `num_types` to x</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_ecdf.html">stat_ecdf</a></span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"step"</span><span class="op">)</span> <span class="co"># generate the cumulative distribution</span></code></pre></div>
+<p><img src="recipe_4_files/figure-html/belc-num-types-ecdf-1.png" width="85%" style="display: block; margin: auto;">
+Here we can graphically inspect the points that intersect on the x and y axis to estimate the percentile of the values that have some number of unique words. We can also get a specific determination by using the following functions. Let’s say we want to know how many number of unique words are in the lower 10% of the written compositions from BELC.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/ecdf.html">ecdf</a></span><span class="op">(</span><span class="va">belc</span><span class="op">$</span><span class="va">num_tokens</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># calculate the cumulative distribution</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="fl">.1</span><span class="op">)</span> <span class="co"># pull the value for the 10th percentile</span></code></pre></div>
+<pre><code>##  10% 
+## 15.4</code></pre>
+<p>Now let’s move towards looking at distributions. This is done by creating either a histogram or a density plot. Let’s plot both here. I will assign each plot to an object and then have them output side-by-side using the gridExtra package <span class="citation">(<a href="#ref-R-gridExtra" role="doc-biblioref">Auguie 2017</a>)</span></p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">p1</span> <span class="op">&lt;-</span> 
+  <span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">num_types</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># map `num_types` to x</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># create histogram</span>
+
+<span class="va">p2</span> <span class="op">&lt;-</span> 
+  <span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">num_types</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># map `num_types` to x</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># create density plot</span>
+
+<span class="fu">gridExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html">grid.arrange</a></span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="co"># arrange both plots in two columns</span></code></pre></div>
+<p><img src="recipe_4_files/figure-html/belc-num-types-plot-1.png" width="85%" style="display: block; margin: auto;"></p>
+<p>As you can see, a histogram also provides count information, like we saw with categorical variables. However, the counts here are based on binned groups, that is, a range of values are calculated that span the entire value space and then values that fall within one of these bins (ranges) are counted. The size of the bin range can be adjusted, but we’ve just gone with the default (in this case <code>bins = 30</code>). The density plot uses proportions to provide an more continuous view of the distribution. Both plot types have their advantages. In the case of histograms it can be easier to identify outliers while density plots can help us determine more easily if the distribution is normal or skewed (left or right). As we will see, identifying outliers and determining the type of distribution we are working with will be useful downstream in certain types of analysis approaches.</p>
+<p>On the topic of normal distributions, let’s look at a useful plot for assessing the extent to which a continuous variable is normally distributed –the Quantile-Quantile plots (QQ Plot).</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">num_types</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># map `num_types` to sample</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">stat_qq</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># calculate the sample and theoretical quantiles points</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">stat_qq_line</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># plot the theoretical line</span></code></pre></div>
+<p><img src="recipe_4_files/figure-html/belc-num-types-qq-1.png" width="85%" style="display: block; margin: auto;">
+In QQ-plots the more the points diverge from the line, the less likely that the distribution is normal.</p>
+</div>
+<div id="multiple-vector" class="section level3">
+<h3 class="hasAnchor">
+<a href="#multiple-vector" class="anchor"></a>Multiple vector</h3>
+<p>Now we turn our attention to working with multiple variables. We will first look at variables of the same type, and then look at describing variables of distinct types.</p>
+<p><strong>Categorical</strong></p>
+<p>Just was with descriptions of single categorical variables, tabular summaries are very useful. When there are multiple categorical variables, we cross-tabulate. That is, that each of the values of one variable are tabulated for the each value of the other variable(s).</p>
+<p>Let’s do a cross-tabulation of the <code>age_group</code> and <code>sex</code> variables. Again we will use the <code><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl()</a></code> function but this time with two variables.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">age_group</span>, <span class="va">sex</span><span class="op">)</span> <span class="co"># cross-tab of `age_group` and `sex`</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="left">age_group</th>
+<th align="right">female</th>
+<th align="right">male</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">10-year-olds</td>
+<td align="right">14</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">12-year-olds</td>
+<td align="right">11</td>
+<td align="right">5</td>
+</tr>
+<tr class="odd">
+<td align="left">16-year-olds</td>
+<td align="right">13</td>
+<td align="right">11</td>
+</tr>
+<tr class="even">
+<td align="left">17-year-olds</td>
+<td align="right">10</td>
+<td align="right">5</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>We can also add proportions to this cross-tabulation by adding the <code><a href="https://rdrr.io/pkg/janitor/man/adorn_percentages.html">adorn_percentages()</a></code> function. I’ve also rounded the output with <code><a href="https://rdrr.io/pkg/janitor/man/adorn_rounding.html">adorn_rounding()</a></code>. Both these functions are part of the janitor package.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">age_group</span>, <span class="va">sex</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># cross-tab of `age_group` and `sex`</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># add percentages (row by default)</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_rounding.html">adorn_rounding</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="co"># round the output</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="left">age_group</th>
+<th align="right">female</th>
+<th align="right">male</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">10-year-olds</td>
+<td align="right">0.58</td>
+<td align="right">0.42</td>
+</tr>
+<tr class="even">
+<td align="left">12-year-olds</td>
+<td align="right">0.69</td>
+<td align="right">0.31</td>
+</tr>
+<tr class="odd">
+<td align="left">16-year-olds</td>
+<td align="right">0.54</td>
+<td align="right">0.46</td>
+</tr>
+<tr class="even">
+<td align="left">17-year-olds</td>
+<td align="right">0.67</td>
+<td align="right">0.33</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The order of the variables in the <code><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl()</a></code> function can allow you rotate the output. This may be desirable depending on the number of levels in a particular categorical variable.</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">age_group</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># cross-tab of `age_group` and `sex`</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># add percentages (row by default)</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_rounding.html">adorn_rounding</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="co"># round the output</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="left">sex</th>
+<th align="right">10-year-olds</th>
+<th align="right">12-year-olds</th>
+<th align="right">16-year-olds</th>
+<th align="right">17-year-olds</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">female</td>
+<td align="right">0.29</td>
+<td align="right">0.23</td>
+<td align="right">0.27</td>
+<td align="right">0.21</td>
+</tr>
+<tr class="even">
+<td align="left">male</td>
+<td align="right">0.32</td>
+<td align="right">0.16</td>
+<td align="right">0.35</td>
+<td align="right">0.16</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Now we can visualize this relationship in a bar plot as well. Let’s create two bar plots, in fact. One for the counts and the second for proportions.</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">p1</span> <span class="op">&lt;-</span> 
+  <span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sex</span>, fill <span class="op">=</span> <span class="va">age_group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># map sex to x and age_group to y</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># generate bar plot with counts</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Count"</span><span class="op">)</span> <span class="co"># add labels</span>
+
+<span class="va">p2</span> <span class="op">&lt;-</span> 
+  <span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sex</span>, fill <span class="op">=</span> <span class="va">age_group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># map sex to x and age_group to y</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"fill"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># generate bar plot with proportions</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Proportion"</span><span class="op">)</span> <span class="co"># add labels</span>
+
+<span class="fu">gridExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html">grid.arrange</a></span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="co"># arrange both plots in two columns</span></code></pre></div>
+<p><img src="recipe_4_files/figure-html/belc-sex-age-group-plot-1.png" width="85%" style="display: block; margin: auto;"></p>
+<p>The proportions provide a apples-to-apples comparison allowing us to see relative sizes of the age group levels for each level of sex.</p>
+<div class="tip">
+<p>I’ve added another function <code><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs()</a></code> to the plot to change the y axis label to a custom label. With the <code><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs()</a></code> function you can change the labels of any of axis as well as other mapping aesthetics as well as the title.</p>
+</div>
+<p><strong>Continuous</strong></p>
+<p>For summaries of continuous variables we can generate correlation statistics as well as visualize relationships. Let’s start with building a plot to visualize the relationship between <code>num_tokens</code> and <code>ttr</code>. To plot points where continuous variables coincide we use the <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> function. If we want to include a trend line we use the <code><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth()</a></code> function. If we want that trend line to be linear, then the argument <code>method = "lm"</code> is included.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">p1</span> <span class="op">&lt;-</span> 
+  <span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">num_tokens</span>, y <span class="op">=</span> <span class="va">ttr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># map num_tokens to x, ttr to y</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># plot x/y points</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Number of tokens"</span>, y <span class="op">=</span> <span class="st">"Type-Token Ratio"</span><span class="op">)</span>
+<span class="va">p2</span> <span class="op">&lt;-</span> 
+  <span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">num_tokens</span>, y <span class="op">=</span> <span class="va">ttr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># map num_tokens to x, ttr to y</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># plot x/y points</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># add a linear trend line</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Number of tokens"</span>, y <span class="op">=</span> <span class="st">"Type-Token Ratio"</span><span class="op">)</span>
+
+<span class="fu">gridExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html">grid.arrange</a></span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="co"># arrange both plots in two columns</span></code></pre></div>
+<p><img src="recipe_4_files/figure-html/belc-num-tokens-ttr-correlation-plots-1.png" width="85%" style="display: block; margin: auto;"></p>
+<p>To calculate a statistical summary of a relationship between two continuous variables (correlation) we can use the <code><a href="https://rdrr.io/r/stats/cor.html">cor()</a></code> function from base R’s stats package. We select the variables we want to explore and assign them to <code>x</code> and <code>y</code> and then select the appropriata method for the correlation assessment. For normally distributed continuous variables, we set <code>method =</code> to ‘pearson’ and for non-normal distributions ‘kendall.’</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">belc</span><span class="op">$</span><span class="va">num_tokens</span>, y <span class="op">=</span> <span class="va">belc</span><span class="op">$</span><span class="va">ttr</span>, method <span class="op">=</span> <span class="st">"kendall"</span><span class="op">)</span>  <span class="co"># correlation stat</span></code></pre></div>
+<pre><code>## [1] -0.563</code></pre>
+<p>Correlation statistics range from 1 to -1. The closer to either of these values means that the relationship is strong. A value closer to 0 means the correlation is weak and if it is 0 or near 0 there is no correlation.</p>
+<div class="tip">
+<p>Remember that to determine if a continuous variable conforms to the normal distribution we can apply the Shapiro-Wilk Normality Test using the <code><a href="https://rdrr.io/r/stats/shapiro.test.html">shapiro.test()</a></code> function. A significant <span class="math inline">\(p\)</span>-value means that the distribution is <em>not</em> normal.</p>
+</div>
+<p><strong>Mixed</strong></p>
+<p>The final scenario is one in which we are interested in assessing the relationship between a categorical variable and a continuous variable. We can perform a summary using <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> and the <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> functions. First we group the dataset by the categorical variable and then we create a new variable which is the result of the summary statistic that we want to calculate. In this case, let’s look at the mean number of tokens by each level of the learner age group.</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">age_group</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># group dataset by age_group</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mean_num_tokens <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">num_tokens</span><span class="op">)</span><span class="op">)</span> <span class="co"># calculate the mean num_tokens</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="left">age_group</th>
+<th align="right">mean_num_tokens</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">10-year-olds</td>
+<td align="right">27.8</td>
+</tr>
+<tr class="even">
+<td align="left">12-year-olds</td>
+<td align="right">57.4</td>
+</tr>
+<tr class="odd">
+<td align="left">16-year-olds</td>
+<td align="right">81.7</td>
+</tr>
+<tr class="even">
+<td align="left">17-year-olds</td>
+<td align="right">112.4</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The statistic(s) that we want to calculate are up to us and we can create multiple statistics by adding other functions to the <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> function.</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">age_group</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># group dataset by age_group</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mean_num_tokens <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">num_tokens</span><span class="op">)</span>, <span class="co"># calculate mean</span>
+            sd_num_tokens <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">num_tokens</span><span class="op">)</span>, <span class="co"># calculate standard deviation </span>
+            median_num_tokens <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">num_tokens</span><span class="op">)</span>, <span class="co"># calculate median</span>
+            iqr_num_tokens <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span><span class="op">(</span><span class="va">num_tokens</span><span class="op">)</span><span class="op">)</span> <span class="co"># calculate the interquartile range score</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="left">age_group</th>
+<th align="right">mean_num_tokens</th>
+<th align="right">sd_num_tokens</th>
+<th align="right">median_num_tokens</th>
+<th align="right">iqr_num_tokens</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">10-year-olds</td>
+<td align="right">27.8</td>
+<td align="right">18.1</td>
+<td align="right">23.5</td>
+<td align="right">21.8</td>
+</tr>
+<tr class="even">
+<td align="left">12-year-olds</td>
+<td align="right">57.4</td>
+<td align="right">28.5</td>
+<td align="right">55.5</td>
+<td align="right">38.0</td>
+</tr>
+<tr class="odd">
+<td align="left">16-year-olds</td>
+<td align="right">81.7</td>
+<td align="right">30.1</td>
+<td align="right">84.5</td>
+<td align="right">29.2</td>
+</tr>
+<tr class="even">
+<td align="left">17-year-olds</td>
+<td align="right">112.4</td>
+<td align="right">50.3</td>
+<td align="right">119.0</td>
+<td align="right">77.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The numeric summaries are helpful for reporting, but a visual can be much easier to interpret. To assess a categorical variable and a continuous variable we turn to box plots.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age_group</span>, y <span class="op">=</span> <span class="va">num_tokens</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># map age_group to x and num_tokens to y</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># create box plot</span></code></pre></div>
+<p><img src="recipe_4_files/figure-html/belc-age-group-num-tokens-1.png" width="85%" style="display: block; margin: auto;"></p>
 <!-- Outline:
 
+
+Skills: 
+
+
+Text summaries
+  - tidyverse
+    - dplyr
+      - group_by
+      - summarize
+        - mean
+  - skimr
+    - five score summary
+
+
+Visual summaries
+  - ggplot2
+    - data (data)
+  - aesthetics (aes)
+    - basic
+      - x
+      - y
+      - fill
+      - color
+  - geometries (geom_)
+    - geom_bar/ _col
+    - geom_histogram
+    - geom_boxplot
+    - geom_point
+    - geom_smooth
+
 -->
+</div>
+</div>
+<div id="summary" class="section level2">
+<h2 class="hasAnchor">
+<a href="#summary" class="anchor"></a>Summary</h2>
+<p>In this recipe we covered various common strategies for descriptively assessing variables in a dataset. We worked with single variables of both categorical and continuous types discussing the relationship between R’s vector types and informational values as well as looking a descriptive stats and visualizations. We also looked at strategies for assessing multiple variables either of the same type or mixed.</p>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-R-gridExtra" class="csl-entry">
+Auguie, Baptiste. 2017. <em>gridExtra: Miscellaneous Functions for "Grid" Graphics</em>. <a href="https://CRAN.R-project.org/package=gridExtra">https://CRAN.R-project.org/package=gridExtra</a>.
+</div>
+<div id="ref-R-janitor" class="csl-entry">
+Firke, Sam. 2021. <em>Janitor: Simple Tools for Examining and Cleaning Dirty Data</em>. <a href="https://CRAN.R-project.org/package=janitor">https://CRAN.R-project.org/package=janitor</a>.
+</div>
+<div id="ref-Munoz2006" class="csl-entry">
+Muñoz, Carme. 2006. <em>Age and the Rate of Foreign Language Learning</em>. Clevedon: Multilingual Matters.
+</div>
+<div id="ref-Munoz2007" class="csl-entry">
+Muñoz, Carmen. 2007. <span>“SLABank Catalan-English Barcelona Corpus.”</span> TalkBank. <a href="https://doi.org/10.21415/T5S89C">https://doi.org/10.21415/T5S89C</a>.
+</div>
+<div id="ref-R-skimr" class="csl-entry">
+Waring, Elin, Michael Quinn, Amelia McNamara, Eduardo Arino de la Rubia, Hao Zhu, and Shannon Ellis. 2021. <em>Skimr: Compact and Flexible Summaries of Data</em>. <a href="https://CRAN.R-project.org/package=skimr">https://CRAN.R-project.org/package=skimr</a>.
+</div>
+<div id="ref-R-ggplot2" class="csl-entry">
+Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn1"><p>To inspect the process by which this dataset was created, you can look at <a href="https://github.com/lin380/tadr/blob/master/vignettes/recipe_4.Rmd">the source file</a> for this recipe.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>For reference visit the the <a href="https://ggplot2.tidyverse.org/">ggplot2 website</a><a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 

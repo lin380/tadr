@@ -18,4 +18,10 @@ Coming soon...
 
 <!-- Outline:
 
+- Sign up for a [https://github.com/signup) account (use WFU email address)
+- Get [the 'students' benefits](https://education.github.com/benefits)
+  - allows for private repositories (if you want)
+
+
+
 -->
