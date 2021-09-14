@@ -76,7 +76,7 @@ belc <-
 write_rds(belc, file = "recipe_4/data/rds/belc.rds")
 ```
 
-Let's read the curated dataset^[To inspect the process by which this dataset was created, you can look at [the source file](https://github.com/lin380/tadr/blob/master/vignettes/recipe_4.Rmd) for this recipe.]. (If you want to access this data you can use [the remote dataset URL]().)
+Let's read the curated dataset^[To inspect the process by which this dataset was created, you can look at [the source file](https://github.com/lin380/tadr/blob/master/vignettes/recipe_4.Rmd) for this recipe.].
 
 ```{r belc-read-noeval, eval=FALSE}
 # read the `belc` dataset from an .rds file
