@@ -423,12 +423,5 @@ Now there are a couple key reasons that one might choose to write either a plain
 
 To sum up this recipe, we covered a lot of ground in the area of reading, inspecting, and writing datasets. This included key functions from the readr and dplyr package, which are both loaded into an R session with the tidyverse meta-package. There are many more functions and strategies for working with datasets, but this introduction provides the scaffolding for some of the most common applications. In the next recipe we will build on the skills presented here and move beyond inspecting datasets to be able to describe and summarize datasets in both tabular and graphical forms.
 
-```{r, include=FALSE}
-# automatically create a bib database for R packages
-knitr::write_bib(c(
-  'tidyverse', 'readr', 'rmarkdown', 'dplyr'
-), 'packages.bib')
-```
-
 ## References
 

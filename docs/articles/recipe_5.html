@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>5. Project template setup • Text as Data Resources</title>
+<title>5. Project management with Git, GitHub, and RStudio Cloud • Text as Data Resources</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<script src="../extra.js"></script><meta property="og:title" content="5. Project template setup">
+<script src="../extra.js"></script><meta property="og:title" content="5. Project management with Git, GitHub, and RStudio Cloud">
 <meta property="og:description" content="tadr">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -82,10 +82,10 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="recipe_5_files/navigation-1.1/tabsets.js"></script><script src="recipe_5_files/navigation-1.1/codefolding.js"></script><div class="row">
+<script src="recipe_5_files/navigation-1.1/tabsets.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>5. Project template setup</h1>
+      <h1 data-toc-skip>5. Project management with Git, GitHub, and RStudio Cloud</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/lin380/tadr/blob/master/vignettes/recipe_5.Rmd"><code>vignettes/recipe_5.Rmd</code></a></small>
@@ -95,21 +95,163 @@
 
     
     
-<p>Coming soon…</p>
-<!-- Outline:
-
-- Sign up for a [https://github.com/signup) account (use WFU email address)
-- Get [the 'students' benefits](https://education.github.com/benefits)
-  - allows for private repositories (if you want)
-
-
-
--->
+<div id="overview" class="section level2">
+<h2 class="hasAnchor">
+<a href="#overview" class="anchor"></a>Overview</h2>
+<p>In this Recipe, we will be turning out attention to getting familiar with the software resources that are used to share and collaborate on research projects. We will be using Git and GitHub to manage, store, and publish our projects.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+</div>
+<div id="getting-setup-with-git-and-github" class="section level2">
+<h2 class="hasAnchor">
+<a href="#getting-setup-with-git-and-github" class="anchor"></a>Getting setup with Git and Github</h2>
+<div id="creating-a-github-account" class="section level3">
+<h3 class="hasAnchor">
+<a href="#creating-a-github-account" class="anchor"></a>Creating a GitHub account</h3>
+<p><a href="https://github.com/signup?ref_cta=Sign+up&amp;ref_loc=header+logged+out&amp;ref_page=%2F&amp;source=header-home">GitHub signup</a>. Note that there are some <a href="https://happygitwithr.com/github-acct.html">consideration you may want to take into account when setting up your GitHub account</a>. Note, that you will want to use your university email if you would like to later take advantage of the <a href="https://education.github.com/benefits">Student Education Benefits</a>.</p>
+<p><img src="images/recipe_5/1_github_signup.png" width="85%" style="display: block; margin: auto;"></p>
+<p>Once you have created an account, you will be presented the following page.</p>
+<p><img src="images/recipe_5/2_github_readme_setup.png" width="85%" style="display: block; margin: auto;">
+Click the ‘Continue’ button to modify your repositories main <code>README.md</code> file.</p>
+<p><img src="images/recipe_5/3_github_readme_edit.png" width="85%" style="display: block; margin: auto;"></p>
+<p>After editing the <code>README.md</code> file, skip to the bottom of the page where you can add a comment and then click ‘Commit new file.’</p>
+<p><img src="images/recipe_5/4_github_readme_commit.png" width="85%" style="display: block; margin: auto;"></p>
+</div>
+<div id="create-a-new-repository" class="section level3">
+<h3 class="hasAnchor">
+<a href="#create-a-new-repository" class="anchor"></a>Create a new repository</h3>
+<p>Then navigate to your repository listings. Click ‘New’ to start the process of creating a new repository.</p>
+<p><img src="images/recipe_5/5_github_repo_listings.png" width="85%" style="display: block; margin: auto;"></p>
+<p>Give the new repository the name <code>test_repo</code>, provide a short description, make sure the repository is ‘Public,’ and check ‘Add a README file.’</p>
+<p><img src="images/recipe_5/6_github_new_repo.png" width="85%" style="display: block; margin: auto;">
+Then skip to the bottom of this page and click ‘Create repository.’</p>
+<p><img src="images/recipe_5/7_github_create_repo.png" width="85%" style="display: block; margin: auto;"></p>
+<p>You will be presented with a page where the repository will be accessible by URL. We will not follow the steps on this page. Rather we will copy the URL of this page and navigate to <a href="https://rstudio.cloud/">RStudio Cloud</a>.</p>
+<p><img src="images/recipe_5/8_github_get_repo_url.png" width="85%" style="display: block; margin: auto;">
+### Create an RStudio Cloud Project from the repository</p>
+<p>In ‘Your Workspace’ on RStudio Cloud, click ‘New Project’ and select ‘New Project from Git Repository.’</p>
+<p><img src="images/recipe_5/9_rstudio_new_project_git.png" width="85%" style="display: block; margin: auto;">
+This will copy your GitHub repository <code>test_repo</code> to RStudio Cloud as a new R Project.</p>
+</div>
+<div id="setting-up-git-on-rstudio-cloud" class="section level3">
+<h3 class="hasAnchor">
+<a href="#setting-up-git-on-rstudio-cloud" class="anchor"></a>Setting up Git on RStudio Cloud</h3>
+<p>To be able to make changes to this project on RStudio Cloud and then send the changes back to GitHub we will first need to set up Git on RStudio Cloud. Git is the engine behind GitHub and it is already installed by default on all RStudio Cloud projects. To make the process of configuring Git to talk to GitHub it needs to know a few pieces of information: (1) our GitHub username (<code>user.name</code>), (2) our GitHub email address (<code>user.email</code>), and (3) our password for GitHub.</p>
+<p>To make the setup easier for steps 1 and 2, we will install the usethis package <span class="citation">(<a href="#ref-R-usethis" role="doc-biblioref">Wickham and Bryan 2021</a>)</span>. Select the ‘Packages’ pane and click ‘Install.’ Then in the ‘Packages’ field of the interactive dialogue box, enter <code>usethis</code> and click ‘Install.’</p>
+<p><img src="images/recipe_5/10_rstudio_install_usethis.png" width="85%" style="display: block; margin: auto;">
+Once the usethis package is installed and the <code>&gt;</code> prompt is available in the R Console, load the package and then enter your GitHub configuration details (<code>user.name</code> and <code>user.email</code>) with the <code>use_git_config()</code> function.</p>
+<p><img src="images/recipe_5/11_rstudio_usethis_git_config.png" width="85%" style="display: block; margin: auto;"></p>
+<p>To confirm that the configuration details we entered with the <code>use_git_config()</code> function are registered with Git, we move to the ‘Terminal’ pane (just right of the Console pane) and enter the command <code>git config --global --list</code> (note the double hyphens!). You should see the ‘user.name’ and ‘user.email’ set to your credentials.</p>
+<p><img src="images/recipe_5/12_rstudio_git_config_info.png" width="85%" style="display: block; margin: auto;"></p>
+<p>The final step to configure Git to talk with GitHub is to create a GitHub token and store it in your Git configuration on RStudio Cloud. The token in effect is your password. The usethis package’s <code>create_github_token()</code> function will open an interactive session with GitHub where we can create this token, known as a personal access token, or PAT. In the Console run the <code>create_github_token()</code> (with no arguments).</p>
+<p><img src="images/recipe_5/13_rstudio_create_github_pat.png" width="85%" style="display: block; margin: auto;">
+A browser tab will open to the ‘New personal access token’ page. The only required field is the ‘Expiration’ field. Set this to ‘90 days.’</p>
+<p><img src="images/recipe_5/14_github_pat_expiration.png" width="85%" style="display: block; margin: auto;">
+Then skip to the bottom of this page and create the token. Copy and store the token (PAT) which is shown on the screen to a safe place as we will need it in just a bit (and every time we want to set up Git/ GitHub on a new RStudio Cloud project).</p>
+<p>Now navigate back to RStudio Cloud and the <code>test_repo</code> project we’ve been working in. To add the PAT to our Git configuration we are going to install another R package that will make the process easy to do. As we did when installing usethis, navigate to the ‘Packages’ pane and click ‘Install’ enter <code>gitcreds</code> <span class="citation">(<a href="#ref-R-gitcreds" role="doc-biblioref">Csárdi 2020</a>)</span> in the dialogue box and click ‘Install’ to install the package.</p>
+<p><img src="images/recipe_5/15_rstudio_install_gitcreds.png" width="85%" style="display: block; margin: auto;">
+Load the gitcreds package and run the <code>gitcreds_set()</code> function.</p>
+<p><img src="images/recipe_5/16_rstudio_gitcreds_set.png" width="85%" style="display: block; margin: auto;">
+You will be prompted to enter your PAT. Return to the GitHub tab in your browser where the PAT is showing and copy that token. Return to RStudio Cloud and paste that PAT in at the ‘? Enter password or token’ prompt and hit ‘Return’ on your keyboard.</p>
+<p><img src="images/recipe_5/17_rstudio_gitcreds_pat_blur.png" width="85%" style="display: block; margin: auto;">
+As your PAT is registered with Git on RStudio Cloud there will be some feedback given. To ensure that the PAT is registered, we can use the <code>gitcreds_get()</code> function. If all is well you will see that the ‘username’ is ‘PersonalAccessToken’ and the ‘password’ is ‘&lt;– hidden —&gt;.’</p>
+<p><img src="images/recipe_5/18_rstudio_gitcreds_view_blur.png" width="85%" style="display: block; margin: auto;">
+Now our Git configuration is setup to talk with Github!</p>
+</div>
+</div>
+<div id="project-workflow" class="section level2">
+<h2 class="hasAnchor">
+<a href="#project-workflow" class="anchor"></a>Project workflow</h2>
+<p>Now that we’ve connected Git to a GitHub repository on RStudio Cloud we can now demonstrate how to use Git to log changes we make to our project and sync them back to GitHub.</p>
+<div id="making-changes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#making-changes" class="anchor"></a>Making changes</h3>
+<p>At this point Git is tracking any changes we make to this project. That includes changes to files, the addition of new files, and deletion of files.</p>
+<p>For testing purposes, let’s open up the ‘README.md’ file in our project and make a simple change. In this case I just typed ‘Hello world!’</p>
+<p><img src="images/recipe_5/19_rstudio_edit_readme.png" width="85%" style="display: block; margin: auto;">
+Now navigate to the ‘Terminal’ tab and enter the command <code>git status</code>.</p>
+<p><img src="images/recipe_5/20_rstudio_git_status.png" width="85%" style="display: block; margin: auto;">
+This will return the current status of the files that Git is tracking. Skipping over some of the details in the output, let’s focus on a couple things. First we see that the ‘README.md’ file is listed as ‘modified’ (in red). That makes sense, we’ve just added the ‘Hello world!’ text to this file. The ‘README.md’ file on GitHub no longer is up to date with the current status of the file in our RStudio Cloud project. Second Git is paying attention to new files as well. We see that the files ‘.gitignore’ and ‘project.Rproj’ are not being tracked (they also appear in red).</p>
+</div>
+<div id="adding-and-committing-changes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#adding-and-committing-changes" class="anchor"></a>Adding and committing changes</h3>
+<p>To add the untracked files to the tracked status we run the <code>git add -A</code> command in the ‘Terminal’ pane. This “stages” these files as part of the Git registry. The next step is to “commit” these changed and new files to the Git log by running <code>git commit -m "&lt;some informative message.&gt;"</code>. The message I gave here is basic, just a note to state that this is the first commit of the project.</p>
+<p><img src="images/recipe_5/21_rstudio_add_commit.png" width="85%" style="display: block; margin: auto;"></p>
+<p>The log is basically a list of snapshots of the project that segment saved points, or “lines in the sand.” Each commit snapshot requires a brief message to describe what has been done. These commit snapshots can be helpful if we would like to revert the project back to the status of the project any one of these points. For now, however, it is key to note that we cannot send GitHub our changes unless we have committed them in Git.</p>
+</div>
+<div id="pushing-changes-to-github" class="section level3">
+<h3 class="hasAnchor">
+<a href="#pushing-changes-to-github" class="anchor"></a>Pushing changes to GitHub</h3>
+<p>So how do we send the committed changes to GitHub? Well, we ‘push’ them to GitHub with the <code>git push</code> command.</p>
+<p><img src="images/recipe_5/22_rstudio_push_commits.png" width="85%" style="display: block; margin: auto;">
+At this point the changes we made, the files we added, and the registry of commits we have created is synced with the GitHub repository. Navigate back to the <code>test_repo</code> repository page on GitHub and refresh the browser page. You will now see the updates to the project reflected on GitHub.</p>
+<p><img src="images/recipe_5/23_github_repo_updates.png" width="85%" style="display: block; margin: auto;"></p>
+<p>We can now see the updates, the message(s) associated with our commits, and the time since the commit was pushed to GitHub.</p>
+<p>If we now navigate to the main page of our GitHub profile, we will see that our repository is among this list of repositories associated with our GitHub account.</p>
+<p><img src="images/recipe_5/24_github_repo_listings_updated.png" width="85%" style="display: block; margin: auto;"></p>
+</div>
+</div>
+<div id="fork-a-repository" class="section level2">
+<h2 class="hasAnchor">
+<a href="#fork-a-repository" class="anchor"></a>Fork a repository</h2>
+<p>You can find a project and create a copy of this project on your own GitHub account. This process is known as ‘forking.’ <a href="https://github.com/lin380/demo_repo">Here you can find a demonstration repository</a> (<code>demo_repo</code>) I’ve created, seen below.</p>
+<p><img src="images/recipe_5/25_github_demo_repo.png" width="85%" style="display: block; margin: auto;"></p>
+<p>Click ‘Fork’ at the top left of the GitHub repository’s page. You will then be taken to your copy of this repo.</p>
+<p><img src="images/recipe_5/26_github_demo_repo_forked.png" width="85%" style="display: block; margin: auto;"></p>
+<p>Once you have forked a repository to your own account, you can then create a new RStudio Cloud project using the URL to your forked copy of the repository.</p>
+<p><img src="images/recipe_5/27_rstudio_new_project_git_forked.png" width="85%" style="display: block; margin: auto;"></p>
+<p>Since each RStudio Cloud project starts ‘fresh,’ the packages that we installed in the previous RStudio Cloud project need to be installed into this new project and the steps to set up the Git configuration to talk with GitHub need to be followed. Here’s the summary:</p>
+<p><strong>R Packages</strong></p>
+<ul>
+<li>Install the R packages ‘usethis’ and ‘gitcreds.’</li>
+<li>Load both the ‘usethis’ and ‘gitcreds’ packages.</li>
+</ul>
+<p><strong>Git credentials</strong></p>
+<ul>
+<li>Set up your GitHub username and user email with <code>use_git_config(user.name = "&lt;your-username&gt;", user.email = "&lt;your-email&gt;")</code>.</li>
+<li>Set your GitHub personal access token (PAT) with <code>gitcreds_set()</code>. Copy and paste your PAT at the prompt and hit ‘Return.’</li>
+</ul>
+<p>You can check your user name and email configuration settings by running <code>git config --global --list</code> in the Terminal pane.</p>
+<p><img src="images/recipe_5/28_rstudio_check_git_config.png" width="85%" style="display: block; margin: auto;"></p>
+<p>And check your PAT in the R Console running <code>gitcreds_get()</code>.</p>
+<p><img src="images/recipe_5/29_rstudio_check_pat.png" width="85%" style="display: block; margin: auto;"></p>
+<p>You are now ready to edit, add, and/ or delete files in this project! The workflow for adding, committing, and pushing changes to GitHub are the same as above, but here is a summary of the steps.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-A</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"&lt;a short message describing what you've done.&gt;"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div>
+<div class="tip">
+<p>You can periodically run <code>git status</code> to find out what the status is of Git in relation to changes in the project. I usually run this at the beginning of my workflow and then again after <code>git add -A</code> to see what is ready to commit.</p>
+</div>
+</div>
+<div id="summary" class="section level2">
+<h2 class="hasAnchor">
+<a href="#summary" class="anchor"></a>Summary</h2>
+<p>In this Recipe you have been introduced to Git, GitHub, and how to set these technologies up to work with RStudio Cloud to manage, store, and publish research projects. We have also seen how to fork other programmers’ GitHub repositories and set them up so we can work with them. In this way research that is published on GitHub contributes to reproducible research as any researcher can access and reproduce and/ or extend another researcher’s work!</p>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-R-gitcreds" class="csl-entry">
+Csárdi, Gábor. 2020. <em>Gitcreds: Query Git Credentials from r</em>. <a href="https://github.com/r-lib/gitcreds">https://github.com/r-lib/gitcreds</a>.
+</div>
+<div id="ref-R-usethis" class="csl-entry">
+Wickham, Hadley, and Jennifer Bryan. 2021. <em>Usethis: Automate Package and Project Setup</em>. <a href="https://CRAN.R-project.org/package=usethis">https://CRAN.R-project.org/package=usethis</a>.
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn1"><p>There are some great tips and guides on <a href="https://happygitwithr.com/">Happy Git and GitHub for the useR</a><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 

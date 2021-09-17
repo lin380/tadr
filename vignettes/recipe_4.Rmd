@@ -23,7 +23,7 @@ In this Recipe we will build on our R coding skills to implement descriptive ass
 First let's load some packages that will help us manipulate and create summaries of data. 
 
 ```{r setup}
-library(tidyverse) # to manipulate and visualizae datasets
+library(tidyverse) # to manipulate and visualize datasets
 library(janitor) # to create (cross-)tabulations
 library(skimr) # to provide statistical summaries
 ```
