@@ -433,17 +433,15 @@ if(conduct_search) {
 Just for fun, let's map these tweets and color the points on the map according to the specific bias term. We get the geocoordinates from the `lat` and `lng` variables extracted by the `lat_lng()` function.
 
 ```{r usa-map-test}
-tweets_geo <- lat_lng(results) # retrieve the lat and long coords from the embedded list
-
 states_map <- map_data("state") # from ggplot2
 
 p <- ggplot() + 
   geom_polygon(data = states_map, 
-               aes(x = long, y = lat, group = group), fill = "grey", color = "grey") +
+               aes(x = long, y = lat, group = group), fill = "grey", color = "black") +
   labs(title = "Tweets in the USA", subtitle = "Bias terms")
 
 p + 
-  geom_point(data = results, aes(x = lng, y = lat, group = 1, color = search_term), alpha = 1/2, size = 1)
+  geom_point(data = results, aes(x = lng, y = lat, group = 1, color = search_term), alpha = 1/2, size = 1.5)
 ```
 
 ### Webscrape text
