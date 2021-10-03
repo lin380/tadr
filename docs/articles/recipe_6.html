@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>6. Control statements and iteration • Text as Data Resources</title>
+<title>6. Control statements, custom functions, and iteration • Text as Data Resources</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<script src="../extra.js"></script><meta property="og:title" content="6. Control statements and iteration">
+<script src="../extra.js"></script><meta property="og:title" content="6. Control statements, custom functions, and iteration">
 <meta property="og:description" content="tadr">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -85,7 +85,7 @@
 <script src="recipe_6_files/navigation-1.1/tabsets.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>6. Control statements and iteration</h1>
+      <h1 data-toc-skip>6. Control statements, custom functions, and iteration</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/lin380/tadr/blob/master/vignettes/recipe_6.Rmd"><code>vignettes/recipe_6.Rmd</code></a></small>
@@ -95,15 +95,564 @@
 
     
     
-<p>Coming soon…</p>
+<!-- 
+Note: These recipes are dedicated to expanding the application of the programming strategies needed to support accomplishing goals at distinct points. Keep that in mind when developing the subsequent recipes. 
+-->
+<div id="overview" class="section level2">
+<h2 class="hasAnchor">
+<a href="#overview" class="anchor"></a>Overview</h2>
+<p>In this Recipe, we will dive into some R strategies that will increase your ability to produce effective, concise, and reproducible code. The three main areas we will cover are working with control statements, writing custom functions, and leveraging iteration. These programming strategies are often useful for acquiring data but, as we will see, they are powerful concepts that can be used throughout a reproducible research project.</p>
+<p>To illustrate the usefulness of these R coding strategies I will provide two data collection cases: One using the rtweet pacakge to collect data from Twitter and the second using the rvest package to perform webscraping.</p>
+<p>To get started let’s load the main packages we will work with in this recipe.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>  <span class="co"># data manipulation</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://CRAN.R-project.org/package=rtweet">rtweet</a></span><span class="op">)</span>  <span class="co"># collecting tweets from Twitter API</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rvest.tidyverse.org/">rvest</a></span><span class="op">)</span>  <span class="co"># webscraping</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span>  <span class="co"># iteration</span></code></pre></div>
+</div>
+<div id="coding-strategies" class="section level2">
+<h2 class="hasAnchor">
+<a href="#coding-strategies" class="anchor"></a>Coding strategies</h2>
+<p>In this section I will discuss control statments, custom functions, and iteration providing general understanding of how each work to develop effective and efficient R coding practices.</p>
+<div id="control-statements" class="section level3">
+<h3 class="hasAnchor">
+<a href="#control-statements" class="anchor"></a>Control statements</h3>
+<p>In programming in general, and in R in particular, it is often the case that there will be points in the code in which the programmer will want to have the code make decisions on what to process (and what not to process) based on some state of the current code.</p>
+<p>So when we want to make a choice point we need to frame that as an operation that returns a logical (TRUE/FALSE) output.</p>
+<p>For example, let’s set a variable <code>x</code> to <code>1</code>. An then ask R to evaluate <code>x</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span>  <span class="co"># set x to 1</span>
+<span class="va">x</span> <span class="op">==</span> <span class="fl">1</span>  <span class="co"># evaluate x is equal to 1</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">!=</span> <span class="fl">1</span>  <span class="co"># evaluate x is not equal to 1</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>The same applies to character values.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">y</span> <span class="op">&lt;-</span> <span class="st">"Delwin"</span>  <span class="co"># set y to Delwin</span>
+<span class="va">y</span> <span class="op">==</span> <span class="st">"Delwin"</span>  <span class="co"># evaluate y is equal to Delwin</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">y</span> <span class="op">!=</span> <span class="st">"Delwin"</span>  <span class="co"># evaluate y is not equal to Delwin</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>Any operation that returns a logical value can be used. In the above example we used <a href="https://bookdown.org/manishpatwal/bookdown-demo/basic-operations-in-r.html#relational-operators-in-r">relational operators</a>, but any function that returns a logical value can be used too.</p>
+<p>There are a set of functions that come with the stringr package that allow us to evaluate character values in various ways. Let’s evaluate whether <code>y</code> starts with the letter “D.”</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_starts.html">str_starts</a></span><span class="op">(</span><span class="va">y</span>, <span class="st">"D"</span><span class="op">)</span>  <span class="co"># evaluate y starts with D</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_starts.html">str_starts</a></span><span class="op">(</span><span class="va">y</span>, <span class="st">"J"</span><span class="op">)</span>  <span class="co"># evaluate y starts with J</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>With functions that return logical values we can reverse the logical value by prefixing the function with <code>!</code>.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">!</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_starts.html">str_starts</a></span><span class="op">(</span><span class="va">y</span>, <span class="st">"J"</span><span class="op">)</span>  <span class="co"># evaluate y starts with J, reversed</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>So with this in mind we can control the code flow with the <code>if()</code> function. The most basic function to control code to execute or not, is to use the <code>if()</code> function. This function evaluates whether an operation returns <code>TRUE</code> or <code>FALSE</code> –if <code>TRUE</code> then the code executes, if not then it does not.</p>
+<p>Let’s make a simple piece of code that returns a message if the character vector starts with “D.”</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_starts.html">str_starts</a></span><span class="op">(</span><span class="va">y</span>, <span class="st">"D"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="co"># if evaluate y starts with J is TRUE</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"This name starts with 'D'"</span><span class="op">)</span>  <span class="co"># if true, print message</span>
+<span class="op">}</span></code></pre></div>
+<pre><code>## [1] "This name starts with 'D'"</code></pre>
+<p>Inside the <code>if()</code> function itself we add the logical operation. Then we add opening and closing braces to tell the code what to execute if the logical operation returns <code>TRUE</code>.</p>
+<p>In this case the code only runs if the vector element starts with “D.” But sometimes we want to execute some code if the <code>if()</code> operation returns <code>FALSE</code>. This is where the <code>else</code> condition comes in. Let’s change the value of <code>y</code> to “Judieth.”</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">y</span> <span class="op">&lt;-</span> <span class="st">"Judeith"</span>  <span class="co"># set y to Judeith</span>
+<span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_starts.html">str_starts</a></span><span class="op">(</span><span class="va">y</span>, <span class="st">"D"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="co"># if evaluate y starts with D is TRUE</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"This name starts with 'D'"</span><span class="op">)</span>  <span class="co"># if true, message</span>
+<span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"This name does not start with 'D'"</span><span class="op">)</span>  <span class="co"># if false, print message</span>
+<span class="op">}</span></code></pre></div>
+<pre><code>## [1] "This name does not start with 'D'"</code></pre>
+<p>Note that the <code>else</code> condition opens and closes a new set of braces which wrap the alternative condition. This effectively makes our code more dynamic adjusting to the particular values of a given object.</p>
+</div>
+<div id="custom-functions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#custom-functions" class="anchor"></a>Custom functions</h3>
+<p>Now if we would like to use the code above again in our code we could copy and paste it again where we need it. We may even adjust it so that we change the logical evaluation expression for a similar, but distinct situation. But ideally we would be able to reuse the code in a way that provides us similar functionality but with some flexibility. This is where writing a custom function comes in handy.</p>
+<p>A custom function is simply a way to reuse code and make that code easily accessible. In it’s most basic form creating a custom function includes calling the <code>function()</code> function and assigning it to an object name. The code to be run by the function is wrapped in braces.</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_function</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+    <span class="co"># some code to run</span>
+<span class="op">}</span></code></pre></div>
+<p>If the code we want to run inside our function depends on some variable or variables, we include them inside the <code>function()</code> function. The names of these variables are included in the code and the values they are assigned are passed on to the code. These variables are known as arguments.</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_function</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">argument</span><span class="op">)</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">argument</span><span class="op">)</span>  <span class="co"># print message</span>
+<span class="op">}</span></code></pre></div>
+<p>Now I can assign the value of <code>argument</code> in the <code>my_function()</code> function to anything I want and it will be reflected in the code that is run.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">my_function</span><span class="op">(</span>argument <span class="op">=</span> <span class="st">"Hi"</span><span class="op">)</span>  <span class="co"># print `argument`</span></code></pre></div>
+<pre><code>## [1] "Hi"</code></pre>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">my_function</span><span class="op">(</span>argument <span class="op">=</span> <span class="st">"Hi Jerid"</span><span class="op">)</span>  <span class="co"># print `argument`</span></code></pre></div>
+<pre><code>## [1] "Hi Jerid"</code></pre>
+<p>A function can have no arguments or multiple arguments, as needed. Furthermore, the function’s arguments can have default values. Let’s rewrite the <code>my_function()</code> function to include two arguments, one of which will have a default value. I’m also going to make the argument names a bit more meaningful so that their use is more transparent and rename the function so that it too is more meaningful.</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">greetings</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">greeting</span> <span class="op">=</span> <span class="st">"Hi"</span>, <span class="va">name</span><span class="op">)</span> <span class="op">{</span>
+    <span class="co"># Function: Print a greeting and name</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">greeting</span>, <span class="va">name</span><span class="op">)</span>  <span class="co"># print message</span>
+<span class="op">}</span>
+
+<span class="fu">greetings</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Jerid"</span><span class="op">)</span>  <span class="co"># print greeting to name</span></code></pre></div>
+<pre><code>## [1] "Hi Jerid"</code></pre>
+<p>An argument with a default value is specified in the function creation itself. Since it has a default value it does not need to be specified in the use of that function. If, however, we want some other value other than the default, we need to assign the argument the new value.</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">greetings</span><span class="op">(</span>greeting <span class="op">=</span> <span class="st">"Hello"</span>, name <span class="op">=</span> <span class="st">"Jerid"</span><span class="op">)</span>  <span class="co"># print greeting to name</span></code></pre></div>
+<pre><code>## [1] "Hello Jerid"</code></pre>
+<p>Let’s apply this knowledge of custom functions to the code from the <code>if/else</code> example in the previous section. Since this will be a function we will want to be used in similar situation, but still have some flexibility we look to what we would like to maintain in the code and what aspects we would like to have depend on values we pass to the function. I think it makes sense to have the <code>name</code> and the <code>letter</code> be arguments. I’ll set the <code>letter</code> argument to default to “D.”</p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">name_starts_with</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">name</span>, <span class="va">letter</span> <span class="op">=</span> <span class="st">"D"</span><span class="op">)</span> <span class="op">{</span>
+    <span class="co"># Function: Evaluates if the name starts with the given letter</span>
+
+    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_starts.html">str_starts</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">letter</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+        <span class="co"># if evaluate name starts with letter</span>
+        <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">name</span>, <span class="st">"starts with"</span>, <span class="va">letter</span><span class="op">)</span>  <span class="co"># if true, print message</span>
+    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
+        <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">name</span>, <span class="st">"does not start with"</span>, <span class="va">letter</span><span class="op">)</span>  <span class="co"># if false, print message</span>
+    <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="fu">name_starts_with</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Jerid"</span><span class="op">)</span>  <span class="co"># name starts with D message</span></code></pre></div>
+<pre><code>## [1] "Jerid does not start with D"</code></pre>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">name_starts_with</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Jerid"</span>, letter <span class="op">=</span> <span class="st">"J"</span><span class="op">)</span>  <span class="co"># name starts with J message</span></code></pre></div>
+<pre><code>## [1] "Jerid starts with J"</code></pre>
+<div class="tip">
+<p>Note that I’ve added the argument <code>name</code> to the message in the <code><a href="https://rdrr.io/r/base/paste.html">paste()</a></code> function.</p>
+</div>
+<p>There are two more points to consider when creating and using custom functions in your code projects. First, if you plan to use this function in distinct parts of your project, that is in distinct R scripts or R Markdown documents, you will want to add this function to a separate R script and then source the script inside of your code to make the function accessible.</p>
+<p>Let me unpack this a bit. If you notice when you create the custom function, you must run the custom function itself to make it accessible in your code. It will then appear in your ‘Environment’ pane in RStudio under the subsection ‘Functions.’ The objects (and functions) in the ‘Environment’ pane are session-specific, that is if you restart R, the ‘Environment’ is cleared. To be able to access this function anywhere you want, create an new R script (.R) and copy the function into this script. I will often create a directory specifically for files with functions.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">functions/</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> functions.R</span></code></pre></div>
+<p>Then we use the <code><a href="https://rdrr.io/r/base/source.html">source()</a></code> function to run this <code>function.R</code> script, which only contains functions, effectively adding the functions stored there to our current R session. Note that the relative path to the <code>functions.R</code> file is the only argument to <code><a href="https://rdrr.io/r/base/source.html">source()</a></code>.</p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="st">"../functions/functions.R"</span><span class="op">)</span></code></pre></div>
+<div class="tip">
+<p>It is a point of personal preference whether you create individual R scripts for each custom function you create, or if you group multiple functions into one R script.</p>
+</div>
+<p>Second, if we invoke a function from a package, say the stringr package in this case, it is important that that package is either loaded before the function is run or that the reference to the function is made explicit (with the <code>::</code> convention). If you use various functions from a package, it is worthwhile to load the package with <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> at the beginning of your custom function.</p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">name_starts_with</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">name</span>, <span class="va">letter</span> <span class="op">=</span> <span class="st">"D"</span><span class="op">)</span> <span class="op">{</span>
+    <span class="co"># Function: Evaluates if the name starts with the given letter</span>
+
+    <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://stringr.tidyverse.org">stringr</a></span><span class="op">)</span>  <span class="co"># to detect first letter</span>
+
+    <span class="kw">if</span> <span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_starts.html">str_starts</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">letter</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+        <span class="co"># if evaluate name starts with letter</span>
+        <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">name</span>, <span class="st">"starts with"</span>, <span class="va">letter</span><span class="op">)</span>  <span class="co"># if true, print message</span>
+    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
+        <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">name</span>, <span class="st">"does not start with"</span>, <span class="va">letter</span><span class="op">)</span>  <span class="co"># if false, print message</span>
+    <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<p>Alternatively, you can use the <code>::</code> convention to avoid loading the entire package.</p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">name_starts_with</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">name</span>, <span class="va">letter</span> <span class="op">=</span> <span class="st">"D"</span><span class="op">)</span> <span class="op">{</span>
+    <span class="co"># Function: Evaluates if the name starts with the given letter</span>
+
+    <span class="kw">if</span> <span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_starts.html">str_starts</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">letter</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+        <span class="co"># if evaluate name starts with letter</span>
+        <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">name</span>, <span class="st">"starts with"</span>, <span class="va">letter</span><span class="op">)</span>  <span class="co"># if true, print message</span>
+    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
+        <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">name</span>, <span class="st">"does not start with"</span>, <span class="va">letter</span><span class="op">)</span>  <span class="co"># if false, print message</span>
+    <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+</div>
+<div id="iteration" class="section level3">
+<h3 class="hasAnchor">
+<a href="#iteration" class="anchor"></a>Iteration</h3>
+<p>So at this point we’ve seen how to control the flow of our code with control statements and explored how to reuse code in an efficient way by creating and using custom functions. The final coding strategy in the recipe concerns passing multiple arguments to the same function and having the function deal with each argument in turn and return the results from each together. This is known as iteration.</p>
+<p>Say we want to use our <code>name_starts_with()</code> function and pass multiple names to this function. One way to do this is to simply apply the function multiple times with a new name.</p>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">name_starts_with</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Dawn"</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "Dawn starts with D"</code></pre>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">name_starts_with</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Vince"</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "Vince does not start with D"</code></pre>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">name_starts_with</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Stephanie"</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "Stephanie does not start with D"</code></pre>
+<p>This, however, is not ideal. If we are working with many values the code will become cumbersome. To be able to apply our custom function to many values at the same time, we turn to the <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> function from the purrr package.</p>
+<p>First let’s some names to work with. The <code>babynames</code> dataset from the babynames package will help us out here. I’ll do a random sample of 10 names from this dataset and only keep the <code>name</code> column.</p>
+<div class="tip">
+<p>Use `?babynames::babynames to find out more about this dataset.</p>
+</div>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hadley/babynames">babynames</a></span><span class="op">)</span> <span class="co"># for the babynames dataset</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1111</span><span class="op">)</span> <span class="co"># make the random sample reproducible</span>
+
+<span class="va">sample_names</span> <span class="op">&lt;-</span> 
+  <span class="va">babynames</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># randomly sample 10 names</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span> <span class="co"># isolate the `name` vector</span>
+
+<span class="va">sample_names</span></code></pre></div>
+<pre><code>##  [1] "Macey"   "Tausha"  "Merlin"  "Vernel"  "Dontez"  "Nallely" "Anna"   
+##  [8] "Hogan"   "Manola"  "Jakalyn"</code></pre>
+<p>Let’s start by seeing what happens if we pass the names in the <code>sample_names</code> vector to our function <code>name_starts_with()</code>.</p>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sample_names</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu">name_starts_with</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>## Warning in if (str_starts(name, letter)) {: the condition has length &gt; 1 and
+## only the first element will be used</code></pre>
+<pre><code>##  [1] "Macey does not start with D"   "Tausha does not start with D" 
+##  [3] "Merlin does not start with D"  "Vernel does not start with D" 
+##  [5] "Dontez does not start with D"  "Nallely does not start with D"
+##  [7] "Anna does not start with D"    "Hogan does not start with D"  
+##  [9] "Manola does not start with D"  "Jakalyn does not start with D"</code></pre>
+<p>We see there is a warning triggered but at first glance it still seems that our function worked. Take a closer look, however, and we see that the name “Dontez” gets the message “does not start with D” –which is clearly not the case. What has happened is that our if-else statements does not allow for multiple values to be passed to it and it just accepts the first value, in this case ‘Macey’ –which does not start with ‘D.’ We can see this clearly by changing the letter to evaluate to ‘M,’ as ‘Macey’ was the first value.</p>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sample_names</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu">name_starts_with</span><span class="op">(</span>letter <span class="op">=</span> <span class="st">"M"</span><span class="op">)</span></code></pre></div>
+<pre><code>## Warning in if (str_starts(name, letter)) {: the condition has length &gt; 1 and
+## only the first element will be used</code></pre>
+<pre><code>##  [1] "Macey starts with M"   "Tausha starts with M"  "Merlin starts with M" 
+##  [4] "Vernel starts with M"  "Dontez starts with M"  "Nallely starts with M"
+##  [7] "Anna starts with M"    "Hogan starts with M"   "Manola starts with M" 
+## [10] "Jakalyn starts with M"</code></pre>
+<p>Same warning and now all of the messages claim that the names start with ‘M.’</p>
+<p>The <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> function allows us to pass multiple values to the same function and each value is run on the function and then the results are returned together.</p>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sample_names</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">name_starts_with</span><span class="op">)</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] "Macey does not start with D"
+## 
+## [[2]]
+## [1] "Tausha does not start with D"
+## 
+## [[3]]
+## [1] "Merlin does not start with D"
+## 
+## [[4]]
+## [1] "Vernel does not start with D"
+## 
+## [[5]]
+## [1] "Dontez starts with D"
+## 
+## [[6]]
+## [1] "Nallely does not start with D"
+## 
+## [[7]]
+## [1] "Anna does not start with D"
+## 
+## [[8]]
+## [1] "Hogan does not start with D"
+## 
+## [[9]]
+## [1] "Manola does not start with D"
+## 
+## [[10]]
+## [1] "Jakalyn does not start with D"</code></pre>
+<p>Now we get the correct output, but the results of <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> by default return a list. We would like the results to be a character vector, just like the character vector that we passed to the function. There are various <code>map_*()</code> functions that specifiy what the type of object that should be returned is. In this case we want <code><a href="https://purrr.tidyverse.org/reference/map.html">map_chr()</a></code> to give us a single character vector.</p>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sample_names</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span><span class="op">(</span><span class="va">name_starts_with</span><span class="op">)</span></code></pre></div>
+<pre><code>##  [1] "Macey does not start with D"   "Tausha does not start with D" 
+##  [3] "Merlin does not start with D"  "Vernel does not start with D" 
+##  [5] "Dontez starts with D"          "Nallely does not start with D"
+##  [7] "Anna does not start with D"    "Hogan does not start with D"  
+##  [9] "Manola does not start with D"  "Jakalyn does not start with D"</code></pre>
+<p>Our <code>name_starts_with()</code> function has another possible argument, the <code>letter</code> argument. To specify a new value for that argument, we can add it to the <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> call. Note, however, that each argument-value pair will need to be separated by a comma.</p>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sample_names</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span><span class="op">(</span><span class="va">name_starts_with</span>, letter <span class="op">=</span> <span class="st">"M"</span><span class="op">)</span></code></pre></div>
+<pre><code>##  [1] "Macey starts with M"           "Tausha does not start with M" 
+##  [3] "Merlin starts with M"          "Vernel does not start with M" 
+##  [5] "Dontez does not start with M"  "Nallely does not start with M"
+##  [7] "Anna does not start with M"    "Hogan does not start with M"  
+##  [9] "Manola starts with M"          "Jakalyn does not start with M"</code></pre>
+</div>
+</div>
+<div id="cases" class="section level2">
+<h2 class="hasAnchor">
+<a href="#cases" class="anchor"></a>Cases</h2>
+<p>The examples of control statements, custom functions, and iteration above were hopefully helpful to illustrate their use, but they are admittedly basic. To ground these coding strategies for acquiring text data, let’s turn to working with more realistic cases.</p>
+<div id="acquire-tweets" class="section level3">
+<h3 class="hasAnchor">
+<a href="#acquire-tweets" class="anchor"></a>Acquire tweets</h3>
+<p>The rtweet package has a wide range of functions which allow for access to the Twitter API. A very useful function is the <code><a href="https://rdrr.io/pkg/rtweet/man/search_tweets.html">search_tweets()</a></code> function which allows access to a sample of Twitter posts within the recent past based on a search query.</p>
+<div class="tip">
+<p>For more options use <code><a href="https://rdrr.io/pkg/rtweet/man/search_tweets.html">?rtweet::search_tweets</a></code> to explore the documentation.</p>
+</div>
+<p>In this test case we are going to aim to collect tweets for various search query terms one at a time and then compile the results into one data frame.</p>
+<p>First let’s set up our basic function to meet our aims to get started. Here I’ve used the query term ‘uppity,’ and set the function to retrieve approximately 100 tweets matching the term and the type of tweet is set to recent. I’ve chosen to avoid retweets and set the geographic boundary to be The United States. I’ve also set the Twitter API token that I’m using to authenticate this search.</p>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tweets</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/rtweet/man/search_tweets.html">search_tweets</a></span><span class="op">(</span>q <span class="op">=</span> <span class="st">"uppity"</span>, <span class="co"># query term</span>
+                n <span class="op">=</span> <span class="fl">100</span>, <span class="co"># number of desired tweets</span>
+                include_rts <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># no retweets</span>
+                geocode <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/rtweet/man/lookup_coords.html">lookup_coords</a></span><span class="op">(</span><span class="st">"usa"</span><span class="op">)</span>, <span class="co"># only from US</span>
+                token <span class="op">=</span> <span class="va">student_token</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># token for authentication</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/rtweet/man/lat_lng.html">lat_lng</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># extract the geocoordinates where available</span></code></pre></div>
+<p>This query returns the following set of information.</p>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">tweets</span><span class="op">)</span></code></pre></div>
+<pre><code>## Rows: 100
+## Columns: 92
+## $ user_id                 &lt;chr&gt; "1269970209819045888", "315893213", "123557102…
+## $ status_id               &lt;chr&gt; "1444793146701983745", "1444792447184297985", …
+## $ created_at              &lt;dttm&gt; 2021-10-03 22:35:03, 2021-10-03 22:32:17, 202…
+## $ screen_name             &lt;chr&gt; "paul_brexit", "michaellevine2", "The_Yort", "…
+## $ text                    &lt;chr&gt; "@Sony09464725 @UKSpunkyMonkey @Mpatrick_71 @e…
+## $ source                  &lt;chr&gt; "Twitter for iPhone", "Twitter for iPhone", "T…
+## $ display_text_width      &lt;dbl&gt; 54, 97, 83, 32, 45, 5, 69, 161, 72, 81, 12, 13…
+## $ reply_to_status_id      &lt;chr&gt; "1444770684220153856", "1444764405359644678", …
+## $ reply_to_user_id        &lt;chr&gt; "1026818819845758977", "47379354", "7570743487…
+## $ reply_to_screen_name    &lt;chr&gt; "Sony09464725", "leahmcelrath", "seulkea", NA,…
+## $ is_quote                &lt;lgl&gt; FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE,…
+## $ is_retweet              &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…
+## $ favorite_count          &lt;int&gt; 0, 0, 1, 2, 1, 2, 2, 0, 0, 0, 1, 3, 0, 1, 0, 1…
+## $ retweet_count           &lt;int&gt; 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1…
+## $ quote_count             &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ reply_count             &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ hashtags                &lt;list&gt; NA, NA, NA, NA, "Steelers", NA, NA, NA, NA, N…
+## $ symbols                 &lt;list&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ urls_url                &lt;list&gt; NA, NA, NA, "twitter.com/leciamichelle1…", NA…
+## $ urls_t.co               &lt;list&gt; NA, NA, NA, "https://t.co/11M8aTXweA", NA, "h…
+## $ urls_expanded_url       &lt;list&gt; NA, NA, NA, "https://twitter.com/leciamichell…
+## $ media_url               &lt;list&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ media_t.co              &lt;list&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ media_expanded_url      &lt;list&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ media_type              &lt;list&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ ext_media_url           &lt;list&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ ext_media_t.co          &lt;list&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ ext_media_expanded_url  &lt;list&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ ext_media_type          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ mentions_user_id        &lt;list&gt; &lt;"1026818819845758977", "316142137", "1515464…
+## $ mentions_screen_name    &lt;list&gt; &lt;"Sony09464725", "UKSpunkyMonkey", "Mpatrick_…
+## $ lang                    &lt;chr&gt; "en", "en", "en", "en", "en", "und", "en", "en…
+## $ quoted_status_id        &lt;chr&gt; NA, NA, NA, "1444717039449526283", NA, "144449…
+## $ quoted_text             &lt;chr&gt; NA, NA, NA, "So the wh.ite women are circling …
+## $ quoted_created_at       &lt;dttm&gt; NA, NA, NA, 2021-10-03 17:32:38, NA, 2021-10-…
+## $ quoted_source           &lt;chr&gt; NA, NA, NA, "Twitter for Android", NA, "WSC Sp…
+## $ quoted_favorite_count   &lt;int&gt; NA, NA, NA, 183, NA, 64766, NA, NA, NA, NA, NA…
+## $ quoted_retweet_count    &lt;int&gt; NA, NA, NA, 28, NA, 7842, NA, NA, NA, NA, NA, …
+## $ quoted_user_id          &lt;chr&gt; NA, NA, NA, "829488643152703488", NA, "2625716…
+## $ quoted_screen_name      &lt;chr&gt; NA, NA, NA, "LeciaMichelle11", NA, "SportsCent…
+## $ quoted_name             &lt;chr&gt; NA, NA, NA, "\U0001f41dVote like Black women\U…
+## $ quoted_followers_count  &lt;int&gt; NA, NA, NA, 8667, NA, 38169608, NA, NA, NA, NA…
+## $ quoted_friends_count    &lt;int&gt; NA, NA, NA, 6986, NA, 731, NA, NA, NA, NA, NA,…
+## $ quoted_statuses_count   &lt;int&gt; NA, NA, NA, 38497, NA, 129191, NA, NA, NA, NA,…
+## $ quoted_location         &lt;chr&gt; NA, NA, NA, "", NA, "", NA, NA, NA, NA, NA, NA…
+## $ quoted_description      &lt;chr&gt; NA, NA, NA, "Womanist. Founder of \"Real Talk:…
+## $ quoted_verified         &lt;lgl&gt; NA, NA, NA, FALSE, NA, TRUE, NA, NA, NA, NA, N…
+## $ retweet_status_id       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ retweet_text            &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ retweet_created_at      &lt;dttm&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ retweet_source          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ retweet_favorite_count  &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ retweet_retweet_count   &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ retweet_user_id         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ retweet_screen_name     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ retweet_name            &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ retweet_followers_count &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ retweet_friends_count   &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ retweet_statuses_count  &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ retweet_location        &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ retweet_description     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ retweet_verified        &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ place_url               &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ place_name              &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ place_full_name         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ place_type              &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ country                 &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ country_code            &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ geo_coords              &lt;list&gt; &lt;NA, NA&gt;, &lt;NA, NA&gt;, &lt;NA, NA&gt;, &lt;NA, NA&gt;, &lt;NA, …
+## $ coords_coords           &lt;list&gt; &lt;NA, NA&gt;, &lt;NA, NA&gt;, &lt;NA, NA&gt;, &lt;NA, NA&gt;, &lt;NA, …
+## $ bbox_coords             &lt;list&gt; &lt;NA, NA, NA, NA, NA, NA, NA, NA&gt;, &lt;NA, NA, NA…
+## $ status_url              &lt;chr&gt; "https://twitter.com/paul_brexit/status/144479…
+## $ name                    &lt;chr&gt; "Na Paul", "Don't Shoot Me I'm Only The Piano …
+## $ location                &lt;chr&gt; "Earth", "New York", "Tampa, FL", "San Antonio…
+## $ description             &lt;chr&gt; "", "married, 3 children who don’t think I’m f…
+## $ url                     &lt;chr&gt; NA, "https://t.co/QLBT3A2fs0", NA, "https://t.…
+## $ protected               &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…
+## $ followers_count         &lt;int&gt; 43, 17219, 542, 1877, 35, 35, 1599, 133, 309, …
+## $ friends_count           &lt;int&gt; 84, 17134, 668, 1724, 106, 106, 1713, 904, 223…
+## $ listed_count            &lt;int&gt; 0, 7, 10, 4, 0, 0, 29, 1, 3, 0, 0, 0, 12, 1, 6…
+## $ statuses_count          &lt;int&gt; 3491, 39545, 28563, 123494, 391, 391, 77140, 6…
+## $ favourites_count        &lt;int&gt; 4, 45852, 66991, 182832, 838, 838, 161576, 149…
+## $ account_created_at      &lt;dttm&gt; 2020-06-08 12:31:21, 2011-06-12 16:25:25, 202…
+## $ verified                &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…
+## $ profile_url             &lt;chr&gt; NA, "https://t.co/QLBT3A2fs0", NA, "https://t.…
+## $ profile_expanded_url    &lt;chr&gt; NA, "http://www.queenspace.org", NA, "https://…
+## $ account_lang            &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ profile_banner_url      &lt;chr&gt; "https://pbs.twimg.com/profile_banners/1269970…
+## $ profile_background_url  &lt;chr&gt; NA, "http://abs.twimg.com/images/themes/theme1…
+## $ profile_image_url       &lt;chr&gt; "http://pbs.twimg.com/profile_images/133096099…
+## $ lat                     &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ lng                     &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</code></pre>
+<p>OK. Since we are going to want to pass various terms/ expressions to this function we will also want to make sure that the search query is added to the structure of the data frame. We do this by creating a variable to pass to the <code>q</code> argument and then add a column to the data frame with <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>.</p>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">search_term</span> <span class="op">&lt;-</span> <span class="st">"uppity"</span> <span class="co"># create a search_term variable</span>
+
+<span class="va">tweets</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/rtweet/man/search_tweets.html">search_tweets</a></span><span class="op">(</span>q <span class="op">=</span> <span class="va">search_term</span>, <span class="co"># query term (from search_term)</span>
+                n <span class="op">=</span> <span class="fl">100</span>, <span class="co"># number of desired tweets</span>
+                include_rts <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># no retweets</span>
+                geocode <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/rtweet/man/lookup_coords.html">lookup_coords</a></span><span class="op">(</span><span class="st">"usa"</span><span class="op">)</span>, <span class="co"># only from US</span>
+                token <span class="op">=</span> <span class="va">student_token</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># token for authentication</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/rtweet/man/lat_lng.html">lat_lng</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># extract the geocoordinates where available</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>search_term <span class="op">=</span> <span class="va">search_term</span><span class="op">)</span> <span class="co"># add search_term value to the data frame</span></code></pre></div>
+<p>Now we can replace the value of <code>search_term</code> and run the search again, if we wanted, and the search term would be added to the new column <code>search_term</code> in the resulting data frame. But let’s go one step further and create a custom function which makes it easy for us to run the search replacing the <code>search_term</code>. In addition, I will add a variable placeholder for <code>n</code> in the custom function which we can change as needed.</p>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">term_search</span> <span class="op">&lt;-</span> 
+  <span class="kw">function</span><span class="op">(</span><span class="va">search_term</span>, <span class="va">n</span> <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">{</span>
+    <span class="co"># Function: </span>
+    <span class="co"># Search recent tweets for specific term</span>
+    
+    <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://CRAN.R-project.org/package=rtweet">rtweet</a></span><span class="op">)</span> <span class="co"># to search Twitter API</span>
+    
+    <span class="va">tweets</span> <span class="op">&lt;-</span> 
+      <span class="fu"><a href="https://rdrr.io/pkg/rtweet/man/search_tweets.html">search_tweets</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sQuote.html">sQuote</a></span><span class="op">(</span><span class="va">search_term</span><span class="op">)</span>, <span class="co"># query term (from search_term)</span>
+                    n <span class="op">=</span> <span class="va">n</span>, <span class="co"># number of desired tweets (from n)</span>
+                    include_rts <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># no retweets</span>
+                    geocode <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/rtweet/man/lookup_coords.html">lookup_coords</a></span><span class="op">(</span><span class="st">"usa"</span><span class="op">)</span>, <span class="co"># only from US</span>
+                    token <span class="op">=</span> <span class="va">student_token</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># token for authentication</span>
+      <span class="fu"><a href="https://rdrr.io/pkg/rtweet/man/lat_lng.html">lat_lng</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># extract the geocoordinates where available</span>
+      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>search_term <span class="op">=</span> <span class="va">search_term</span><span class="op">)</span> <span class="co"># add search_term value to the data frame</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">tweets</span><span class="op">)</span> <span class="co"># return the results</span>
+  <span class="op">}</span></code></pre></div>
+<div class="tip">
+<p>Note that I’ve added <code><a href="https://rdrr.io/r/base/sQuote.html">sQuote()</a></code> around the <code>search_term</code> in the <code>search_tweet</code> function to make sure that multiword terms are quoted with single quotes <code>'term expression'</code>. This tells the function to search for the whole phrase not just individual words.</p>
+</div>
+<p>As is the <code>term_search()</code> function is pretty useful and makes searching along the parameters we have set easy to do. But we want to search multiple terms/ expressions at the same time and return them together.</p>
+<p>Here are the search terms I’ve selected in a vector called <code>bias_terms</code>.</p>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Biased language Source:</span>
+<span class="co"># https://blog.ongig.com/diversity-and-inclusion/biased-language-examples/</span>
+
+<span class="va">bias_terms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"uppity"</span>, <span class="st">"ghetto"</span>, <span class="st">"peanut gallery"</span>, <span class="st">"call a spade a spade"</span><span class="op">)</span></code></pre></div>
+<p>Now we can employ the <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> function from the purrr package to pass each term to our custom function <code>term_search</code>. I’ve set <code>n</code> to 500, overriding the default of 100.</p>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">results</span> <span class="op">&lt;-</span> 
+  <span class="va">bias_terms</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># terms to search</span>
+  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">term_search</span>, n <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># apply the function to each term, retrieve 500 tweets (if available)</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/rtweet/man/do_call_rbind.html">do_call_rbind</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># join the results by rows</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># return the results</span></code></pre></div>
+<p>Let’s take a look at how many tweets we obtained for each of the search terms.</p>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">results</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">search_term</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="left">search_term</th>
+<th align="right">n</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">call a spade a spade</td>
+<td align="right">500</td>
+</tr>
+<tr class="even">
+<td align="left">ghetto</td>
+<td align="right">500</td>
+</tr>
+<tr class="odd">
+<td align="left">uppity</td>
+<td align="right">499</td>
+</tr>
+<tr class="even">
+<td align="left">peanut gallery</td>
+<td align="right">273</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Notice we obtained 500 matching tweets for all the terms except ‘peanut gallery.’ This underscores that we are not guaranteed to get exactly the number of tweets requested at any given time.</p>
+<p>Let’s save these results to disk using the <code><a href="https://rdrr.io/pkg/rtweet/man/write_as_csv.html">save_as_csv()</a></code> function from rtweet.</p>
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/rtweet/man/write_as_csv.html">save_as_csv</a></span><span class="op">(</span><span class="va">results</span>, file_name <span class="op">=</span> <span class="st">"../data/original/twitter/bias_terms.csv"</span><span class="op">)</span></code></pre></div>
+<p>In a reproducible research project we may want to make sure that we don’t overwrite the results of our Twitter query each time we run this script as the result will be distinct. We can use a control statement to avoid conducting a new search, unless it is desired to do so.</p>
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">conduct_search</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span> <span class="co"># set to TRUE to conduct a new search</span>
+
+<span class="kw">if</span><span class="op">(</span><span class="va">conduct_search</span><span class="op">)</span> <span class="op">{</span>
+  
+  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Conducting new search. \n"</span><span class="op">)</span>
+  
+  <span class="va">bias_terms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"uppity"</span>, <span class="st">"ghetto"</span>, <span class="st">"peanut gallery"</span>, <span class="st">"call a spade a spade"</span><span class="op">)</span>
+  
+  <span class="va">bias_terms</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># terms to search</span>
+    <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">term_search</span>, n <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># apply the function to each term, retrieve 500 tweets (if available)</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/rtweet/man/do_call_rbind.html">do_call_rbind</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># join the results by rows</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/rtweet/man/write_as_csv.html">save_as_csv</a></span><span class="op">(</span>file_name <span class="op">=</span> <span class="st">"../data/original/twitter/bias_terms.csv"</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Search results saved to disk. \n"</span><span class="op">)</span>
+  
+<span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Keeping previous search results. \n"</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+<p>Just for fun, let’s map these tweets and color the points on the map according to the specific bias term. We get the geocoordinates from the <code>lat</code> and <code>lng</code> variables extracted by the <code><a href="https://rdrr.io/pkg/rtweet/man/lat_lng.html">lat_lng()</a></code> function.</p>
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tweets_geo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtweet/man/lat_lng.html">lat_lng</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span>  <span class="co"># retrieve the lat and long coords from the embedded list</span>
+
+<span class="va">states_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/map_data.html">map_data</a></span><span class="op">(</span><span class="st">"state"</span><span class="op">)</span>  <span class="co"># from ggplot2</span>
+
+<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">states_map</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span>,
+    fill <span class="op">=</span> <span class="st">"grey"</span>, color <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Tweets in the USA"</span>, subtitle <span class="op">=</span> <span class="st">"Bias terms"</span><span class="op">)</span>
+
+<span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">results</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lng</span>, y <span class="op">=</span> <span class="va">lat</span>, group <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="va">search_term</span><span class="op">)</span>,
+    alpha <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<p><img src="recipe_6_files/figure-html/usa-map-test-1.png" width="85%" style="display: block; margin: auto;"></p>
+</div>
+<div id="webscrape-text" class="section level3">
+<h3 class="hasAnchor">
+<a href="#webscrape-text" class="anchor"></a>Webscrape text</h3>
+<p><strong>Under development</strong></p>
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">search_url</span> <span class="op">&lt;-</span> <span class="st">"https://www.msnbc.com/search/?q=latinx#gsc.tab=0&amp;gsc.q=latinx%20opinion&amp;gsc.sort=date"</span>
+
+<span class="va">search_url</span> <span class="op">&lt;-</span> <span class="st">"https://www.msnbc.com/opinion/biden-reversing-trump-s-discriminatory-housing-rulings-we-need-more-n1276857"</span>
+
+<span class="va">search_html</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://xml2.r-lib.org/reference/read_xml.html">read_html</a></span><span class="op">(</span><span class="va">search_url</span><span class="op">)</span>
+
+<span class="va">search_html</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://rvest.tidyverse.org/reference/html_element.html">html_elements</a></span><span class="op">(</span><span class="st">"div.article-body__content"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://rvest.tidyverse.org/reference/html_text.html">html_text</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">url</span> <span class="op">&lt;-</span> <span class="st">"http://www.chakoteya.net/DoctorWho/episodes13.html"</span>
+
+<span class="va">html</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://xml2.r-lib.org/reference/read_xml.html">read_html</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span>
+
+<span class="va">html</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://rvest.tidyverse.org/reference/html_element.html">html_elements</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://rvest.tidyverse.org/reference/html_attr.html">html_attr</a></span><span class="op">(</span><span class="st">"href"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="co"># pluck() %&gt;%</span>
+<span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"^\\d.*.html$"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">main_url</span> <span class="op">&lt;-</span> <span class="st">"http://www.chakoteya.net/DoctorWho/"</span>
+
+<span class="va">html</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://xml2.r-lib.org/reference/read_xml.html">read_html</a></span><span class="op">(</span><span class="va">main_url</span><span class="op">)</span>
+
+<span class="va">html</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://rvest.tidyverse.org/reference/html_element.html">html_elements</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://rvest.tidyverse.org/reference/html_attr.html">html_attr</a></span><span class="op">(</span><span class="st">"href"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">url</span> <span class="op">&lt;-</span> <span class="st">"https://www.nytimes.com/2021/09/21/opinion/gender-pronouns-they.html"</span>
+<span class="va">html</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://xml2.r-lib.org/reference/read_xml.html">read_html</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span>
+
+<span class="va">html</span></code></pre></div>
+</div>
+</div>
+<div id="summary" class="section level2">
+<h2 class="hasAnchor">
+<a href="#summary" class="anchor"></a>Summary</h2>
+<p>…</p>
 <!-- Outline:
 
 -->
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 

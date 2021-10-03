@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1. R, RStudio, and Git/GitHub • Text as Data Resources</title>
+<title>1. Twitter API Developer Setup • Text as Data Resources</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<script src="../extra.js"></script><meta property="og:title" content="1. R, RStudio, and Git/GitHub">
+<script src="../extra.js"></script><meta property="og:title" content="1. Twitter API Developer Setup">
 <meta property="og:description" content="tadr">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -85,7 +85,7 @@
 <script src="guide_1_files/navigation-1.1/tabsets.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>1. R, RStudio, and Git/GitHub</h1>
+      <h1 data-toc-skip>1. Twitter API Developer Setup</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/lin380/tadr/blob/master/vignettes/guide_1.Rmd"><code>vignettes/guide_1.Rmd</code></a></small>
@@ -95,12 +95,123 @@
 
     
     
-<p>Coming soon…</p>
+<div id="overview" class="section level2">
+<h2 class="hasAnchor">
+<a href="#overview" class="anchor"></a>Overview</h2>
+</div>
+<div id="apply-for-a-developer-account" class="section level2">
+<h2 class="hasAnchor">
+<a href="#apply-for-a-developer-account" class="anchor"></a>Apply for a developer account</h2>
+<ul>
+<li>You must have a Twitter account</li>
+<li>Apply for a developer account:
+<ul>
+<li><a href="https://developer.twitter.com/en" class="uri">https://developer.twitter.com/en</a></li>
+<li>
+<a href="https://developer.twitter.com/en/portal/petition/use-case" class="uri">https://developer.twitter.com/en/portal/petition/use-case</a>
+<ul>
+<li>Choose ‘Student’</li>
+<li>Fill out the form on:
+<ul>
+<li>how you will use the Twitter API/ Data?<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>
+</li>
+<li>Specifics:
+<ul>
+<li>Are you planning to analyze Twitter data? Yes. Add general description.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>
+</li>
+<li>Will your app use Tweet, Retweet, Like, Follow, or Direct Message functionality? No.</li>
+<li>Do you plan to display Tweets or aggregate data about Twitter content outside Twitter? Yes. Describe that the data will be used for a research project (details if you like) and that it will be aggregated (you will not share full tweet content outside of Twitter)<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>
+</li>
+<li>Will your product, service, or analysis make Twitter content or derived information available to a government entity? No.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Submit application and verify your email</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="create-a-project" class="section level2">
+<h2 class="hasAnchor">
+<a href="#create-a-project" class="anchor"></a>Create a project</h2>
+<ul>
+<li>Create a project <a href="https://developer.twitter.com/en/portal/dashboard" class="uri">https://developer.twitter.com/en/portal/dashboard</a>
+<ul>
+<li>Name the project (Example “Language use”)</li>
+<li>Use case: “Student”</li>
+<li>Project description: Use the description for “Are you planning to analyze Twitter data?” in the Developer application.</li>
+<li>App name: give it the same name as your GitHub Project, “project_<yourlastname>,” so mine is “project_francom.”</yourlastname>
+</li>
+<li>Copy the API Key, API Key Secret, and Bearer Token and store them in a safe and accessible place (you’ll need them later.)</li>
+<li>Enable 3-legged OAuth
+<ul>
+<li>Click ‘Edit’
+<ul>
+<li>Enter “CALLBACK URLS” as <code>http://127.0.0.1:1410</code>
+</li>
+<li>Enter “WEBSITE URL” as your twitter profile page (e.g. <code>https://twitter.com/jrad_cole</code>)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="authenticate-with-r" class="section level2">
+<h2 class="hasAnchor">
+<a href="#authenticate-with-r" class="anchor"></a>Authenticate with R</h2>
+<ul>
+<li>Open an .R script and save it as <code>_twitter_auth.R</code>
+</li>
+<li>Edit your <code>.gitignore</code>
+<ul>
+<li>add <code>_twitter_auth.R</code> to the list</li>
+</ul>
+</li>
+<li>Return to the <code>_twitter_auth.R</code> file
+<ul>
+<li>Load the rtweet package</li>
+</ul>
+</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://CRAN.R-project.org/package=rtweet">rtweet</a></span><span class="op">)</span></code></pre></div>
+<ul>
+<li>pass your credentials to the <code><a href="https://rdrr.io/pkg/rtweet/man/create_token.html">create_token()</a></code> function.</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## stored api keys </span>
+<span class="co"># (these are fake example values; replace with your own keys)</span>
+<span class="va">app_name</span> <span class="op">&lt;-</span> <span class="st">"project_francom"</span>
+<span class="va">api_key</span> <span class="op">&lt;-</span> <span class="st">"afYS4vbIlPAj096E60c4W1fiK"</span>
+<span class="va">api_secret_key</span> <span class="op">&lt;-</span> <span class="st">"bI91kqnqFoNCrZFbsjAWHD4gJ91LQAhdCJXCj3yscfuULtNkuu"</span>
+
+<span class="co">## authenticate via web browser</span>
+<span class="va">token</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtweet/man/create_token.html">create_token</a></span><span class="op">(</span>
+  app <span class="op">=</span> <span class="va">app_name</span>,
+  consumer_key <span class="op">=</span> <span class="va">api_key</span>,
+  consumer_secret <span class="op">=</span> <span class="va">api_secret_key</span><span class="op">)</span></code></pre></div>
+<p>You will now have a token saved in your R Project environment for use.</p>
+</div>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Example: “I plan to search for tweets matching certain terms and then analyze the language that is associated with these terms. This will be part of a research project for a university course on text analysis methods.”<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Example: “I plan to search for tweets matching certain terms and then analyze the language that is associated with these terms. The goal will be to understand how certain terms are related to types of linguistic discourse and whether there is a relationship between these terms and geographic location. This aim is to understand sociolinguistic trends in language use.”<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Example: “The analysis of the language returned from term searches will be analyzed and shared only in aggregate form as part of a research project on language use and variation.”<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 

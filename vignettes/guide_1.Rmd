@@ -1,5 +1,5 @@
 ---
-title: "1. R, RStudio, and Git/GitHub"
+title: "1. Twitter API Developer Setup"
 pkgdown:
   as_is: true
 bibliography: bibliography.bib
@@ -14,6 +14,66 @@ link-citations: true
 pacman::p_load(tidyverse)
 ```
 
-Coming soon...
+## Overview
+
+## Apply for a developer account
+
+- You must have a Twitter account
+- Apply for a developer account: 
+  - https://developer.twitter.com/en
+  - https://developer.twitter.com/en/portal/petition/use-case
+    - Choose 'Student'
+    - Fill out the form on: 
+      - how you will use the Twitter API/ Data?^[Example: "I plan to search for tweets matching certain terms and then analyze the language that is associated with these terms. This will be part of a research project for a university course on text analysis methods."] 
+      - Specifics:
+        - Are you planning to analyze Twitter data? Yes. Add general description.^[Example: "I plan to search for tweets matching certain terms and then analyze the language that is associated with these terms. The goal will be to understand how certain terms are related to types of linguistic discourse and whether there is a relationship between these terms and geographic location. This aim is to understand sociolinguistic trends in language use."]
+        - Will your app use Tweet, Retweet, Like, Follow, or Direct Message functionality? No.
+        - Do you plan to display Tweets or aggregate data about Twitter content outside Twitter? Yes. Describe that the data will be used for a research project (details if you like) and that it will be aggregated (you will not share full tweet content outside of Twitter)^[Example: "The analysis of the language returned from term searches will be analyzed and shared only in aggregate form as part of a research project on language use and variation."]
+        - Will your product, service, or analysis make Twitter content or derived information available to a government entity? No.
+    - Submit application and verify your email
+
+## Create a project
+
+- Create a project https://developer.twitter.com/en/portal/dashboard
+  - Name the project (Example "Language use")
+  - Use case: "Student"
+  - Project description: Use the description for "Are you planning to analyze Twitter data?" in the Developer application.
+  - App name: give it the same name as your GitHub Project, "project_<yourlastname>", so mine is "project_francom".
+  - Copy the API Key, API Key Secret, and Bearer Token and store them in a safe and accessible place (you'll need them later.)
+  - Enable 3-legged OAuth
+    - Click 'Edit'
+      - Enter "CALLBACK URLS" as `http://127.0.0.1:1410`
+      - Enter "WEBSITE URL" as your twitter profile page (e.g. `https://twitter.com/jrad_cole`)
+
+## Authenticate with R
+
+- Open an .R script and save it as `_twitter_auth.R`
+- Edit your `.gitignore`
+  - add `_twitter_auth.R` to the list
+- Return to the `_twitter_auth.R` file
+  - Load the rtweet package
+
+```r
+library(rtweet)
+```
+
+  - pass your credentials to the `create_token()` function. 
+
+```r
+## stored api keys 
+# (these are fake example values; replace with your own keys)
+app_name <- "project_francom"
+api_key <- "afYS4vbIlPAj096E60c4W1fiK"
+api_secret_key <- "bI91kqnqFoNCrZFbsjAWHD4gJ91LQAhdCJXCj3yscfuULtNkuu"
+
+## authenticate via web browser
+token <- create_token(
+  app = app_name,
+  consumer_key = api_key,
+  consumer_secret = api_secret_key)
+
+```
+
+You will now have a token saved in your R Project environment for use. 
 
 
