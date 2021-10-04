@@ -506,8 +506,6 @@ html
 
 ## Summary
 
+In this recipe we have taken a closer look at some key programming strategies that are applicable to acquiring data, but also for many other parts of a text analysis project. These strategies allow the programmer to control the code flow, create reusable custom functions and iterate programming tasks. Together these strategies will make your more concise, efficient, and effective. 
 
-
-<!-- Outline:
-
--->
+In the next recipe we will turn to curating data. That is, the process of taking data or a dataset and manipulating it's structure such that it conforms to tidy data principles. 
