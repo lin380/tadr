@@ -7,6 +7,14 @@ biblio-style: "apalike"
 link-citations: true
 ---
 
+<!-- TODOS:
+
+- Complete webscraping example
+  - One online news page, create function then apply to another page on the same site
+- Add citations for the packages (rtweet, purrr, rvest)
+
+-->
+
 ```{r, child="_common.Rmd"}
 ```
 
@@ -498,7 +506,7 @@ html
 
 ## Summary
 
-...
+
 
 <!-- Outline:
 

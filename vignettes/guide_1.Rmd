@@ -47,9 +47,19 @@ pacman::p_load(tidyverse)
 
 ## Authenticate with R
 
+:::{.tip}
+Note you will need to complete the following steps on a local machine. You cannot create an authentication token in RStudio Cloud. Refer to [this guide to install R and RStudio](https://rstudio-education.github.io/hopr/starting.html) on your own computer.
+:::
+
 - Open an .R script and save it as `_twitter_auth.R`
+
+Only if you plan on pushing this project to GitHub:
+
 - Edit your `.gitignore`
   - add `_twitter_auth.R` to the list
+
+Continue with the following steps:
+
 - Return to the `_twitter_auth.R` file
   - Load the rtweet package
 
@@ -75,5 +85,9 @@ token <- create_token(
 ```
 
 You will now have a token saved in your R Project environment for use. 
+
+:::{.tip}
+If you want to use this token on RStudio Cloud, you will need to save `token` as an `.rds` file and upload it to the RStudio Cloud project where you want to interface with the Twitter API. 
+:::
 
 

@@ -164,14 +164,23 @@
 <div id="authenticate-with-r" class="section level2">
 <h2 class="hasAnchor">
 <a href="#authenticate-with-r" class="anchor"></a>Authenticate with R</h2>
+<div class="tip">
+<p>Note you will need to complete the following steps on a local machine. You cannot create an authentication token in RStudio Cloud. Refer to <a href="https://rstudio-education.github.io/hopr/starting.html">this guide to install R and RStudio</a> on your own computer.</p>
+</div>
 <ul>
 <li>Open an .R script and save it as <code>_twitter_auth.R</code>
 </li>
+</ul>
+<p>Only if you plan on pushing this project to GitHub:</p>
+<ul>
 <li>Edit your <code>.gitignore</code>
 <ul>
 <li>add <code>_twitter_auth.R</code> to the list</li>
 </ul>
 </li>
+</ul>
+<p>Continue with the following steps:</p>
+<ul>
 <li>Return to the <code>_twitter_auth.R</code> file
 <ul>
 <li>Load the rtweet package</li>
@@ -196,6 +205,9 @@
   consumer_key <span class="op">=</span> <span class="va">api_key</span>,
   consumer_secret <span class="op">=</span> <span class="va">api_secret_key</span><span class="op">)</span></code></pre></div>
 <p>You will now have a token saved in your R Project environment for use.</p>
+<div class="tip">
+<p>If you want to use this token on RStudio Cloud, you will need to save <code>token</code> as an <code>.rds</code> file and upload it to the RStudio Cloud project where you want to interface with the Twitter API.</p>
+</div>
 </div>
 <div class="footnotes">
 <hr>
