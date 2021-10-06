@@ -1,6 +1,6 @@
 #' Download a Compressed File and Decompress its Contents
 #'
-#' Possible file types include .zip, .gz, and .tar
+#' Possible file types include .zip, .gz, .tar, and .tgz
 #'
 #' @param url A character vector representing the full url to the compressed file
 #' @param target_dir The directory where the compressed file should be downloaded
@@ -18,7 +18,7 @@ get_compressed_data <- function(url, target_dir, force = FALSE) {
   # Get the extension of the target file
   ext <- tools::file_ext(url)
   # Check to see if the target file is a compressed file
-  if(!ext %in% c("zip", "gz", "tar")) stop("Target file given is not supported")
+  if(!ext %in% c("zip", "gz", "tar", "tgz")) stop("Target file given is not supported")
   # Check to see if the data already exists
   if(!dir.exists(target_dir) | force == TRUE) { # if data does not exist, download/ decompress
     cat("Creating target data directory \n") # print status message
