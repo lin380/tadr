@@ -87,7 +87,19 @@ token <- create_token(
 You will now have a token saved in your R Project environment for use. 
 
 :::{.tip}
-If you want to use this token on RStudio Cloud, you will need to save `token` as an `.rds` file and upload it to the RStudio Cloud project where you want to interface with the Twitter API. 
+If you want to use this token on RStudio Cloud, you will need to first save `token` as an `.rds` file.
+
+`saveRDS(token, file = "~/Desktop/token.rds")`
+
+Then you will upload it to the RStudio Cloud project where you want to interface with the Twitter API. 
+
+To use the token, read the `token.rds` file and assign it to an object. 
+
+`token = readRDS("token.rds")`
+
+Use this object name (`token`) in your calls to rtweet functions (`token = token`).
+
+One final note, if you plan to push your project to GitHub include the name of the `.rds` token file in `.gitignore` to that it is not made public.
 :::
 
 

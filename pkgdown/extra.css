@@ -8,3 +8,11 @@
   background: rgb(144,235,249) no-repeat 5px center/3em;
   background-image: url("articles/images/tip.png");
 }
+
+.highlight {
+  border-radius: 10px;
+  border: 2px solid rgb(225,225,225);
+  padding: 1em 1em 1em 1em;
+  margin-bottom: 10px;
+  background: rgb(227,239,172) no-repeat 5px center/3em;
+}

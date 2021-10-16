@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Text as Data Resources</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -206,7 +206,13 @@
   consumer_secret <span class="op">=</span> <span class="va">api_secret_key</span><span class="op">)</span></code></pre></div>
 <p>You will now have a token saved in your R Project environment for use.</p>
 <div class="tip">
-<p>If you want to use this token on RStudio Cloud, you will need to save <code>token</code> as an <code>.rds</code> file and upload it to the RStudio Cloud project where you want to interface with the Twitter API.</p>
+<p>If you want to use this token on RStudio Cloud, you will need to first save <code>token</code> as an <code>.rds</code> file.</p>
+<p><code>saveRDS(token, file = "~/Desktop/token.rds")</code></p>
+<p>Then you will upload it to the RStudio Cloud project where you want to interface with the Twitter API.</p>
+<p>To use the token, read the <code>token.rds</code> file and assign it to an object.</p>
+<p><code>token = readRDS("token.rds")</code></p>
+<p>Use this object name (<code>token</code>) in your calls to rtweet functions (<code>token = token</code>).</p>
+<p>One final note, if you plan to push your project to GitHub include the name of the <code>.rds</code> token file in <code>.gitignore</code> to that it is not made public.</p>
 </div>
 </div>
 <div class="footnotes">
