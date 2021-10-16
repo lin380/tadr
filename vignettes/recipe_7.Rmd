@@ -567,7 +567,7 @@ lots_meta_lines %>% # dataset
   filter(str_detect(lines, "^\\W")) %>% # search lines starting with non-word character
   slice_sample(n = 10) # random sample of 10 observations
 ```
-Running the above code a few times to get a sample of what the `^\\W` pattern matches we get results which are clearly artifacts ('<i>') and some other which do not 'Yes.'. So let's play it safe and not filter by non-word character, but instead remove lines that start what appear to be HTML tags '<tag>'. The regular expression I've worked out for this is `^<.+?>.*`.
+Running the above code a few times to get a sample of what the `^\\W` pattern matches we get results which are clearly artifacts ('\<i\>') and some other which do not 'Yes.'. So let's play it safe and not filter by non-word character, but instead remove lines that start what appear to be HTML tags '\<tag\>'. The regular expression I've worked out for this is `^<.+?>.*`.
 
 ```{r lots-lines-remove-html-starts}
 lots_meta_lines %>% # dataset
@@ -579,7 +579,7 @@ lots_meta_lines %>% # dataset
   slice_sample(n = 10) # random sample of 10 observations
 ```
 
-Alright. This text is almost as clean as it's going to get. I did notice on inspection that there were '<i>...</i>' tags around some words, but they were words used by the target speakers. So let's keep the text inside but remove the leading and trailing tag with this expression `<.+?>`.
+Alright. This text is almost as clean as it's going to get. I did notice on inspection that there were '\<i\>...\</i\>' tags around some words, but they were words used by the target speakers. So let's keep the text inside but remove the leading and trailing tag with this expression `<.+?>`.
 
 ```{r lots-lines-remove-html-tags}
 lots_meta_lines %>% # dataset
