@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>8. Dataset manipulation • Text as Data Resources</title>
+<title>8. Dataset manipulation: tokenization and joining datasets • Text as Data Resources</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<script src="../extra.js"></script><meta property="og:title" content="8. Dataset manipulation">
+<script src="../extra.js"></script><meta property="og:title" content="8. Dataset manipulation: tokenization and joining datasets">
 <meta property="og:description" content="tadr">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Text as Data Resources</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@
 <script src="recipe_8_files/navigation-1.1/tabsets.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>8. Dataset manipulation</h1>
+      <h1 data-toc-skip>8. Dataset manipulation: tokenization and joining datasets</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/lin380/tadr/blob/master/vignettes/recipe_8.Rmd"><code>vignettes/recipe_8.Rmd</code></a></small>
@@ -95,15 +95,2104 @@
 
     
     
-<p>Coming soon…</p>
-<!-- Outline:
+<div id="overview" class="section level2">
+<h2 class="hasAnchor">
+<a href="#overview" class="anchor"></a>Overview</h2>
+<p>In this Recipe we will look at two primary types of transformations, tokenization and joins. Tokenization is the process of recasting textual units as smaller textual units. The process of joining datasets aims to incorporate other datasets to augment or filter the dataset of interest.</p>
+<p>We will first look at a sample dataset to explore the strategies associated with tokenization and joins and then we will put these into practice with a more practical example.</p>
+<p>Let’s load the packages that we will use for this Recipe.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  <span class="co"># data manipulation</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/juliasilge/tidytext">tidytext</a></span><span class="op">)</span>  <span class="co"># tokenization</span></code></pre></div>
+</div>
+<div id="coding-strategies" class="section level2">
+<h2 class="hasAnchor">
+<a href="#coding-strategies" class="anchor"></a>Coding strategies</h2>
+<p>To illustrate the relevant coding strategies I’ve created a curated dataset of the <a href="https://data.mendeley.com/datasets/fvtfjyvw7d/2">“Big Data Set from RateMyProfessor.com for Professors’ Teaching Evaluation”</a> <span class="citation">(<a href="#ref-He2020" role="doc-biblioref">He 2020</a>)</span>.</p>
+<p>Let’s take a look at the curated dataset and get oriented to its structure.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"recipe_8/data/derived/rate_my_professor_sample/rmp_curated.csv"</span><span class="op">)</span>  <span class="co"># read curated dataset</span>
 
--->
+<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">rmp</span><span class="op">)</span>  <span class="co"># preview structure</span></code></pre></div>
+<pre><code>## Rows: 10
+## Columns: 4
+## $ rating_id    &lt;dbl&gt; 84, 2360, 6828, 9443, 4353, 9584, 7460, 4320, 2802, 43
+## $ online       &lt;dbl&gt; 0, 0, 0, 0, 0, 1, 1, 1, 1, 1
+## $ student_star &lt;dbl&gt; 5, 5, 5, 5, 5, 5, 5, 5, 1, 1
+## $ comments     &lt;chr&gt; "very good teacher.. wouldnt mind taking her for another …</code></pre>
+<p>We see that there are 10 observations and four columns.</p>
+<p>There is a data dictionary associated with the <code>rmp</code> curated dataset. Let’s read it and show it in a human-readable format.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"recipe_8/data/derived/rate_my_professor_sample/rmp_curated_data_dictionary.csv"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># read data dictionary</span>
+  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>booktabs <span class="op">=</span> <span class="cn">TRUE</span>,
+               caption <span class="op">=</span> <span class="st">"Rate My Professor curated sample data dictionary."</span><span class="op">)</span> <span class="co"># show preview table</span></code></pre></div>
+<table class="table">
+<caption>
+<span id="tab:rmp-read-data-dictionary">Table 1: </span>Rate My Professor curated sample data dictionary.</caption>
+<colgroup>
+<col width="16%">
+<col width="19%">
+<col width="63%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">variable_name</th>
+<th align="left">name</th>
+<th align="left">description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">rating_id</td>
+<td align="left">Rating ID</td>
+<td align="left">Unique ID for each student course rating</td>
+</tr>
+<tr class="even">
+<td align="left">online</td>
+<td align="left">Online Course</td>
+<td align="left">Was the course online or not: 1 is TRUE and 0 is FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">student_star</td>
+<td align="left">Student Rating</td>
+<td align="left">Scalar rating provided by the student</td>
+</tr>
+<tr class="even">
+<td align="left">comments</td>
+<td align="left">Student Comments</td>
+<td align="left">Student comments provided for the course</td>
+</tr>
+</tbody>
+</table>
+<p>Now let’s look a this small curated sample in its current form.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rmp</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>booktabs <span class="op">=</span> <span class="cn">TRUE</span>,
+               caption <span class="op">=</span> <span class="st">"Rate My Professor curated sample preview."</span><span class="op">)</span> <span class="co"># show dataset preview</span></code></pre></div>
+<table class="table">
+<caption>
+<span id="tab:rmp-preview">Table 2: </span>Rate My Professor curated sample preview.</caption>
+<colgroup>
+<col width="2%">
+<col width="1%">
+<col width="3%">
+<col width="92%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">rating_id</th>
+<th align="right">online</th>
+<th align="right">student_star</th>
+<th align="left">comments</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+</tr>
+<tr class="even">
+<td align="right">2360</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">Good guy and some funny jokes during his lectures. Took him for G208 and it was an easy A.</td>
+</tr>
+<tr class="odd">
+<td align="right">6828</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">Great proffessor and treats all students the same</td>
+</tr>
+<tr class="even">
+<td align="right">9443</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">He was really nice in general. Yes, he did wear the same short shorts over and over again but he has a wife and kids so he isn't that fruity. Get to know him he is very nice. He let me take the final two weeks late when I had the flu.</td>
+</tr>
+<tr class="odd">
+<td align="right">4353</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">I like her, she forgave me and accepted that a piece of scratch paper really could just be a joke.</td>
+</tr>
+<tr class="even">
+<td align="right">9584</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="left">Great professor! Be prepared to do the work but the work is easy if you apply yourself. Deadlines matter but he gives enough time to complete it. Assignments are based on current events so it easily keeps interest!</td>
+</tr>
+<tr class="odd">
+<td align="right">7460</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="left">I have taken several online classes-1 of the most fantastic classes I have taken! I'm CD major but we learned so much in such short time. The lectures &amp; videos were great. Shout out to Prof Benavides! for being so organized, contacting us 2 see how we are doing, caring about us &amp; motivating &amp; pushing us. we learned about ourselves, family &amp; life!!</td>
+</tr>
+<tr class="even">
+<td align="right">4320</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="left">Easy. If you do the work, you'll pass.</td>
+</tr>
+<tr class="odd">
+<td align="right">2802</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">I took professor Hardyway's general psych class online for a filler class. Worst professor I've had in 3 years. Takes a long time to respond and very tough grader with no response for help. Wouldn't take his class again, not online at least.</td>
+</tr>
+<tr class="even">
+<td align="right">43</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">Missed the first assignment because I was moving. Did every assignment thereafter and he had me dropped at midterms for not attending. Does not give clear instructions and he doesn't seem to care at all about the students. I get the impression he is one of those people that is miserable and wants everyone else to be miserable as well.</td>
+</tr>
+</tbody>
+</table>
+<p>From this orientation to the dataset we can see that there are four columns <code>id</code>, <code>online</code>, <code>student_star</code>, and <code>comments</code>. The first three are metadata associated with the text in <code>comments</code>. We also see that the <code>online</code> column contains five positive comments and five negative comments.</p>
+<div id="tokenization" class="section level3">
+<h3 class="hasAnchor">
+<a href="#tokenization" class="anchor"></a>Tokenization</h3>
+<p>The very helpful function <code><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens()</a></code> from the tidytext package is the most efficient way to recast a column with text into various smaller textual units –all while maintaining the metadata structure from the curated dataset. In this way, our transformation will maintain a tidy data format.</p>
+<p>Let’s consider some of the key options for tokenization that are provided through the <code><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens()</a></code> function. First let’s look at the arguments using the <code><a href="https://rdrr.io/r/base/args.html">args()</a></code> function.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/args.html">args</a></span><span class="op">(</span><span class="va">unnest_tokens</span><span class="op">)</span>  <span class="co"># view the arguments</span></code></pre></div>
+<pre><code>## function (tbl, output, input, token = "words", format = c("text", 
+##     "man", "latex", "html", "xml"), to_lower = TRUE, drop = TRUE, 
+##     collapse = NULL, ...) 
+## NULL</code></pre>
+<p>In order of appearance in the function, the <code>tbl</code> argument takes a data frame, the <code>output</code> will be a character vector with the desired name of the output column after tokenization, the <code>input</code> is the character vector which names the column which contains the textual information to be tokenized, the <code>token</code> argument is where we specify what type of token we would like to generate from the <code>input</code> column, the <code>format</code> argument is often left as the default ‘text’ –as we most often that not are working with text, the <code>drop</code> argument by default with drop the <code>input</code> column in the tokenized dataset, the <code>to_lower</code> argument let’s us decide if we want to lowercase the text when it is tokenized, the <code>collapse</code> argument allows for grouping the tokenization output and is often left to ‘NULL’ (the default), and finally we have a <code>...</code> argument which leaves the possibility of adding arguments that are relevant for some of the token options, specifically for ‘ngrams’ and ‘character_shingles.’</p>
+<p>Let’s see <code><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens()</a></code> in action starting first with the most common tokenization unit (and therefore the default) ‘words.’</p>
+<div id="words" class="section level4">
+<h4 class="hasAnchor">
+<a href="#words" class="anchor"></a>Words</h4>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rmp</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="st">"word"</span>, <span class="co"># tokenized output column</span>
+                input <span class="op">=</span> <span class="st">"comments"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># input column to tokenize</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># preview first 10 observations</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="right">rating_id</th>
+<th align="right">online</th>
+<th align="right">student_star</th>
+<th align="left">word</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">good</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">teacher</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">wouldnt</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">mind</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">taking</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">her</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">for</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">another</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">class</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>We now see from this preview of the first 10 observations that we have words from the comments tokenized. <code><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens()</a></code> will return each of these tokens on their own row and maintain the metadata from the original dataset (dropping the input <code>comments</code> column). We also see that by default that the tokens have been lowercased, again, this is the default behavior.</p>
+<p>Let’s change the <code>drop =</code> argument and the <code>to_lower =</code> argument from their defaults (<code>TRUE</code>).</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rmp</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="st">"word"</span>, <span class="co"># tokenized output column</span>
+                input <span class="op">=</span> <span class="st">"comments"</span>, <span class="co"># input column to tokenize</span>
+                to_lower <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># do not lowercase</span>
+                drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># do not drop input column</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># preview first 10 observations</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<colgroup>
+<col width="7%">
+<col width="5%">
+<col width="9%">
+<col width="72%">
+<col width="5%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">rating_id</th>
+<th align="right">online</th>
+<th align="right">student_star</th>
+<th align="left">comments</th>
+<th align="left">word</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">very</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">good</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">teacher</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">wouldnt</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">mind</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">taking</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">her</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">for</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">another</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">class</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Note that if the textual input has punctuation, the <code><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens()</a></code> function will strip this punctuation when doing the tokenization for words.</p>
+</div>
+<div id="sentences" class="section level4">
+<h4 class="hasAnchor">
+<a href="#sentences" class="anchor"></a>Sentences</h4>
+<p>If we specify that the tokenized unit is <code>sentences</code>, then the punctuation is not stripped.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rmp</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="st">"sentence"</span>, <span class="co"># tokenized output column</span>
+                input <span class="op">=</span> <span class="st">"comments"</span>, <span class="co"># input column to tokenize</span>
+                token <span class="op">=</span> <span class="st">"sentences"</span>, <span class="co"># tokenize to sentences</span>
+                to_lower <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># do not lowercase</span>
+                drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># do not drop input column</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># preview first 10 observations</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<colgroup>
+<col width="2%">
+<col width="1%">
+<col width="3%">
+<col width="62%">
+<col width="29%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">rating_id</th>
+<th align="right">online</th>
+<th align="right">student_star</th>
+<th align="left">comments</th>
+<th align="left">sentence</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+</tr>
+<tr class="even">
+<td align="right">2360</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">Good guy and some funny jokes during his lectures. Took him for G208 and it was an easy A.</td>
+<td align="left">Good guy and some funny jokes during his lectures.</td>
+</tr>
+<tr class="odd">
+<td align="right">2360</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">Good guy and some funny jokes during his lectures. Took him for G208 and it was an easy A.</td>
+<td align="left">Took him for G208 and it was an easy A.</td>
+</tr>
+<tr class="even">
+<td align="right">6828</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">Great proffessor and treats all students the same</td>
+<td align="left">Great proffessor and treats all students the same</td>
+</tr>
+<tr class="odd">
+<td align="right">9443</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">He was really nice in general. Yes, he did wear the same short shorts over and over again but he has a wife and kids so he isn't that fruity. Get to know him he is very nice. He let me take the final two weeks late when I had the flu.</td>
+<td align="left">He was really nice in general.</td>
+</tr>
+<tr class="even">
+<td align="right">9443</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">He was really nice in general. Yes, he did wear the same short shorts over and over again but he has a wife and kids so he isn't that fruity. Get to know him he is very nice. He let me take the final two weeks late when I had the flu.</td>
+<td align="left">Yes, he did wear the same short shorts over and over again but he has a wife and kids so he isn't that fruity.</td>
+</tr>
+<tr class="odd">
+<td align="right">9443</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">He was really nice in general. Yes, he did wear the same short shorts over and over again but he has a wife and kids so he isn't that fruity. Get to know him he is very nice. He let me take the final two weeks late when I had the flu.</td>
+<td align="left">Get to know him he is very nice.</td>
+</tr>
+<tr class="even">
+<td align="right">9443</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">He was really nice in general. Yes, he did wear the same short shorts over and over again but he has a wife and kids so he isn't that fruity. Get to know him he is very nice. He let me take the final two weeks late when I had the flu.</td>
+<td align="left">He let me take the final two weeks late when I had the flu.</td>
+</tr>
+<tr class="odd">
+<td align="right">4353</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">I like her, she forgave me and accepted that a piece of scratch paper really could just be a joke.</td>
+<td align="left">I like her, she forgave me and accepted that a piece of scratch paper really could just be a joke.</td>
+</tr>
+<tr class="even">
+<td align="right">9584</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="left">Great professor! Be prepared to do the work but the work is easy if you apply yourself. Deadlines matter but he gives enough time to complete it. Assignments are based on current events so it easily keeps interest!</td>
+<td align="left">Great professor!</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If we take a close look at the output of using sentence tokens in this case we see that there are multiple sentences in the same observation row. This appears to be due to the fact that students sometimes opted not to capitalize the beginning of the next sentence. This suggests that the algorithm that <code><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens()</a></code> uses sentences punctuation followed by a capitalized word to segment/ tokenize sentences.</p>
+<div class="tip">
+<p>It is important to review the output of the tokenization to catch these types of anomalies and not assume that the algorithm will be perfectly accurate.</p>
+</div>
+<p>If the tokenization defaults (<code>words</code>, <code>sentences</code>, etc.) do not produce the desired result, we can specify the <code>token =</code> argument to <code>regex</code>. This allows us to specify a regular expression pattern to do the tokenization in the added argument <code>pattern =</code>.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rmp</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="st">"sentence"</span>, <span class="co"># tokenized output column</span>
+                input <span class="op">=</span> <span class="st">"comments"</span>, <span class="co"># input column to tokenize</span>
+                token <span class="op">=</span> <span class="st">"regex"</span>, <span class="co"># tokenize by a regex pattern</span>
+                pattern <span class="op">=</span> <span class="st">"[.!?]\\s"</span>,
+                to_lower <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># do not lowercase</span>
+                drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># do not drop input column</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># preview first 10 observations</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<colgroup>
+<col width="2%">
+<col width="1%">
+<col width="3%">
+<col width="62%">
+<col width="29%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">rating_id</th>
+<th align="right">online</th>
+<th align="right">student_star</th>
+<th align="left">comments</th>
+<th align="left">sentence</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">very good teacher.</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">wouldnt mind taking her for another class.</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">very fair with the work given</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">:0)</td>
+</tr>
+<tr class="odd">
+<td align="right">2360</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">Good guy and some funny jokes during his lectures. Took him for G208 and it was an easy A.</td>
+<td align="left">Good guy and some funny jokes during his lectures</td>
+</tr>
+<tr class="even">
+<td align="right">2360</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">Good guy and some funny jokes during his lectures. Took him for G208 and it was an easy A.</td>
+<td align="left">Took him for G208 and it was an easy A.</td>
+</tr>
+<tr class="odd">
+<td align="right">6828</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">Great proffessor and treats all students the same</td>
+<td align="left">Great proffessor and treats all students the same</td>
+</tr>
+<tr class="even">
+<td align="right">9443</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">He was really nice in general. Yes, he did wear the same short shorts over and over again but he has a wife and kids so he isn't that fruity. Get to know him he is very nice. He let me take the final two weeks late when I had the flu.</td>
+<td align="left">He was really nice in general</td>
+</tr>
+<tr class="odd">
+<td align="right">9443</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">He was really nice in general. Yes, he did wear the same short shorts over and over again but he has a wife and kids so he isn't that fruity. Get to know him he is very nice. He let me take the final two weeks late when I had the flu.</td>
+<td align="left">Yes, he did wear the same short shorts over and over again but he has a wife and kids so he isn't that fruity</td>
+</tr>
+<tr class="even">
+<td align="right">9443</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">He was really nice in general. Yes, he did wear the same short shorts over and over again but he has a wife and kids so he isn't that fruity. Get to know him he is very nice. He let me take the final two weeks late when I had the flu.</td>
+<td align="left">Get to know him he is very nice</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Note that when a pattern used to segment the text is matched, the match is removed. We can use some regular expression magic with the ‘positive lookbehind’ operator <code>(?&lt;=)</code> to detect a pattern, but not use it as a match. In this case if we apply this to the punctuation part of our original regex, we can preserve the sentence punctuation and still segment the sentences.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rmp</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="st">"sentence"</span>, <span class="co"># tokenized output column</span>
+                input <span class="op">=</span> <span class="st">"comments"</span>, <span class="co"># input column to tokenize</span>
+                token <span class="op">=</span> <span class="st">"regex"</span>, <span class="co"># tokenize by a regex pattern</span>
+                pattern <span class="op">=</span> <span class="st">"(?&lt;=[.!?])\\s"</span>,
+                to_lower <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># do not lowercase</span>
+                drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># do not drop input column</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># preview first 10 observations</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<colgroup>
+<col width="2%">
+<col width="1%">
+<col width="3%">
+<col width="62%">
+<col width="29%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">rating_id</th>
+<th align="right">online</th>
+<th align="right">student_star</th>
+<th align="left">comments</th>
+<th align="left">sentence</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">very good teacher..</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">wouldnt mind taking her for another class..</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">very fair with the work given!</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">:0)</td>
+</tr>
+<tr class="odd">
+<td align="right">2360</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">Good guy and some funny jokes during his lectures. Took him for G208 and it was an easy A.</td>
+<td align="left">Good guy and some funny jokes during his lectures.</td>
+</tr>
+<tr class="even">
+<td align="right">2360</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">Good guy and some funny jokes during his lectures. Took him for G208 and it was an easy A.</td>
+<td align="left">Took him for G208 and it was an easy A.</td>
+</tr>
+<tr class="odd">
+<td align="right">6828</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">Great proffessor and treats all students the same</td>
+<td align="left">Great proffessor and treats all students the same</td>
+</tr>
+<tr class="even">
+<td align="right">9443</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">He was really nice in general. Yes, he did wear the same short shorts over and over again but he has a wife and kids so he isn't that fruity. Get to know him he is very nice. He let me take the final two weeks late when I had the flu.</td>
+<td align="left">He was really nice in general.</td>
+</tr>
+<tr class="odd">
+<td align="right">9443</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">He was really nice in general. Yes, he did wear the same short shorts over and over again but he has a wife and kids so he isn't that fruity. Get to know him he is very nice. He let me take the final two weeks late when I had the flu.</td>
+<td align="left">Yes, he did wear the same short shorts over and over again but he has a wife and kids so he isn't that fruity.</td>
+</tr>
+<tr class="even">
+<td align="right">9443</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">He was really nice in general. Yes, he did wear the same short shorts over and over again but he has a wife and kids so he isn't that fruity. Get to know him he is very nice. He let me take the final two weeks late when I had the flu.</td>
+<td align="left">Get to know him he is very nice.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="ngrams" class="section level4">
+<h4 class="hasAnchor">
+<a href="#ngrams" class="anchor"></a>Ngrams</h4>
+<p>Now let’s turn to <code>ngram</code> tokenization. An ngram is a sequence of words where <span class="math inline">\(n\)</span> is the sequence desired in the output. Word tokenization is sometimes called a unigram. To get ngrams larger than one word, we use the specify <code>token =</code> to <code>ngrams</code>. Then we need to add the argument <code>n =</code> and set the number of word sequences we want to tokenize. <code>n = 2</code> would produce bigrams, <code>n = 3</code> trigrams, and so on.</p>
+<p>So let’s see this in action by creating bigrams.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rmp</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="st">"bigram"</span>, <span class="co"># tokenized output column</span>
+                input <span class="op">=</span> <span class="st">"comments"</span>, <span class="co"># input column to tokenize</span>
+                token <span class="op">=</span> <span class="st">"ngrams"</span>, <span class="co"># tokenize ngram sequences</span>
+                n <span class="op">=</span> <span class="fl">2</span>, <span class="co"># two word sequences</span>
+                to_lower <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># do not lowercase</span>
+                drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># do not drop input column</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># preview first 10 observations</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<colgroup>
+<col width="6%">
+<col width="4%">
+<col width="8%">
+<col width="68%">
+<col width="11%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">rating_id</th>
+<th align="right">online</th>
+<th align="right">student_star</th>
+<th align="left">comments</th>
+<th align="left">bigram</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">very good</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">good teacher</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">teacher wouldnt</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">wouldnt mind</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">mind taking</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">taking her</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">her for</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">for another</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">another class</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very good teacher.. wouldnt mind taking her for another class.. very fair with the work given! :0)</td>
+<td align="left">class very</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Great. We now have two word sequences (bigrams) as our tokens. But if we look at the ouput we see that the tokenization of bigrams included sequences that span between sentences (ex. ‘teacher wouldnt.’ This is due to the fact that we used the original input (<code>comments</code>) which has all the text. In some cases we may not want to capture these cross-sentential word sequences. To avoid this we can first tokenize our <code>comments</code> by sentences (with the regular expression approach), then pass this result to our bigram tokenization.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rmp</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="co"># Tokenize by sentences</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="st">"sentence"</span>, <span class="co"># tokenized output column</span>
+                input <span class="op">=</span> <span class="st">"comments"</span>, <span class="co"># input column to tokenize</span>
+                token <span class="op">=</span> <span class="st">"regex"</span>, <span class="co"># tokenize by a regex pattern</span>
+                pattern <span class="op">=</span> <span class="st">"(?&lt;=[.!?])\\s"</span>,
+                to_lower <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># do not lowercase</span>
+  <span class="co"># Add a sentence_id to the dataset</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">rating_id</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># group the comments</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>sentence_id <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/ranking.html">row_number</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># add a sentence id to index the individual sentences for each comment </span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># remove grouping attribute</span>
+  <span class="co"># Tokenize the sentences by bigrams</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="st">"bigram"</span>, <span class="co"># tokenized output column</span>
+                input <span class="op">=</span> <span class="st">"sentence"</span>, <span class="co"># input column to tokenize</span>
+                token <span class="op">=</span> <span class="st">"ngrams"</span>, <span class="co"># tokenize by ngrams</span>
+                n <span class="op">=</span> <span class="fl">2</span>, <span class="co"># create bigrams</span>
+                to_lower <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># do not lowercase</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># preview first 10 observations</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="right">rating_id</th>
+<th align="right">online</th>
+<th align="right">student_star</th>
+<th align="right">sentence_id</th>
+<th align="left">bigram</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">1</td>
+<td align="left">very good</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">1</td>
+<td align="left">good teacher</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">2</td>
+<td align="left">wouldnt mind</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">2</td>
+<td align="left">mind taking</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">2</td>
+<td align="left">taking her</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">2</td>
+<td align="left">her for</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">2</td>
+<td align="left">for another</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">2</td>
+<td align="left">another class</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">3</td>
+<td align="left">very fair</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">3</td>
+<td align="left">fair with</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>So by applying firs the sentence tokenization and then the ngram tokenization we avoid cross-sentential word sequences.</p>
+<div class="tip">
+<p>Note that I added a <code>sentence_id</code> column to make sure that the sentence from which the bigram comes is documented in the dataset.</p>
+</div>
+<p>With this overview of the options and strategies for tokenizing textual input, I will now create a word-based tokenization of the <code>rmp</code> dataset, lowercasing the text in preparation for our next strategy to cover, joins.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rmp_words</span> <span class="op">&lt;-</span> 
+  <span class="va">rmp</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="st">"word"</span>, <span class="co"># tokenized output column</span>
+                input <span class="op">=</span> <span class="st">"comments"</span><span class="op">)</span> <span class="co"># input column to tokenize</span>
+
+<span class="va">rmp_words</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>booktabs <span class="op">=</span> <span class="cn">TRUE</span>, 
+               caption <span class="op">=</span> <span class="st">"Preview of the `rmp_words` dataset."</span><span class="op">)</span></code></pre></div>
+<table class="table">
+<caption>
+<span id="tab:rmp-word-tokens-example">Table 3: </span>Preview of the <code>rmp_words</code> dataset.</caption>
+<thead><tr class="header">
+<th align="right">rating_id</th>
+<th align="right">online</th>
+<th align="right">student_star</th>
+<th align="left">word</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">good</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">teacher</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">wouldnt</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">mind</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">taking</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">her</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">for</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">another</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">class</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="joining-datasets" class="section level3">
+<h3 class="hasAnchor">
+<a href="#joining-datasets" class="anchor"></a>Joining datasets</h3>
+<p>The dplyr package, loaded as part of the tidyverse, contains a number of functions aimed at joining datasets. These functions are of two main types: mutating joins and filtering joins.</p>
+<p>In both cases a join relates two datasets that share a column (or column) which has overlapping values. For mutating joins, the shared column/s is/are the key that connects the two datasets and effectively expands the columns combining the columns from each dataset where the values match across both datasets. For filtering joins, the shared column effectively is used to filter rows in a dataset that have matching values in both datasets. Filter may be used to exclude matching values, or only include those values that match. Let’s look a these two types of joins to get a better sense of their behavior.</p>
+<div id="mutating-joins" class="section level4">
+<h4 class="hasAnchor">
+<a href="#mutating-joins" class="anchor"></a>Mutating joins</h4>
+<p>As a demonstration, let’s consider a dataset included in the tidytext package which provides a list of words and a sentiment value for each word.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/get_sentiments.html">get_sentiments</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">sentiment</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="left">word</th>
+<th align="left">sentiment</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">2-faces</td>
+<td align="left">negative</td>
+</tr>
+<tr class="even">
+<td align="left">abnormal</td>
+<td align="left">negative</td>
+</tr>
+<tr class="odd">
+<td align="left">abolish</td>
+<td align="left">negative</td>
+</tr>
+<tr class="even">
+<td align="left">abominable</td>
+<td align="left">negative</td>
+</tr>
+<tr class="odd">
+<td align="left">abominably</td>
+<td align="left">negative</td>
+</tr>
+<tr class="even">
+<td align="left">abound</td>
+<td align="left">positive</td>
+</tr>
+<tr class="odd">
+<td align="left">abounds</td>
+<td align="left">positive</td>
+</tr>
+<tr class="even">
+<td align="left">abundance</td>
+<td align="left">positive</td>
+</tr>
+<tr class="odd">
+<td align="left">abundant</td>
+<td align="left">positive</td>
+</tr>
+<tr class="even">
+<td align="left">accessable</td>
+<td align="left">positive</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>We can see that the <code><a href="https://rdrr.io/pkg/tidytext/man/get_sentiments.html">get_sentiments()</a></code> function returns a dataset with two columns (<code>word</code> and <code>sentiment</code>). I’ve only provided the first five word-sentiment pairs for ‘negative’ and ‘positive’ sentiments. However, the full dataset contains 6786 words.</p>
+<p>We can see how many are listed as positive and negative.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/get_sentiments.html">get_sentiments</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">sentiment</span><span class="op">)</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="left">sentiment</th>
+<th align="right">n</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">negative</td>
+<td align="right">4781</td>
+</tr>
+<tr class="even">
+<td align="left">positive</td>
+<td align="right">2005</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>We can see that negative words outnumber the positive-labeled words.</p>
+<p>With this information, we can now see that our <code>rmp_words</code> dataset and the dataset from <code><a href="https://rdrr.io/pkg/tidytext/man/get_sentiments.html">get_sentiments()</a></code> share a column called <code>word</code>. More importantly, the columns share the same type of values, i.e. words. If we wanted to augment our <code>rmp_words</code> dataset with the sentiment labels from <code><a href="https://rdrr.io/pkg/tidytext/man/get_sentiments.html">get_sentiments()</a></code> we will want to use a mutating join. The idea will be to create a data frame with the following structure:</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span>
+  <span class="op">~</span><span class="va">rating_id</span>, <span class="op">~</span><span class="va">online</span>, <span class="op">~</span><span class="va">student_star</span>, <span class="op">~</span><span class="va">word</span>, <span class="op">~</span><span class="va">sentiment</span>,
+  <span class="fl">84</span>, <span class="fl">0</span>, <span class="fl">5</span>, <span class="st">"good"</span>, <span class="st">"positive"</span>,
+  <span class="fl">84</span>, <span class="fl">0</span>, <span class="fl">5</span>, <span class="st">"teacher"</span>, <span class="cn">NA</span>,
+  <span class="fl">2802</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="st">"worst"</span>, <span class="st">"negative"</span>,
+  <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="st">"..."</span>, <span class="st">"..."</span>
+<span class="op">)</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="right">rating_id</th>
+<th align="right">online</th>
+<th align="right">student_star</th>
+<th align="left">word</th>
+<th align="left">sentiment</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">good</td>
+<td align="left">positive</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">teacher</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">2802</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">worst</td>
+<td align="left">negative</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">…</td>
+<td align="left">…</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>In this structure we want all of the observations (words) from <code>rmp_words</code> to appear and those words with matches in <code><a href="https://rdrr.io/pkg/tidytext/man/get_sentiments.html">get_sentiments()</a></code> should also get a corresponding sentiment value. To do this we use the <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> function. This function takes to primary arguments <code>x</code> and <code>y</code> where <code>x</code> is the dataset which we want all of the observations to be included and <code>y</code> where the matching values will also get the corresponding values.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">rmp_words</span>, <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/get_sentiments.html">get_sentiments</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="right">rating_id</th>
+<th align="right">online</th>
+<th align="right">student_star</th>
+<th align="left">word</th>
+<th align="left">sentiment</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">good</td>
+<td align="left">positive</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">teacher</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">wouldnt</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">mind</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">taking</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">her</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">for</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">another</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">class</td>
+<td align="left">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Note that <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> keeps all of the rows from the <code>x</code> dataset –in this case <code>rmp_words</code>. If, for example, we wanted to do a mutating join and remove words from <code>x</code> that do not have a match in <code>y</code>, then we can turn to <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code>.</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">rmp_words</span>, <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/get_sentiments.html">get_sentiments</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="right">rating_id</th>
+<th align="right">online</th>
+<th align="right">student_star</th>
+<th align="left">word</th>
+<th align="left">sentiment</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">good</td>
+<td align="left">positive</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">fair</td>
+<td align="left">positive</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">work</td>
+<td align="left">positive</td>
+</tr>
+<tr class="even">
+<td align="right">2360</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">good</td>
+<td align="left">positive</td>
+</tr>
+<tr class="odd">
+<td align="right">2360</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">funny</td>
+<td align="left">negative</td>
+</tr>
+<tr class="even">
+<td align="right">2360</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">easy</td>
+<td align="left">positive</td>
+</tr>
+<tr class="odd">
+<td align="right">6828</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">great</td>
+<td align="left">positive</td>
+</tr>
+<tr class="even">
+<td align="right">9443</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">nice</td>
+<td align="left">positive</td>
+</tr>
+<tr class="odd">
+<td align="right">9443</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">nice</td>
+<td align="left">positive</td>
+</tr>
+<tr class="even">
+<td align="right">4353</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">like</td>
+<td align="left">positive</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code> is in essence a mutating join with a filtering side effect. If we want to simply filter a dataset based on the values in other dataset, we turn to the filtering joins.</p>
+</div>
+<div id="filtering-joins" class="section level4">
+<h4 class="hasAnchor">
+<a href="#filtering-joins" class="anchor"></a>Filtering joins</h4>
+<p>To look at filtering joins let’s consider another dataset also included with the tidytext package <code><a href="https://rdrr.io/pkg/tidytext/man/get_stopwords.html">get_stopwords()</a></code>.</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/get_stopwords.html">get_stopwords</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="left">word</th>
+<th align="left">lexicon</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">i</td>
+<td align="left">snowball</td>
+</tr>
+<tr class="even">
+<td align="left">me</td>
+<td align="left">snowball</td>
+</tr>
+<tr class="odd">
+<td align="left">my</td>
+<td align="left">snowball</td>
+</tr>
+<tr class="even">
+<td align="left">myself</td>
+<td align="left">snowball</td>
+</tr>
+<tr class="odd">
+<td align="left">we</td>
+<td align="left">snowball</td>
+</tr>
+<tr class="even">
+<td align="left">our</td>
+<td align="left">snowball</td>
+</tr>
+<tr class="odd">
+<td align="left">ours</td>
+<td align="left">snowball</td>
+</tr>
+<tr class="even">
+<td align="left">ourselves</td>
+<td align="left">snowball</td>
+</tr>
+<tr class="odd">
+<td align="left">you</td>
+<td align="left">snowball</td>
+</tr>
+<tr class="even">
+<td align="left">your</td>
+<td align="left">snowball</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Stopwords are words that are considered to have little semantic content (they roughly correspond to pronouns, prepositions, conjunctions, etc.). In some research cases we will want to remove these words from a dataset. To remove these words we can use the filtering join called <code><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join()</a></code>, which you can imagine will return all the rows in <code>x</code> that do not have a match in <code>y</code>.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join</a></span><span class="op">(</span><span class="va">rmp_words</span>, <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/get_stopwords.html">get_stopwords</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="right">rating_id</th>
+<th align="right">online</th>
+<th align="right">student_star</th>
+<th align="left">word</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">good</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">teacher</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">wouldnt</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">mind</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">taking</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">another</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">class</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">fair</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">work</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">given</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>We see now that the stopwords have been removed from the <code>rmp_words</code> dataset.</p>
+<p>Now if we want to the the inverse operation, keeping the stopwords in <code>rmp_words</code> we can use the <code><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">semi_join()</a></code> function.</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">semi_join</a></span><span class="op">(</span><span class="va">rmp_words</span>, <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/get_stopwords.html">get_stopwords</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="right">rating_id</th>
+<th align="right">online</th>
+<th align="right">student_star</th>
+<th align="left">word</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">her</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">for</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">with</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">the</td>
+</tr>
+<tr class="odd">
+<td align="right">2360</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">and</td>
+</tr>
+<tr class="even">
+<td align="right">2360</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">some</td>
+</tr>
+<tr class="odd">
+<td align="right">2360</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">during</td>
+</tr>
+<tr class="even">
+<td align="right">2360</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">his</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>One last case that is worth including here has to do with a filtering join which takes a character vector, not a data frame. The <code>%in%</code> operator can be used as a <code><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">semi_join()</a></code> keeping matching values in <code>x</code> or as an <code><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join()</a></code> removing values in <code>x</code>.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rmp_words</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">word</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"very"</span>, <span class="st">"teacher"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># keep matching rows</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="right">rating_id</th>
+<th align="right">online</th>
+<th align="right">student_star</th>
+<th align="left">word</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">teacher</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very</td>
+</tr>
+<tr class="even">
+<td align="right">9443</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">very</td>
+</tr>
+<tr class="odd">
+<td align="right">2802</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">very</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rmp_words</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">word</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"very"</span>, <span class="st">"teacher"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># remove matching rows</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="right">rating_id</th>
+<th align="right">online</th>
+<th align="right">student_star</th>
+<th align="left">word</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">good</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">wouldnt</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">mind</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">taking</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">her</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">for</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">another</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">class</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">fair</td>
+</tr>
+<tr class="even">
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="left">with</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Note that in all filtering joins, no new columns are added, only rows are affected.</p>
+</div>
+</div>
+</div>
+<div id="case" class="section level2">
+<h2 class="hasAnchor">
+<a href="#case" class="anchor"></a>Case</h2>
+<p>Let’s now turn to a practical case and see tokenization and joins in action. I will work with the Love On The Spectrum curated dataset that we have previously worked with.</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Read the curated dataset for Love on the Spectrum Season 1</span>
+<span class="va">lots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"recipe_8/data/derived/love_on_the_spectrum/lots_curated.csv"</span><span class="op">)</span>
+
+<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">lots</span><span class="op">)</span></code></pre></div>
+<pre><code>## Rows: 3
+## Columns: 4
+## $ series   &lt;chr&gt; "Love On The Spectrum", "Love On The Spectrum", "Love On The …
+## $ season   &lt;chr&gt; "01", "01", "01"
+## $ episode  &lt;chr&gt; "01", "02", "03"
+## $ dialogue &lt;chr&gt; "It'll be like a fairy tale. A natural high, I suppose? Gets …</code></pre>
+<p>The aim will be to tokenize the dataset by words and then join an imported dataset which contains word frequencies calculated on a corpus of TV/Film transcripts, <a href="https://www.ugent.be/pp/experimentele-psychologie/en/research/documents/subtlexus">SUBTLEXus word frequencies</a>. I’ll read in this dataset and clean up the columns so that we only have the relevant columns for our transformational goals.</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">word_frequencies</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"recipe_8/data/original/word_frequency_list/SUBTLEXus.tsv"</span><span class="op">)</span>
+
+<span class="va">word_frequencies</span> <span class="op">&lt;-</span> 
+  <span class="va">word_frequencies</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">word</span>, word_freq <span class="op">=</span> <span class="va">SUBTLWF</span><span class="op">)</span> <span class="co"># select columns</span>
+
+<span class="va">word_frequencies</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="left">word</th>
+<th align="right">word_freq</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">the</td>
+<td align="right">29449</td>
+</tr>
+<tr class="even">
+<td align="left">to</td>
+<td align="right">22678</td>
+</tr>
+<tr class="odd">
+<td align="left">a</td>
+<td align="right">20415</td>
+</tr>
+<tr class="even">
+<td align="left">you</td>
+<td align="right">41857</td>
+</tr>
+<tr class="odd">
+<td align="left">and</td>
+<td align="right">13388</td>
+</tr>
+<tr class="even">
+<td align="left">it</td>
+<td align="right">18896</td>
+</tr>
+<tr class="odd">
+<td align="left">s</td>
+<td align="right">20731</td>
+</tr>
+<tr class="even">
+<td align="left">of</td>
+<td align="right">11577</td>
+</tr>
+<tr class="odd">
+<td align="left">for</td>
+<td align="right">6895</td>
+</tr>
+<tr class="even">
+<td align="left">I</td>
+<td align="right">39971</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The result of this transformation aims to produce the following dataset structure:</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span>
+  <span class="op">~</span><span class="va">series</span>, <span class="op">~</span><span class="va">season</span>, <span class="op">~</span><span class="va">episode</span>, <span class="op">~</span><span class="va">word</span>, <span class="op">~</span><span class="va">word_freq</span>,
+  <span class="st">"Love On The Spectrum"</span>, <span class="st">"01"</span>, <span class="st">"01"</span>, <span class="st">"it"</span>, <span class="fl">18896</span>
+<span class="op">)</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="left">series</th>
+<th align="left">season</th>
+<th align="left">episode</th>
+<th align="left">word</th>
+<th align="right">word_freq</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">it</td>
+<td align="right">18896</td>
+</tr></tbody>
+</table>
+</div>
+<div id="tokenize" class="section level3">
+<h3 class="hasAnchor">
+<a href="#tokenize" class="anchor"></a>Tokenize</h3>
+<p>The first step is to tokenize the <code>lots</code> curated dataset into word tokens.</p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Tokenize dialogue into words</span>
+<span class="va">lots_words</span> <span class="op">&lt;-</span> 
+  <span class="va">lots</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="st">"word"</span>, <span class="co"># output column</span>
+                input <span class="op">=</span> <span class="st">"dialogue"</span>, <span class="co"># input column</span>
+                token <span class="op">=</span> <span class="st">"words"</span><span class="op">)</span> <span class="co"># tokenized unit</span>
+
+<span class="va">lots_words</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="left">series</th>
+<th align="left">season</th>
+<th align="left">episode</th>
+<th align="left">word</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">it’ll</td>
+</tr>
+<tr class="even">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">be</td>
+</tr>
+<tr class="odd">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">like</td>
+</tr>
+<tr class="even">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">a</td>
+</tr>
+<tr class="odd">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">fairy</td>
+</tr>
+<tr class="even">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">tale</td>
+</tr>
+<tr class="odd">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">a</td>
+</tr>
+<tr class="even">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">natural</td>
+</tr>
+<tr class="odd">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">high</td>
+</tr>
+<tr class="even">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">i</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>One thing I notice from this preview is that words like “it’ll” are considered one token, not two (i.e. ‘it’ and ‘ll’). Let’s use <code>%in%</code> to filter (i.e. search) the <code>word_frequencies</code> dataset to see if words like “it’ll” are listed.</p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">word_frequencies</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">word</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"it'll"</span>, <span class="st">"it"</span>, <span class="st">"ll"</span><span class="op">)</span><span class="op">)</span> <span class="co">#search for it'll, it, and ll</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="left">word</th>
+<th align="right">word_freq</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">it</td>
+<td align="right">18896</td>
+</tr>
+<tr class="even">
+<td align="left">ll</td>
+<td align="right">4394</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>It appears that ‘it’ and ‘ll’ are treated as separate words. Therefore we want to make sure that our tokenization of the <code>lots</code> dataset reflects this too. Our original tokenization using the default <code>token = "words"</code> did not do this so let’s create a regular expression to do this.</p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">lots</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="st">"word"</span>, <span class="co"># output column</span>
+                input <span class="op">=</span> <span class="st">"dialogue"</span>, <span class="co"># input column</span>
+                token <span class="op">=</span> <span class="st">"regex"</span>, <span class="co"># regex tokenization</span>
+                pattern <span class="op">=</span> <span class="st">"(\\s|')"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># regex pattern</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># preview</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="left">series</th>
+<th align="left">season</th>
+<th align="left">episode</th>
+<th align="left">word</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">it</td>
+</tr>
+<tr class="even">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">ll</td>
+</tr>
+<tr class="odd">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">be</td>
+</tr>
+<tr class="even">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">like</td>
+</tr>
+<tr class="odd">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">a</td>
+</tr>
+<tr class="even">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">fairy</td>
+</tr>
+<tr class="odd">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">tale.</td>
+</tr>
+<tr class="even">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">a</td>
+</tr>
+<tr class="odd">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">natural</td>
+</tr>
+<tr class="even">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">high,</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>This works, but there is a side effect –namely that the punctuation has not been stripped. To get rid of the punctuation we can normalize the <code>word</code> column, removing punctuation.</p>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">lots</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="st">"word"</span>, <span class="co"># output column</span>
+                input <span class="op">=</span> <span class="st">"dialogue"</span>, <span class="co"># input column</span>
+                token <span class="op">=</span> <span class="st">"regex"</span>, <span class="co"># regex tokenization</span>
+                pattern <span class="op">=</span> <span class="st">"(\\s|')"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># regex pattern</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>word <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"[:punct:]"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># remove punctuation</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># preview</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="left">series</th>
+<th align="left">season</th>
+<th align="left">episode</th>
+<th align="left">word</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">it</td>
+</tr>
+<tr class="even">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">ll</td>
+</tr>
+<tr class="odd">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">be</td>
+</tr>
+<tr class="even">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">like</td>
+</tr>
+<tr class="odd">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">a</td>
+</tr>
+<tr class="even">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">fairy</td>
+</tr>
+<tr class="odd">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">tale</td>
+</tr>
+<tr class="even">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">a</td>
+</tr>
+<tr class="odd">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">natural</td>
+</tr>
+<tr class="even">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">high</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>This appears to look good. Let’s now assign this ouput to an object so we can move to join this dataset with the <code>word_frequencies</code> dataset.</p>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">lots_words</span> <span class="op">&lt;-</span> 
+  <span class="va">lots</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="st">"word"</span>, <span class="co"># output column</span>
+                input <span class="op">=</span> <span class="st">"dialogue"</span>, <span class="co"># input column</span>
+                token <span class="op">=</span> <span class="st">"regex"</span>, <span class="co"># regex tokenization</span>
+                pattern <span class="op">=</span> <span class="st">"(\\s|')"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># regex pattern</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>word <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span><span class="op">(</span><span class="va">word</span>, pattern <span class="op">=</span> <span class="st">"[:punct:]"</span><span class="op">)</span><span class="op">)</span> <span class="co"># remove punctuation</span></code></pre></div>
+</div>
+<div id="join" class="section level3">
+<h3 class="hasAnchor">
+<a href="#join" class="anchor"></a>Join</h3>
+<p>Now it is time to join the <code>lots_words</code> and the <code>word_frequencies</code> keeping all the observations in <code>x</code> and adding the <code>word_freq</code> column for words that match in <code>x</code> and <code>y</code>. So we will turn to the function <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>.</p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">lots_words</span>, <span class="va">word_frequencies</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
+<div class="kable-table">
+<table class="table">
+<thead><tr class="header">
+<th align="left">series</th>
+<th align="left">season</th>
+<th align="left">episode</th>
+<th align="left">word</th>
+<th align="right">word_freq</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">it</td>
+<td align="right">18896.3</td>
+</tr>
+<tr class="even">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">ll</td>
+<td align="right">4394.1</td>
+</tr>
+<tr class="odd">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">be</td>
+<td align="right">5746.8</td>
+</tr>
+<tr class="even">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">like</td>
+<td align="right">3999.0</td>
+</tr>
+<tr class="odd">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">a</td>
+<td align="right">20415.3</td>
+</tr>
+<tr class="even">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">fairy</td>
+<td align="right">16.7</td>
+</tr>
+<tr class="odd">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">tale</td>
+<td align="right">12.0</td>
+</tr>
+<tr class="even">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">a</td>
+<td align="right">20415.3</td>
+</tr>
+<tr class="odd">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">natural</td>
+<td align="right">42.4</td>
+</tr>
+<tr class="even">
+<td align="left">Love On The Spectrum</td>
+<td align="left">01</td>
+<td align="left">01</td>
+<td align="left">high</td>
+<td align="right">195.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>This looks good so let’s assign this operation to a new object <code>lots_words_freq</code>.</p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">lots_words_freq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">lots_words</span>, <span class="va">word_frequencies</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="document" class="section level3">
+<h3 class="hasAnchor">
+<a href="#document" class="anchor"></a>Document</h3>
+<p>The final step in the process is to write the transformed dataset to disk and document it with a data dictionary.</p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">lots_words_freq</span>, file <span class="op">=</span> <span class="st">"recipe_8/data/derived/love_on_the_spectrum/lots_words_freq.csv"</span><span class="op">)</span></code></pre></div>
+<p>Using our <code>data_dic_starter()</code> we can create the data dictionary template that we can then open in a spreadsheet and document.</p>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">data_dic_starter</span><span class="op">(</span>data <span class="op">=</span> <span class="va">lots_words_freq</span>, file_path <span class="op">=</span> <span class="st">"recipe_8/data/derived/love_on_the_spectrum/lots_words_freq_data_dictionary.csv"</span><span class="op">)</span></code></pre></div>
+</div>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-He2020" class="csl-entry">
+He, Jibo. 2020. <span>“Big Data Set from RateMyProfessor.com for Professors’ Teaching Evaluation”</span> 2 (March). <a href="https://doi.org/10.17632/fvtfjyvw7d.2">https://doi.org/10.17632/fvtfjyvw7d.2</a>.
+</div>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 

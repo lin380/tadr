@@ -1,5 +1,5 @@
 ---
-title: "8. Dataset manipulation"
+title: "8. Dataset manipulation: tokenization and joining datasets"
 pkgdown:
   as_is: true
 bibliography: bibliography.bib
@@ -10,12 +10,407 @@ link-citations: true
 ```{r, child="_common.Rmd"}
 ```
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+## Overview
+
+In this Recipe we will look at two primary types of transformations, tokenization and joins. Tokenization is the process of recasting textual units as smaller textual units. The process of joining datasets aims to incorporate other datasets to augment or filter the dataset of interest. 
+
+We will first look at a sample dataset to explore the strategies associated with tokenization and joins and then we will put these into practice with a more practical example.
+
+Let's load the packages that we will use for this Recipe. 
+
+```{r setup}
+library(tidyverse, quietly = TRUE) # data manipulation
+library(tidytext)  # tokenization
 ```
 
-Coming soon...
+## Coding strategies
 
-<!-- Outline:
+To illustrate the relevant coding strategies I've created a curated dataset of the ["Big Data Set from RateMyProfessor.com for Professors' Teaching Evaluation"](https://data.mendeley.com/datasets/fvtfjyvw7d/2) [@He2020]. 
 
--->
+Let's take a look at the curated dataset and get oriented to its structure. 
+
+```{r rmp-read}
+rmp <- 
+  read_csv(file = "recipe_8/data/derived/rate_my_professor_sample/rmp_curated.csv") # read curated dataset
+
+glimpse(rmp) # preview structure
+```
+
+We see that there are 10 observations and four columns. 
+
+There is a data dictionary associated with the `rmp` curated dataset. Let's read it and show it in a human-readable format.
+
+```{r rmp-read-data-dictionary, message=FALSE}
+read_csv(file = "recipe_8/data/derived/rate_my_professor_sample/rmp_curated_data_dictionary.csv") %>% # read data dictionary
+  knitr::kable(booktabs = TRUE,
+               caption = "Rate My Professor curated sample data dictionary.") # show preview table
+```
+
+Now let's look a this small curated sample in its current form.
+
+```{r rmp-preview}
+rmp %>% # dataset
+  knitr::kable(booktabs = TRUE,
+               caption = "Rate My Professor curated sample preview.") # show dataset preview
+```
+
+From this orientation to the dataset we can see that there are four columns `id`, `online`, `student_star`, and `comments`. The first three are metadata associated with the text in `comments`. We also see that the `online` column contains five positive comments and five negative comments.
+
+### Tokenization
+
+The very helpful function `unnest_tokens()` from the tidytext package is the most efficient way to recast a column with text into various smaller textual units --all while maintaining the metadata structure from the curated dataset. In this way, our transformation will maintain a tidy data format. 
+
+Let's consider some of the key options for tokenization that are provided through the `unnest_tokens()` function. First let's look at the arguments using the `args()` function.
+
+```{r args-unnest-tokens}
+args(unnest_tokens) # view the arguments
+```
+
+In order of appearance in the function, the `tbl` argument takes a data frame, the `output` will be a character vector with the desired name of the output column after tokenization, the `input` is the character vector which names the column which contains the textual information to be tokenized, the `token` argument is where we specify what type of token we would like to generate from the `input` column, the `format` argument is often left as the default 'text' --as we most often that not are working with text, the `drop` argument by default with drop the `input` column in the tokenized dataset, the `to_lower` argument let's us decide if we want to lowercase the text when it is tokenized, the `collapse` argument allows for grouping the tokenization output and is often left to 'NULL' (the default), and finally we have a `...` argument which leaves the possibility of adding arguments that are relevant for some of the token options, specifically for 'ngrams' and 'character_shingles'. 
+
+Let's see `unnest_tokens()` in action starting first with the most common tokenization unit (and therefore the default) 'words'. 
+
+#### Words
+
+```{r rmp-word-tokens}
+rmp %>% # dataset
+  unnest_tokens(output = "word", # tokenized output column
+                input = "comments") %>% # input column to tokenize
+  slice_head(n = 10) # preview first 10 observations
+```
+We now see from this preview of the first 10 observations that we have words from the comments tokenized. `unnest_tokens()` will return each of these tokens on their own row and maintain the metadata from the original dataset (dropping the input `comments` column). We also see that by default that the tokens have been lowercased, again, this is the default behavior. 
+
+Let's change the `drop =` argument and the `to_lower =` argument from their defaults (`TRUE`). 
+
+```{r rmp-word-tokens-change-defaults}
+rmp %>% # dataset
+  unnest_tokens(output = "word", # tokenized output column
+                input = "comments", # input column to tokenize
+                to_lower = FALSE, # do not lowercase
+                drop = FALSE) %>%  # do not drop input column
+  slice_head(n = 10) # preview first 10 observations
+```
+Note that if the textual input has punctuation, the `unnest_tokens()` function will strip this punctuation when doing the tokenization for words. 
+
+#### Sentences
+
+If we specify that the tokenized unit is `sentences`, then the punctuation is not stripped. 
+
+```{r rmp-sentence-tokens-change-defaults}
+rmp %>% # dataset
+  unnest_tokens(output = "sentence", # tokenized output column
+                input = "comments", # input column to tokenize
+                token = "sentences", # tokenize to sentences
+                to_lower = FALSE, # do not lowercase
+                drop = FALSE) %>%  # do not drop input column
+  slice_head(n = 10) # preview first 10 observations
+```
+If we take a close look at the output of using sentence tokens in this case we see that there are multiple sentences in the same observation row. This appears to be due to the fact that students sometimes opted not to capitalize the beginning of the next sentence. This suggests that the algorithm that `unnest_tokens()` uses sentences punctuation followed by a capitalized word to segment/ tokenize sentences. 
+
+:::{.tip}
+It is important to review the output of the tokenization to catch these types of anomalies and not assume that the algorithm will be perfectly accurate. 
+:::
+
+If the tokenization defaults (`words`, `sentences`, etc.) do not produce the desired result, we can specify the `token =` argument to `regex`. This allows us to specify a regular expression pattern to do the tokenization in the added argument `pattern = `. 
+
+```{r rmp-regex-sentence-tokens}
+rmp %>% # dataset
+  unnest_tokens(output = "sentence", # tokenized output column
+                input = "comments", # input column to tokenize
+                token = "regex", # tokenize by a regex pattern
+                pattern = "[.!?]\\s",
+                to_lower = FALSE, # do not lowercase
+                drop = FALSE) %>%  # do not drop input column
+  slice_head(n = 10) # preview first 10 observations
+```
+Note that when a pattern used to segment the text is matched, the match is removed. We can use some regular expression magic with the 'positive lookbehind' operator `(?<=)` to detect a pattern, but not use it as a match. In this case if we apply this to the punctuation part of our original regex, we can preserve the sentence punctuation and still segment the sentences.
+
+```{r rmp-regex-sentence-tokens-preserve-punct}
+rmp %>% # dataset
+  unnest_tokens(output = "sentence", # tokenized output column
+                input = "comments", # input column to tokenize
+                token = "regex", # tokenize by a regex pattern
+                pattern = "(?<=[.!?])\\s",
+                to_lower = FALSE, # do not lowercase
+                drop = FALSE) %>%  # do not drop input column
+  slice_head(n = 10) # preview first 10 observations
+```
+#### Ngrams
+
+Now let's turn to `ngram` tokenization. An ngram is a sequence of words where $n$ is the sequence desired in the output. Word tokenization is sometimes called a unigram. To get ngrams larger than one word, we use the specify `token =` to `ngrams`. Then we need to add the argument `n = ` and set the number of word sequences we want to tokenize. `n = 2` would produce bigrams, `n = 3` trigrams, and so on. 
+
+So let's see this in action by creating bigrams.
+
+```{r}
+rmp %>% # dataset
+  unnest_tokens(output = "bigram", # tokenized output column
+                input = "comments", # input column to tokenize
+                token = "ngrams", # tokenize ngram sequences
+                n = 2, # two word sequences
+                to_lower = FALSE, # do not lowercase
+                drop = FALSE) %>%  # do not drop input column
+  slice_head(n = 10) # preview first 10 observations
+```
+Great. We now have two word sequences (bigrams) as our tokens. But if we look at the ouput we see that the tokenization of bigrams included sequences that span between sentences (ex. 'teacher wouldnt'. This is due to the fact that we used the original input (`comments`) which has all the text. In some cases we may not want to capture these cross-sentential word sequences. To avoid this we can first tokenize our `comments` by sentences (with the regular expression approach), then pass this result to our bigram tokenization. 
+
+```{r}
+rmp %>% # dataset
+  # Tokenize by sentences
+  unnest_tokens(output = "sentence", # tokenized output column
+                input = "comments", # input column to tokenize
+                token = "regex", # tokenize by a regex pattern
+                pattern = "(?<=[.!?])\\s",
+                to_lower = FALSE) %>%  # do not lowercase
+  # Add a sentence_id to the dataset
+  group_by(rating_id) %>% # group the comments
+  mutate(sentence_id = row_number()) %>% # add a sentence id to index the individual sentences for each comment 
+  ungroup() %>% # remove grouping attribute
+  # Tokenize the sentences by bigrams
+  unnest_tokens(output = "bigram", # tokenized output column
+                input = "sentence", # input column to tokenize
+                token = "ngrams", # tokenize by ngrams
+                n = 2, # create bigrams
+                to_lower = FALSE) %>%  # do not lowercase
+  slice_head(n = 10) # preview first 10 observations
+```
+
+So by applying firs the sentence tokenization and then the ngram tokenization we avoid cross-sentential word sequences. 
+
+:::{.tip}
+Note that I added a `sentence_id` column to make sure that the sentence from which the bigram comes is documented in the dataset.
+:::
+
+With this overview of the options and strategies for tokenizing textual input, I will now create a word-based tokenization of the `rmp` dataset, lowercasing the text in preparation for our next strategy to cover, joins. 
+
+```{r rmp-word-tokens-example}
+rmp_words <- 
+  rmp %>% # dataset
+  unnest_tokens(output = "word", # tokenized output column
+                input = "comments") # input column to tokenize
+
+rmp_words %>% 
+  slice_head(n = 10) %>% 
+  knitr::kable(booktabs = TRUE, 
+               caption = "Preview of the `rmp_words` dataset.")
+```
+
+
+### Joining datasets
+
+The dplyr package, loaded as part of the tidyverse, contains a number of functions aimed at joining datasets. These functions are of two main types: mutating joins and filtering joins. 
+
+In both cases a join relates two datasets that share a column (or column) which has overlapping values. For mutating joins, the shared column/s is/are the key that connects the two datasets and effectively expands the columns combining the columns from each dataset where the values match across both datasets. For filtering joins, the shared column effectively is used to filter rows in a dataset that have matching values in both datasets. Filter may be used to exclude matching values, or only include those values that match. Let's look a these two types of joins to get a better sense of their behavior. 
+
+#### Mutating joins
+
+As a demonstration, let's consider a dataset included in the tidytext package which provides a list of words and a sentiment value for each word. 
+
+```{r}
+get_sentiments() %>% 
+  group_by(sentiment) %>% 
+  slice_head(n = 5)
+```
+We can see that the `get_sentiments()` function returns a dataset with two columns (`word` and `sentiment`). I've only provided the first five word-sentiment pairs for 'negative' and 'positive' sentiments. However, the full dataset contains `r nrow(get_sentiments())` words. 
+
+We can see how many are listed as positive and negative. 
+
+```{r}
+get_sentiments() %>% 
+  count(sentiment)
+```
+We can see that negative words outnumber the positive-labeled words.
+
+With this information, we can now see that our `rmp_words` dataset and the dataset from `get_sentiments()` share a column called `word`. More importantly, the columns share the same type of values, i.e. words. If we wanted to augment our `rmp_words` dataset with the sentiment labels from `get_sentiments()` we will want to use a mutating join. The idea will be to create a data frame with the following structure: 
+
+```{r idealized-mutating-join, tidy=FALSE}
+tribble(
+  ~rating_id, ~online, ~student_star, ~word, ~sentiment,
+  84, 0, 5, "good", "positive",
+  84, 0, 5, "teacher", NA,
+  2802, 1, 1, "worst", "negative",
+  NA, NA, NA, "...", "..."
+)
+```
+
+In this structure we want all of the observations (words) from `rmp_words` to appear and those words with matches in `get_sentiments()` should also get a corresponding sentiment value. To do this we use the `left_join()` function. This function takes to primary arguments `x` and `y` where `x` is the dataset which we want all of the observations to be included and `y` where the matching values will also get the corresponding values. 
+
+```{r}
+left_join(rmp_words, get_sentiments()) %>% 
+  slice_head(n = 10)
+```
+
+Note that `left_join()` keeps all of the rows from the `x` dataset --in this case `rmp_words`. If, for example, we wanted to do a mutating join and remove words from `x` that do not have a match in `y`, then we can turn to `inner_join()`.
+
+```{r}
+inner_join(rmp_words, get_sentiments()) %>% 
+  slice_head(n = 10)
+```
+
+`inner_join()` is in essence a mutating join with a filtering side effect. If we want to simply filter a dataset based on the values in other dataset, we turn to the filtering joins. 
+
+#### Filtering joins
+
+To look at filtering joins let's consider another dataset also included with the tidytext package `get_stopwords()`. 
+
+```{r}
+get_stopwords() %>% 
+  slice_head(n = 10)
+```
+Stopwords are words that are considered to have little semantic content (they roughly correspond to pronouns, prepositions, conjunctions, etc.). In some research cases we will want to remove these words from a dataset. To remove these words we can use the filtering join called `anti_join()`, which you can imagine will return all the rows in `x` that do not have a match in `y`. 
+
+```{r}
+anti_join(rmp_words, get_stopwords()) %>% 
+  slice_head(n = 10)
+```
+
+We see now that the stopwords have been removed from the `rmp_words` dataset. 
+
+Now if we want to the the inverse operation, keeping the stopwords in `rmp_words` we can use the `semi_join()` function. 
+
+```{r}
+semi_join(rmp_words, get_stopwords()) %>% 
+  slice_head(n = 10)
+```
+
+
+One last case that is worth including here has to do with a filtering join which takes a character vector, not a data frame. The `%in%` operator can be used as a `semi_join()` keeping matching values in `x` or as an `anti_join()` removing values in `x`. 
+
+```{r}
+rmp_words %>% 
+  filter(word %in% c("very", "teacher")) %>%  # keep matching rows
+  slice_head(n = 10)
+```
+
+```{r}
+rmp_words %>% 
+  filter(!word %in% c("very", "teacher")) %>%  # remove matching rows
+  slice_head(n = 10)
+```
+Note that in all filtering joins, no new columns are added, only rows are affected.
+
+## Case
+
+Let's now turn to a practical case and see tokenization and joins in action. I will work with the Love On The Spectrum curated dataset that we have previously worked with. 
+
+```{r lots-read-curated}
+# Read the curated dataset for Love on the Spectrum Season 1
+lots <- 
+  read_csv(file = "recipe_8/data/derived/love_on_the_spectrum/lots_curated.csv")
+
+glimpse(lots)
+```
+
+The aim will be to tokenize the dataset by words and then join an imported dataset which contains word frequencies calculated on a corpus of TV/Film transcripts, [SUBTLEXus word frequencies](https://www.ugent.be/pp/experimentele-psychologie/en/research/documents/subtlexus). I'll read in this dataset and clean up the columns so that we only have the relevant columns for our transformational goals.
+
+```{r}
+word_frequencies <- 
+  read_tsv(file = "recipe_8/data/original/word_frequency_list/SUBTLEXus.tsv")
+
+word_frequencies <- 
+  word_frequencies %>% # dataset
+  select(word, word_freq = SUBTLWF) # select columns
+
+word_frequencies %>% 
+  slice_head(n = 10)
+```
+
+The result of this transformation aims to produce the following dataset structure:
+
+```{r, tidy=FALSE}
+tribble(
+  ~series, ~season, ~episode, ~word, ~word_freq,
+  "Love On The Spectrum", "01", "01", "it", 18896
+)
+```
+
+### Tokenize
+
+The first step is to tokenize the `lots` curated dataset into word tokens.
+
+```{r tokens}
+# Tokenize dialogue into words
+lots_words <- 
+  lots %>% # dataset
+  unnest_tokens(output = "word", # output column
+                input = "dialogue", # input column
+                token = "words") # tokenized unit
+
+lots_words %>% 
+  slice_head(n = 10)
+```
+One thing I notice from this preview is that words like "it'll" are considered one token, not two (i.e. 'it' and 'll'). Let's use `%in%` to filter (i.e. search) the `word_frequencies` dataset to see if words like "it'll" are listed. 
+
+```{r}
+word_frequencies %>% # dataset
+  filter(word %in% c("it'll", "it", "ll")) #search for it'll, it, and ll
+```
+It appears that 'it' and 'll' are treated as separate words. Therefore we want to make sure that our tokenization of the `lots` dataset reflects this too. Our original tokenization using the default `token = "words"` did not do this so let's create a regular expression to do this. 
+
+```{r}
+lots %>% # dataset
+  unnest_tokens(output = "word", # output column
+                input = "dialogue", # input column
+                token = "regex", # regex tokenization
+                pattern = "(\\s|')") %>% # regex pattern
+  slice_head(n = 10) # preview
+```
+This works, but there is a side effect --namely that the punctuation has not been stripped. To get rid of the punctuation we can normalize the `word` column, removing punctuation. 
+
+```{r}
+lots %>% # dataset
+  unnest_tokens(output = "word", # output column
+                input = "dialogue", # input column
+                token = "regex", # regex tokenization
+                pattern = "(\\s|')") %>% # regex pattern
+  mutate(word = str_remove(word, pattern = "[:punct:]")) %>% # remove punctuation
+  slice_head(n = 10) # preview
+```
+This appears to look good. Let's now assign this ouput to an object so we can move to join this dataset with the `word_frequencies` dataset.
+
+```{r}
+lots_words <- 
+  lots %>% # dataset
+  unnest_tokens(output = "word", # output column
+                input = "dialogue", # input column
+                token = "regex", # regex tokenization
+                pattern = "(\\s|')") %>% # regex pattern
+  mutate(word = str_remove(word, pattern = "[:punct:]")) # remove punctuation
+```
+
+
+### Join
+
+Now it is time to join the `lots_words` and the `word_frequencies` keeping all the observations in `x` and adding the `word_freq` column for words that match in `x` and `y`. So we will turn to the function `left_join()`. 
+
+```{r}
+left_join(lots_words, word_frequencies) %>% 
+  slice_head(n = 10)
+```
+
+This looks good so let's assign this operation to a new object `lots_words_freq`. 
+
+```{r}
+lots_words_freq <- 
+  left_join(lots_words, word_frequencies)
+```
+
+
+### Document
+
+The final step in the process is to write the transformed dataset to disk and document it with a data dictionary. 
+
+```{r}
+write_csv(lots_words_freq, file = "recipe_8/data/derived/love_on_the_spectrum/lots_words_freq.csv")
+```
+
+Using our `data_dic_starter()` we can create the data dictionary template that we can then open in a spreadsheet and document. 
+
+```{r, eval=FALSE}
+data_dic_starter(data = lots_words_freq, 
+                 file_path = "recipe_8/data/derived/love_on_the_spectrum/lots_words_freq_data_dictionary.csv")
+```
+
+
+# References
+ 
+ 

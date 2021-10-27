@@ -1,0 +1,5 @@
+variable_name,name,description
+rating_id,Rating ID ,Unique ID for each student course rating
+online,Online Course,Was the course online or not: 1 is TRUE and 0 is FALSE
+student_star,Student Rating,Scalar rating provided by the student
+comments,Student Comments,Student comments provided for the course

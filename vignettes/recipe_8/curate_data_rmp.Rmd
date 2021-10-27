@@ -1,0 +1,51 @@
+---
+title: 'Rate My Professor: Curate data'
+author: "Jerid Francom"
+date: "10/27/2021"
+output: html_document
+---
+
+```{r setup, message=FALSE}
+library(tidyverse)
+```
+
+## Curate data
+
+[Rate My Professor sample dataset](https://data.mendeley.com/datasets/fvtfjyvw7d/2) 
+
+```{r rmp-read, message=FALSE}
+rmp <- read_csv(file = "data/original/rate_my_professor_sample/RateMyProfessor_Sample data.csv")
+```
+
+```{r rmp-curate}
+rmp_curated <- 
+  rmp %>% 
+  select(online = IsCourseOnline, student_star, comments) %>% 
+  filter(student_star == 1 | student_star == 5) %>% 
+  mutate(id = row_number()) %>% 
+  group_by(online) %>% 
+  slice_sample(n = 5) %>% 
+  ungroup() %>% 
+  select(rating_id = id, online, student_star, comments)
+```
+
+```{r rmp-write}
+fs::dir_create(path = "data/derived/rate_my_professor_sample/")
+write_csv(rmp_curated, file = "data/derived/rate_my_professor_sample/rmp_curated.csv")
+```
+
+```{r rmp-document, eval=FALSE}
+data_dic_starter <- function(data, file_path) {
+  # Function:
+  # Creates a .csv file with the basic information
+  # to document a curated dataset
+
+  tibble(variable_name = names(data), # column with existing variable names
+         name = "", # column for human-readable names
+         description = "") %>% # column for prose description
+    write_csv(file = file_path) # write to disk
+}
+
+data_dic_starter(rmp_curated, file_path = "data/derived/rate_my_professor_sample/rmp_curated_data_dictionary.csv")
+```
+
