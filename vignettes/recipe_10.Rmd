@@ -433,7 +433,7 @@ predict_sms_type(sms_message = "Call now to order this amazing product!!", nb_mo
 
 As you can see we can now create our own text messages and have them filtered by the algorithm that we have developed here.
 
-# Summary
+## Summary
 
 In this Recipe, I demonstrated the steps involved in creating a text classification model. We then evaluated the training model and then applied it to the test data. The evaluation of both the training and testing predictions show that they were highly accurate. Since these results were very promising I demonstrated how we can turn a trained model into an actual spam filter.
 
@@ -505,7 +505,7 @@ tab_class <-
 caret::confusionMatrix(tab_class, mode = "prec_recall") # model performance statistics
 ```
 
-# References
+## References
 
 <!-- DRAFTS -->
 
