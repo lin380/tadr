@@ -18,7 +18,7 @@ get_compressed_data(url = "http://www.dt.fee.unicamp.br/~tiago/smsspamcollection
 
 # Read data
 sms <-
-  read_tsv(file = "data-raw/original/sms/SMSSpamCollection.txt", col_names = c("sms_type", "message"), trim_ws = TRUE)
+  read_tsv(file = "data-raw/original/sms/SMSSpamCollection.txt", col_names = c("sms_type", "message"), quote = "")
 
 # Write data
 write_csv(sms, file = "data-raw/derived/sms.csv", col_names = TRUE)

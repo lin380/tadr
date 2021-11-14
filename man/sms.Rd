@@ -10,7 +10,7 @@ being legitimate (ham) or spam.
 }
 \usage{data("sms")}
 \format{
-  A data frame with 4837 observations on the following 2 variables.
+  A data frame with 5,574 observations on the following 2 variables.
   \describe{
     \item{\code{sms_type}}{Type of message; either spam or ham}
     \item{\code{message}}{The sms message}

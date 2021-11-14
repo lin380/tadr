@@ -400,27 +400,27 @@ Note: These recipes are dedicated to expanding the application of the programmin
 <code class="sourceCode R"><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">tweets</span><span class="op">)</span></code></pre></div>
 <pre><code>## Rows: 100
 ## Columns: 92
-## $ user_id                 &lt;chr&gt; "149546339", "1252080404", "1252080404", "2416…
-## $ status_id               &lt;chr&gt; "1457094340107542528", "1457094001090351104", …
-## $ created_at              &lt;dttm&gt; 2021-11-06 21:15:36, 2021-11-06 21:14:16, 202…
-## $ screen_name             &lt;chr&gt; "tenantfromzero", "carlamechele", "carlamechel…
-## $ text                    &lt;chr&gt; "@SotoAlfred I believe he definitely was into …
-## $ source                  &lt;chr&gt; "Twitter for iPhone", "Twitter for iPhone", "T…
-## $ display_text_width      &lt;dbl&gt; 280, 141, 237, 95, 56, 262, 277, 116, 61, 152,…
-## $ reply_to_status_id      &lt;chr&gt; "1457083127793389577", "1455117299581546496", …
-## $ reply_to_user_id        &lt;chr&gt; "365090695", "776186273039998976", "1348168683…
-## $ reply_to_screen_name    &lt;chr&gt; "SotoAlfred", "rodneythavoice", "AntiFascist64…
-## $ is_quote                &lt;lgl&gt; FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE…
+## $ user_id                 &lt;chr&gt; "1177625946410700800", "291379402", "460634539…
+## $ status_id               &lt;chr&gt; "1459939840867377158", "1459934765981659137", …
+## $ created_at              &lt;dttm&gt; 2021-11-14 17:42:37, 2021-11-14 17:22:27, 202…
+## $ screen_name             &lt;chr&gt; "PatBruc", "AloyisiousOttr", "byemaiya", "coac…
+## $ text                    &lt;chr&gt; "@ironbow It is called the sweet spot for peas…
+## $ source                  &lt;chr&gt; "Twitter Web App", "Twitter Web App", "Twitter…
+## $ display_text_width      &lt;dbl&gt; 246, 186, 102, 85, 278, 105, 82, 213, 89, 273,…
+## $ reply_to_status_id      &lt;chr&gt; "1459937160497283073", NA, NA, "14598493633924…
+## $ reply_to_user_id        &lt;chr&gt; "33806999", NA, NA, "2995996372", "2933793124"…
+## $ reply_to_screen_name    &lt;chr&gt; "ironbow", NA, NA, "NightmareEcc111", "kenkirc…
+## $ is_quote                &lt;lgl&gt; FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE,…
 ## $ is_retweet              &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…
-## $ favorite_count          &lt;int&gt; 1, 0, 0, 2, 3, 222, 4, 1, 0, 0, 3, 1, 0, 0, 1,…
-## $ retweet_count           &lt;int&gt; 0, 0, 0, 0, 0, 61, 0, 0, 0, 0, 1, 0, 0, 0, 0, …
+## $ favorite_count          &lt;int&gt; 1, 1, 0, 1, 0, 0, 0, 8, 1, 1, 1, 10, 1, 0, 0, …
+## $ retweet_count           &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0…
 ## $ quote_count             &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
 ## $ reply_count             &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-## $ hashtags                &lt;list&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, "free…
+## $ hashtags                &lt;list&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
 ## $ symbols                 &lt;list&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
-## $ urls_url                &lt;list&gt; NA, NA, NA, "twitter.com/dragongender/s…", NA…
-## $ urls_t.co               &lt;list&gt; NA, NA, NA, "https://t.co/5pjjn3BhXn", NA, "h…
-## $ urls_expanded_url       &lt;list&gt; NA, NA, NA, "https://twitter.com/dragongender…
+## $ urls_url                &lt;list&gt; NA, "twitter.com/elonmusk/statu…", "twitter.c…
+## $ urls_t.co               &lt;list&gt; NA, "https://t.co/JB8Tyzwuss", "https://t.co/…
+## $ urls_expanded_url       &lt;list&gt; NA, "https://twitter.com/elonmusk/status/1459…
 ## $ media_url               &lt;list&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
 ## $ media_t.co              &lt;list&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
 ## $ media_expanded_url      &lt;list&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
@@ -429,24 +429,24 @@ Note: These recipes are dedicated to expanding the application of the programmin
 ## $ ext_media_t.co          &lt;list&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
 ## $ ext_media_expanded_url  &lt;list&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
 ## $ ext_media_type          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-## $ mentions_user_id        &lt;list&gt; "365090695", "776186273039998976", &lt;"13481686…
-## $ mentions_screen_name    &lt;list&gt; "SotoAlfred", "rodneythavoice", &lt;"AntiFascist…
+## $ mentions_user_id        &lt;list&gt; "33806999", NA, NA, &lt;"2995996372", "24358474"…
+## $ mentions_screen_name    &lt;list&gt; "ironbow", NA, NA, &lt;"NightmareEcc111", "zefro…
 ## $ lang                    &lt;chr&gt; "en", "en", "en", "en", "en", "en", "en", "en"…
-## $ quoted_status_id        &lt;chr&gt; NA, NA, NA, "1457086283491254276", NA, NA, NA,…
-## $ quoted_text             &lt;chr&gt; NA, NA, NA, "@nhannahjones @Charlieday1993 Yea…
-## $ quoted_created_at       &lt;dttm&gt; NA, NA, NA, 2021-11-06 20:43:35, NA, NA, NA, …
-## $ quoted_source           &lt;chr&gt; NA, NA, NA, "Twitter Web App", NA, NA, NA, NA,…
-## $ quoted_favorite_count   &lt;int&gt; NA, NA, NA, 0, NA, NA, NA, NA, NA, NA, NA, NA,…
-## $ quoted_retweet_count    &lt;int&gt; NA, NA, NA, 0, NA, NA, NA, NA, NA, NA, NA, NA,…
-## $ quoted_user_id          &lt;chr&gt; NA, NA, NA, "853969293154955265", NA, NA, NA, …
-## $ quoted_screen_name      &lt;chr&gt; NA, NA, NA, "dragongender", NA, NA, NA, NA, NA…
-## $ quoted_name             &lt;chr&gt; NA, NA, NA, "Billy Lee Dragon", NA, NA, NA, NA…
-## $ quoted_followers_count  &lt;int&gt; NA, NA, NA, 30, NA, NA, NA, NA, NA, NA, NA, NA…
-## $ quoted_friends_count    &lt;int&gt; NA, NA, NA, 744, NA, NA, NA, NA, NA, NA, NA, N…
-## $ quoted_statuses_count   &lt;int&gt; NA, NA, NA, 107, NA, NA, NA, NA, NA, NA, NA, N…
-## $ quoted_location         &lt;chr&gt; NA, NA, NA, "", NA, NA, NA, NA, NA, NA, NA, NA…
-## $ quoted_description      &lt;chr&gt; NA, NA, NA, "Black Belt in Tweet Kune Do. I am…
-## $ quoted_verified         &lt;lgl&gt; NA, NA, NA, FALSE, NA, NA, NA, NA, NA, NA, NA,…
+## $ quoted_status_id        &lt;chr&gt; NA, "1459891238384115722", "145940572383891865…
+## $ quoted_text             &lt;chr&gt; NA, "@SenSanders I keep forgetting that you’re…
+## $ quoted_created_at       &lt;dttm&gt; NA, 2021-11-14 14:29:29, 2021-11-13 06:20:13,…
+## $ quoted_source           &lt;chr&gt; NA, "Twitter for iPhone", "Twitter Web App", N…
+## $ quoted_favorite_count   &lt;int&gt; NA, 95758, 19153, NA, NA, NA, NA, NA, NA, NA, …
+## $ quoted_retweet_count    &lt;int&gt; NA, 12084, 6749, NA, NA, NA, NA, NA, NA, NA, 0…
+## $ quoted_user_id          &lt;chr&gt; NA, "44196397", "341877093", NA, NA, NA, NA, N…
+## $ quoted_screen_name      &lt;chr&gt; NA, "elonmusk", "Gecorious_", NA, NA, NA, NA, …
+## $ quoted_name             &lt;chr&gt; NA, "Elon Musk", "𝙶𝙴𝙲𝙾𝚁𝙸𝙾𝚄𝚂.", NA, NA, NA, NA,…
+## $ quoted_followers_count  &lt;int&gt; NA, 63678952, 11514, NA, NA, NA, NA, NA, NA, N…
+## $ quoted_friends_count    &lt;int&gt; NA, 105, 6135, NA, NA, NA, NA, NA, NA, NA, 237…
+## $ quoted_statuses_count   &lt;int&gt; NA, 15980, 33876, NA, NA, NA, NA, NA, NA, NA, …
+## $ quoted_location         &lt;chr&gt; NA, "", "Austin, TX", NA, NA, NA, NA, NA, NA, …
+## $ quoted_description      &lt;chr&gt; NA, "", "𝙶𝙾𝙳 \U0001f64f\U0001f3fe | 𝙾𝙼𝙴𝙶𝙰 𝙿𝚂𝙸 …
+## $ quoted_verified         &lt;lgl&gt; NA, TRUE, FALSE, NA, NA, NA, NA, NA, NA, NA, F…
 ## $ retweet_status_id       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
 ## $ retweet_text            &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
 ## $ retweet_created_at      &lt;dttm&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
@@ -471,25 +471,25 @@ Note: These recipes are dedicated to expanding the application of the programmin
 ## $ geo_coords              &lt;list&gt; &lt;NA, NA&gt;, &lt;NA, NA&gt;, &lt;NA, NA&gt;, &lt;NA, NA&gt;, &lt;NA, …
 ## $ coords_coords           &lt;list&gt; &lt;NA, NA&gt;, &lt;NA, NA&gt;, &lt;NA, NA&gt;, &lt;NA, NA&gt;, &lt;NA, …
 ## $ bbox_coords             &lt;list&gt; &lt;NA, NA, NA, NA, NA, NA, NA, NA&gt;, &lt;NA, NA, NA…
-## $ status_url              &lt;chr&gt; "https://twitter.com/tenantfromzero/status/145…
-## $ name                    &lt;chr&gt; "Covid’s Metamorphoses", "Carla Mechele Media"…
-## $ location                &lt;chr&gt; "Brooklyn, NY", "Florida, USA", "Florida, USA"…
-## $ description             &lt;chr&gt; "Gay man who fills the void with cooking, opin…
-## $ url                     &lt;chr&gt; "https://t.co/PWdY4EsK4T", "https://t.co/QtXaI…
+## $ status_url              &lt;chr&gt; "https://twitter.com/PatBruc/status/1459939840…
+## $ name                    &lt;chr&gt; "Pat Bruce", "Black Lives Matter Get Fuxed If …
+## $ location                &lt;chr&gt; "Canada ", "Phoenix, AZ", "prairie view, tx", …
+## $ description             &lt;chr&gt; "Canadian What you ignore you empower. It is i…
+## $ url                     &lt;chr&gt; NA, "https://t.co/HXM22v2fia", "https://t.co/0…
 ## $ protected               &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…
-## $ followers_count         &lt;int&gt; 310, 776, 776, 1541, 1541, 177904, 4872, 111, …
-## $ friends_count           &lt;int&gt; 958, 1916, 1916, 2605, 2605, 3339, 597, 323, 9…
-## $ listed_count            &lt;int&gt; 0, 36, 36, 38, 38, 5358, 54, 0, 2, 13, 0, 34, …
-## $ statuses_count          &lt;int&gt; 16074, 12570, 12570, 63070, 63070, 33484, 1360…
-## $ favourites_count        &lt;int&gt; 38401, 41079, 41079, 156981, 156981, 10, 14708…
-## $ account_created_at      &lt;dttm&gt; 2010-05-29 15:28:26, 2013-03-08 15:50:17, 201…
+## $ followers_count         &lt;int&gt; 2294, 277, 500, 178, 74, 204, 314, 3995, 970, …
+## $ friends_count           &lt;int&gt; 2845, 3730, 372, 590, 278, 409, 600, 4410, 933…
+## $ listed_count            &lt;int&gt; 3, 5, 0, 1, 3, 76, 1, 25, 0, 2, 366, 12, 9, 3,…
+## $ statuses_count          &lt;int&gt; 52935, 20317, 17822, 1378, 15078, 17805, 7661,…
+## $ favourites_count        &lt;int&gt; 33607, 19273, 194935, 29759, 28230, 17917, 528…
+## $ account_created_at      &lt;dttm&gt; 2019-09-27 16:48:20, 2011-05-01 22:30:05, 201…
 ## $ verified                &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…
-## $ profile_url             &lt;chr&gt; "https://t.co/PWdY4EsK4T", "https://t.co/QtXaI…
-## $ profile_expanded_url    &lt;chr&gt; "https://tenantfromzero1.bandcamp.com/album/fl…
+## $ profile_url             &lt;chr&gt; NA, "https://t.co/HXM22v2fia", "https://t.co/0…
+## $ profile_expanded_url    &lt;chr&gt; NA, "https://suichi.sofurry.com/", "https://ww…
 ## $ account_lang            &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-## $ profile_banner_url      &lt;chr&gt; "https://pbs.twimg.com/profile_banners/1495463…
-## $ profile_background_url  &lt;chr&gt; "http://abs.twimg.com/images/themes/theme1/bg.…
-## $ profile_image_url       &lt;chr&gt; "http://pbs.twimg.com/profile_images/135880873…
+## $ profile_banner_url      &lt;chr&gt; "https://pbs.twimg.com/profile_banners/1177625…
+## $ profile_background_url  &lt;chr&gt; NA, "http://abs.twimg.com/images/themes/theme2…
+## $ profile_image_url       &lt;chr&gt; "http://pbs.twimg.com/profile_images/142906872…
 ## $ lat                     &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
 ## $ lng                     &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</code></pre>
 <p>OK. Since we are going to want to pass various terms/ expressions to this function we will also want to make sure that the search query is added to the structure of the data frame. We do this by creating a variable to pass to the <code>q</code> argument and then add a column to the data frame with <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>.</p>

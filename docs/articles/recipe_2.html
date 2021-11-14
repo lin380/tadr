@@ -244,7 +244,7 @@ Figure 7: HTML output with figure and table cross-references.
 <pre><code>```{r cars-figure, fig.cap='Example plot'}
 plot(cars)
 ```</code></pre>
-<p>For a table, again, we find the code-chunk name (<code>cars-table</code>) and make sure there is a caption associated. Captions for tables, however, is not part of the code chunk options, but rather the function that creates the table needs to add the caption. In the example below, I’ve used the <code><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable()</a></code> function from the <code>knitr</code> package (referenced directly with <code><a href="https://rdrr.io/pkg/knitr/man/kable.html">knitr::kable()</a></code>). One of the arguments of the <code><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable()</a></code> function is <code>caption =</code>.</p>
+<p>For a table, again, we find the code-chunk name (<code>cars-table</code>) and make sure there is a caption associated. Captions for tables, however, is not part of the code chunk options, but rather the function that creates the table needs to add the caption. In the example below, I’ve used the <code>kable()</code> function from the <code>knitr</code> package (referenced directly with <code><a href="https://rdrr.io/pkg/knitr/man/kable.html">knitr::kable()</a></code>). One of the arguments of the <code>kable()</code> function is <code>caption =</code>.</p>
 <pre><code>```{r cars-table}
 knitr::kable(head(cars), caption = "Example table.")
 ```</code></pre>

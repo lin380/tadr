@@ -39,6 +39,7 @@ articles:
 - title: Guides
   contents:
   - guide_1
+  - guide_2
 
 tutorials:
 # These can be added via url
