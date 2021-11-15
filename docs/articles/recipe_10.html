@@ -240,11 +240,11 @@
 </tbody>
 </table>
 </div>
-<p>We can add metadata to our corpus object by simply making reference to a new column and assigning values to it. In our data we are going to want to have a unique document id for each of our 4,837 text messages. We want to create a vector of numbers 1 to 4,837. One way to do this is by using the <code>1:4837</code> syntax with the number hardcoded in. Another more flexible way to create the document id vector that is exactly fit to the number of observations is by using the <code><a href="https://quanteda.io/reference/ndoc.html">ndoc()</a></code> function on the corpus object itself. <code><a href="https://quanteda.io/reference/ndoc.html">ndoc()</a></code> will return the number of documents in the corpus object. For corpus objects observations are known as documents and for us a document is a text message.</p>
+<p>We can add metadata to our corpus object by simply making reference to a new column and assigning values to it. In our data we are going to want to have a unique document id for each of our 5,574 text messages. We want to create a vector of numbers 1 to 5,574. One way to do this is by using the <code>1:5574</code> syntax with the number hardcoded in. Another more flexible way to create the document id vector that is exactly fit to the number of observations is by using the <code><a href="https://quanteda.io/reference/ndoc.html">ndoc()</a></code> function on the corpus object itself. <code><a href="https://quanteda.io/reference/ndoc.html">ndoc()</a></code> will return the number of documents in the corpus object. For corpus objects observations are known as documents and for us a document is a text message.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sms_corpus</span><span class="op">$</span><span class="va">doc_id</span> <span class="op">&lt;-</span> <span class="co"># create a new column `doc_id`</span>
   <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://quanteda.io/reference/ndoc.html">ndoc</a></span><span class="op">(</span><span class="va">sms_corpus</span><span class="op">)</span> <span class="co"># add numeric id to each text message</span></code></pre></div>
-<p>We can now look at the document variables again and we will see that the <code>do c_id</code> column now appears.</p>
+<p>We can now look at the document variables again and we will see that the <code>doc_id</code> column now appears.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sms_corpus</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># corpus object</span>
   <span class="fu"><a href="https://quanteda.io/reference/docvars.html">docvars</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># get corpus metadata attributes</span>
@@ -330,7 +330,7 @@
 <h3 class="hasAnchor">
 <a href="#feature-engineering" class="anchor"></a>Feature engineering</h3>
 <!-- tokenization and document-frequency matrix -->
-<p>The next step towards preparing our dataset for use in the predictive model is to decide what the features are that will be used to help the predictive model learn how to distinguish between spam and ham text messages. To create language features we will tokenize the text into smaller linguistic units. We can choose from characters, words, or sentences, or ngram sequences of either characters of words. For many predictive models, the default feature to select as a starting point will be words. However, it there is reason to believe that some other linguistic unit(s) would make more practical sense there is nothing limiting you from selecting another unit. If we later see that the model does not perform well we can always come back and tweak the tokenization process and try other linguistic units.</p>
+<p>The next step towards preparing our dataset for use in the predictive model is to decide what the features are that will be used to help the predictive model learn how to distinguish between spam and ham text messages. To create language features we will tokenize the text into smaller linguistic units. We can choose from characters, words, or sentences, or ngram sequences of either characters or words. For many predictive models, the default feature to select as a starting point will be words. However, if there is reason to believe that some other linguistic unit(s) would make more practical sense there is nothing limiting you from selecting another unit. If we later see that the model does not perform well we can always come back and tweak the tokenization process and try other linguistic units.</p>
 <p>Let’s move forward by tokenizing the messages into words. We will also remove punctuation and numbers and lowercase all the messages. The <code><a href="https://quanteda.io/reference/tokens.html">tokens()</a></code> function allows us to do all but lowercasing.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sms_tokens</span> <span class="op">&lt;-</span> 
@@ -367,7 +367,7 @@
 <div class="tip">
 <p>The <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code> function has been used here instead of the <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head()</a></code> function we have typically used. It is of note that <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code> works much like <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head()</a></code> with the main distinction that <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head()</a></code> only works on data frame objects where <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code> will work on any type of R object. In this case <code>sms_tokens</code> is a ‘tokens’ object which is a more complex type of list object.</p>
 </div>
-<p>What is nice about a tokens object is that the metadata from the corpus object <code>sms_corpus</code> is retained. We can preview the metadata with.</p>
+<p>What is nice about a tokens object is that the metadata from the corpus object <code>sms_corpus</code> is retained. We can preview the metadata again with <code><a href="https://quanteda.io/reference/docvars.html">docvars()</a></code>.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sms_tokens</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://quanteda.io/reference/docvars.html">docvars</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># get corpus metadata attributes</span>
@@ -548,7 +548,7 @@
 </table>
 </div>
 <p>We can see that our grouped frequency statistics show similarities and differences. On the one hand we can see that the frequency counts and document frequency are much larger for ham. This makes sense since around 87% of the messages are ham in our dataset. On the other hand, if we look at particular features we see that ‘i’ is the most common feature for ham and ‘to’ for spam. There is some overlap as well ‘you’ and ‘a’ appear in both ham and spam. The more overlap we have between features the less distinctive our classes (ham and spam) will be which can make it more difficult for the prediction model to make accurate predictions.</p>
-<p>For the moment we will continue to move forward and see how the model does despite these similarities, but it is important to know that we can apply some techniques to reduce similarity. One way is to return to our tokenization process and remove common words using a stopword list. This approach is common but relies on pre-defined lists of what is considered common. Another approach is to weigh the distribution of the given dataset such that the number of documents a feature appears in influences the feature value. This weighting is called the <a href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf">Term Frequency-Inverse Document Frequency (TF-IDF)</a>. We can use the <code><a href="https://quanteda.io/reference/dfm_tfidf.html">dfm_tfidf()</a></code> function to transform the <code>sms_dfm</code> matrix and view how this weighting effects our apparent overlap in top features for ham and spam.</p>
+<p>For the moment we will continue to move forward and see how the model does despite these similarities, but it is important to know that we can apply some techniques to reduce similarity. One way is to return to our tokenization process and remove common words using a stopword list. This approach is common but relies on pre-defined lists of what is considered common. Another approach is to weigh the distribution of the given dataset such that the number of documents in which a feature appears in influences the feature value. This weighting is called the <a href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf">Term Frequency-Inverse Document Frequency (TF-IDF)</a>. We can use the <code><a href="https://quanteda.io/reference/dfm_tfidf.html">dfm_tfidf()</a></code> function to transform the <code>sms_dfm</code> matrix and view how this weighting effects our apparent overlap in top features for ham and spam.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sms_dfm</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://quanteda.io/reference/dfm_tfidf.html">dfm_tfidf</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># calculate term frequency-inverse document frequency weighted scores</span>
@@ -640,7 +640,7 @@
 </div>
 <p>We can see now that the TF-IDF scores have reduced the apparent overlap. Let’s keep this in mind when we evaluate our model performance. For now we will continue with the raw counts as our value scores.</p>
 <p>The last step we need to do to prepare our dataset for predictive modeling is to split the dataset into training and testing sets. The training set should contain around 75% of the dataset and the other 25% will be reserve for testing. Both datasets should have similar relative proportions of the classes we want to predict (i.e. ham and spam).</p>
-<p>Let’s create a numeric vector which we will use to randomly sample 75% of the observations from our <code>sms_dfm</code> for use in training. First I will set a random number seed <code>set.seed(300)</code> to make this example reproducible. Next I will calculate the number of documents in the <code>sms_dfm</code> with the <code><a href="https://quanteda.io/reference/ndoc.html">ndoc()</a></code> function. then I will multiply this number by <code>.75</code> to get the sample size we want. The we can use the <code><a href="https://rdrr.io/r/base/sample.html">sample()</a></code> function to get the <code>train_ids</code>. Note we set <code>replace = FALSE</code> so no ids are repeated in the sample (all 75% will be unique).</p>
+<p>Let’s create a numeric vector which we will use to randomly sample 75% of the observations from our <code>sms_dfm</code> for use in training. First I will set a random number seed <code><a href="https://rdrr.io/r/base/Random.html">set.seed()</a></code> to make this example reproducible. Next I will calculate the number of documents in the <code>sms_dfm</code> with the <code><a href="https://quanteda.io/reference/ndoc.html">ndoc()</a></code> function. then I will multiply this number by <code>.75</code> to get the sample size we want. The we can use the <code><a href="https://rdrr.io/r/base/sample.html">sample()</a></code> function to get the <code>train_ids</code>. Note we set <code>replace = FALSE</code> so no ids are repeated in the sample (all 75% will be unique).</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">300</span><span class="op">)</span> <span class="co"># make reproducible</span>
 
@@ -749,7 +749,7 @@
 <h3 class="hasAnchor">
 <a href="#model-training" class="anchor"></a>Model training</h3>
 <!-- naive bayes text modeling -->
-<p>We will be using a <a href="https://en.wikipedia.org/wiki/Naive_Bayes_classifier">Naive Bayes Classifier algorithm</a> implemented in the quanteda.textmodels package <code><a href="https://rdrr.io/pkg/quanteda.textmodels/man/textmodel_nb.html">textmodel_nb()</a></code>. Naive Bayes is a common starting algorithm for text classification. To train our mmodel we need to pass the <code>sms_dfm_train</code> document-feature matrix which contains the values for each of our feature tokens to <code>x</code> and then the class labels (‘ham’ and ‘spam’) for each document using the document variables of the <code>sms_dfm_train</code> object. We will assign the model to <code>nb1</code> and use <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> to see an overview of the training results.</p>
+<p>We will be using a <a href="https://en.wikipedia.org/wiki/Naive_Bayes_classifier">Naive Bayes Classifier algorithm</a> implemented in the quanteda.textmodels package <code><a href="https://rdrr.io/pkg/quanteda.textmodels/man/textmodel_nb.html">textmodel_nb()</a></code>. Naive Bayes is a common starting algorithm for text classification. To train our model we need to pass the <code>sms_dfm_train</code> document-feature matrix which contains the values for each of our feature tokens to <code>x</code> and then the class labels (‘ham’ and ‘spam’) for each document using the document variables of the <code>sms_dfm_train</code> object. We will assign the model to <code>nb1</code> and use <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> to see an overview of the training results.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">nb1</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="https://rdrr.io/pkg/quanteda.textmodels/man/textmodel_nb.html">textmodel_nb</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sms_dfm_train</span>, <span class="co"># document-feature matrix</span>
@@ -778,7 +778,7 @@
 ##            u      oni     free    entry       2      a
 ## ham  0.01293 6.49e-05 0.000811 1.62e-05 0.00396 0.0133
 ## spam 0.00533 4.33e-05 0.007233 8.66e-04 0.00585 0.0118</code></pre>
-<p>In the <code>nb1</code> model summary we see the ‘Call,’ the ‘Class Priors’ and a preview of the ‘Estimated Feature Scores.’ The class priors are set to 50/50 for ham and spam which means our model does not assume one class is more prevalent than the other. We will leave it this way as we don’t want to bias our model towards one class over the other –even though our input data is biased. The posterior probabilities for the features can be seen in the estimated feature scores. For a given word we can see how the model weigh individual features towards ham or spam. Our predictions will be based on the sum of these probabilities for the features in the testing dataset. We can see, for example, the probability of ‘u’ is higher for ham and ‘free’ leans towards ‘spam.’ A feature like ‘a,’ however, does not have much discriminatory power as it is split quite equally.</p>
+<p>In the <code>nb1</code> model summary we see the ‘Call,’ the ‘Class Priors’ and a preview of the ‘Estimated Feature Scores.’ The class priors are set to 50/50 for ham and spam which means our model does not assume one class is more prevalent than the other. We will leave it this way as we don’t want to bias our model towards one class over the other –even though our input data is biased. The posterior probabilities for the features can be seen in the estimated feature scores. For a given word we can see how the model weighs individual features towards ham or spam. Our predictions will be based on the sum of these probabilities for the features of each text message in the testing dataset. We can see, for example, the probability of ‘u’ is higher for ham and ‘free’ leans towards ‘spam.’ A feature like ‘a,’ however, does not have much discriminatory power as it is split quite equally.</p>
 <p>We can explore more of the feature probabilities using the <code><a href="https://rdrr.io/r/stats/coef.html">coef()</a></code> function on the <code>nb1</code> model.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">nb1</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># get the feature coefficient scores</span>
@@ -1034,21 +1034,21 @@
 ##                                         
 ##        'Positive' Class : ham           
 ## </code></pre>
-<p>So we see that the trained <code>nb1</code> model does quite well at 96.7% accuracy. If we did into the cross-tabulation we see that the errors tend to be more for cases when the model predicts that messages are spam when they are in fact ham.</p>
+<p>So we see that the trained <code>nb1</code> model does quite well at 96.7% accuracy. If we dig into the cross-tabulation we see that the errors tend to be more for cases when the model predicts that messages are spam when they are in fact ham.</p>
 <p>Let’s describe in more detail where the key statistics come from and how they are calculated. Below we have a summary of the meanings of the statistics:</p>
 <ul>
-<li>Accuracy (measure of overall correct predictions)</li>
-<li>Precision (measure of the quality of the predictions)
+<li>Accuracy: measure of overall correct predictions</li>
+<li>Precision: measure of the quality of the predictions
 <ul>
 <li>Percentage of predicted ‘ham’ messages that were correct</li>
 </ul>
 </li>
-<li>Recall (measure of the quantity of the predictions)
+<li>Recall: measure of the quantity of the predictions
 <ul>
 <li>Percentage of actual ‘ham’ messages that were correct</li>
 </ul>
 </li>
-<li>F1-score (summarizes the balance between precision and recall)</li>
+<li>F1-score: summarizes the balance between precision and recall</li>
 </ul>
 <p>To calculate these statistic by hand it is helpful to be able to read a confusion matrix as seen in Figure <a href="#fig:eval-confusion-matrix-image">1</a>.</p>
 <div class="figure" style="text-align: center">
@@ -1086,14 +1086,13 @@ Figure 1: Confusion matrix
 <a href="#production" class="anchor"></a>Production</h3>
 <!-- function to apply to new text -->
 <p>Now, if we were satisfied with this model and wanted to put it into use to filter real SMS text messages, we could create a function to do just that.</p>
-<p>We just need to include the step to tokenize the new message in the same way we did to create the model and then create a dfm of these tokens as features. Then we match the features from the model and apply the model to the new message and report the class prediction as the result.</p>
+<p>We just need to include the step to tokenize the new messages in the same way we did to create the model and then create a dfm of these tokens as features. Then we match the features from the model and apply the model to the new message and report the class prediction as the result.</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">predict_sms_type</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">sms_message</span>, <span class="va">nb_model</span><span class="op">)</span> <span class="op">{</span>
   <span class="co"># Function</span>
   <span class="co"># Takes a character vector of sms messages and provides</span>
-  <span class="co"># a prediction as to whether the review is spam or ham</span>
+  <span class="co"># a prediction as to whether the message is spam or ham</span>
   <span class="co"># given the given trained NB model</span>
-  
   
 <span class="va">sms_tokens</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="https://quanteda.io/reference/tokens.html">tokens</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sms_message</span>, <span class="co"># character vector</span>

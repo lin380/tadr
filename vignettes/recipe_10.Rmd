@@ -73,14 +73,14 @@ sms_corpus %>% # corpus object
   slice_head(n = 5) # first observations
 ```
 
-We can add metadata to our corpus object by simply making reference to a new column and assigning values to it. In our data we are going to want to have a unique document id for each of our 4,837 text messages. We want to create a vector of numbers 1 to 4,837. One way to do this is by using the `1:4837` syntax with the number hardcoded in. Another more flexible way to create the document id vector that is exactly fit to the number of observations is by using the `ndoc()` function on the corpus object itself. `ndoc()` will return the number of documents in the corpus object. For corpus objects observations are known as documents and for us a document is a text message.
+We can add metadata to our corpus object by simply making reference to a new column and assigning values to it. In our data we are going to want to have a unique document id for each of our 5,574 text messages. We want to create a vector of numbers 1 to 5,574. One way to do this is by using the `1:5574` syntax with the number hardcoded in. Another more flexible way to create the document id vector that is exactly fit to the number of observations is by using the `ndoc()` function on the corpus object itself. `ndoc()` will return the number of documents in the corpus object. For corpus objects observations are known as documents and for us a document is a text message.
 
 ```{r sms-corpus-docvars-doc-id}
 sms_corpus$doc_id <- # create a new column `doc_id`
   1:ndoc(sms_corpus) # add numeric id to each text message
 ```
 
-We can now look at the document variables again and we will see that the `do c_id` column now appears. 
+We can now look at the document variables again and we will see that the `doc_id` column now appears. 
 
 ```{r sms-corpus-docvars-doc-id-view}
 sms_corpus %>% # corpus object
@@ -100,7 +100,7 @@ sms_corpus %>% # corpus object
 
 <!-- tokenization and document-frequency matrix -->
 
-The next step towards preparing our dataset for use in the predictive model is to decide what the features are that will be used to help the predictive model learn how to distinguish between spam and ham text messages. To create language features we will tokenize the text into smaller linguistic units. We can choose from characters, words, or sentences, or ngram sequences of either characters of words. For many predictive models, the default feature to select as a starting point will be words. However, it there is reason to believe that some other linguistic unit(s) would make more practical sense there is nothing limiting you from selecting another unit. If we later see that the model does not perform well we can always come back and tweak the tokenization process and try other linguistic units. 
+The next step towards preparing our dataset for use in the predictive model is to decide what the features are that will be used to help the predictive model learn how to distinguish between spam and ham text messages. To create language features we will tokenize the text into smaller linguistic units. We can choose from characters, words, or sentences, or ngram sequences of either characters or words. For many predictive models, the default feature to select as a starting point will be words. However, if there is reason to believe that some other linguistic unit(s) would make more practical sense there is nothing limiting you from selecting another unit. If we later see that the model does not perform well we can always come back and tweak the tokenization process and try other linguistic units. 
 
 Let's move forward by tokenizing the messages into words. We will also remove punctuation and numbers and lowercase all the messages. The `tokens()` function allows us to do all but lowercasing.
 
@@ -124,7 +124,7 @@ sms_tokens %>%
 The `head()` function has been used here instead of the `slice_head()` function we have typically used. It is of note that `head()` works much like `slice_head()` with the main distinction that `slice_head()` only works on data frame objects where `head()` will work on any type of R object. In this case `sms_tokens` is a 'tokens' object which is a more complex type of list object.
 :::
 
-What is nice about a tokens object is that the metadata from the corpus object `sms_corpus` is retained. We can preview the metadata with. 
+What is nice about a tokens object is that the metadata from the corpus object `sms_corpus` is retained. We can preview the metadata again with `docvars()`. 
 
 ```{r sms-tokenize-docvars}
 sms_tokens %>% 
@@ -179,7 +179,7 @@ sms_dfm %>%
 ```
 We can see that our grouped frequency statistics show similarities and differences.  On the one hand we can see that the frequency counts and document frequency are much larger for ham. This makes sense since around 87\% of the messages are ham in our dataset. On the other hand, if we look at particular features we see that 'i' is the most common feature for ham and 'to' for spam. There is some overlap as well 'you' and 'a' appear in both ham and spam. The more overlap we have between features the less distinctive our classes (ham and spam) will be which can make it more difficult for the prediction model to make accurate predictions. 
 
-For the moment we will continue to move forward and see how the model does despite these similarities, but it is important to know that we can apply some techniques to reduce similarity. One way is to return to our tokenization process and remove common words using a stopword list. This approach is common but relies on pre-defined lists of what is considered common. Another approach is to weigh the distribution of the given dataset such that the number of documents a feature appears in influences the feature value. This weighting is called the [Term Frequency-Inverse Document Frequency (TF-IDF)](https://en.wikipedia.org/wiki/Tf%E2%80%93idf). We can use the `dfm_tfidf()` function to transform the `sms_dfm` matrix and view how this weighting effects our apparent overlap in top features for ham and spam. 
+For the moment we will continue to move forward and see how the model does despite these similarities, but it is important to know that we can apply some techniques to reduce similarity. One way is to return to our tokenization process and remove common words using a stopword list. This approach is common but relies on pre-defined lists of what is considered common. Another approach is to weigh the distribution of the given dataset such that the number of documents in which a feature appears in influences the feature value. This weighting is called the [Term Frequency-Inverse Document Frequency (TF-IDF)](https://en.wikipedia.org/wiki/Tf%E2%80%93idf). We can use the `dfm_tfidf()` function to transform the `sms_dfm` matrix and view how this weighting effects our apparent overlap in top features for ham and spam. 
 
 ```{r sms-dfm-tfidf}
 sms_dfm %>% 
@@ -192,7 +192,7 @@ We can see now that the TF-IDF scores have reduced the apparent overlap. Let's k
 
 The last step we need to do to prepare our dataset for predictive modeling is to split the dataset into training and testing sets. The training set should contain around 75\% of the dataset and the other 25\% will be reserve for testing. Both datasets should have similar relative proportions of the classes we want to predict (i.e. ham and spam). 
 
-Let's create a numeric vector which we will use to randomly sample 75\% of the observations from our `sms_dfm` for use in training. First I will set a random number seed `set.seed(300)` to make this example reproducible. Next I will calculate the number of documents in the `sms_dfm` with the `ndoc()` function. then I will multiply this number by `.75` to get the sample size we want. The we can use the `sample()` function to get the `train_ids`. Note we set `replace = FALSE` so no ids are repeated in the sample (all 75\% will be unique). 
+Let's create a numeric vector which we will use to randomly sample 75\% of the observations from our `sms_dfm` for use in training. First I will set a random number seed `set.seed()` to make this example reproducible. Next I will calculate the number of documents in the `sms_dfm` with the `ndoc()` function. then I will multiply this number by `.75` to get the sample size we want. The we can use the `sample()` function to get the `train_ids`. Note we set `replace = FALSE` so no ids are repeated in the sample (all 75\% will be unique). 
 
 ```{r create-train-ids}
 set.seed(300) # make reproducible
@@ -246,7 +246,7 @@ The splits look comparable so we are good to proceed to training our prediction 
 
 <!-- naive bayes text modeling -->
 
-We will be using a [Naive Bayes Classifier algorithm](https://en.wikipedia.org/wiki/Naive_Bayes_classifier) implemented in the quanteda.textmodels package `textmodel_nb()`. Naive Bayes is a common starting algorithm for text classification. To train our mmodel we need to pass the `sms_dfm_train` document-feature matrix which contains the values for each of our feature tokens to `x` and then the class labels ('ham' and 'spam') for each document using the document variables of the `sms_dfm_train` object. We will assign the model to `nb1` and use `summary()` to see an overview of the training results.
+We will be using a [Naive Bayes Classifier algorithm](https://en.wikipedia.org/wiki/Naive_Bayes_classifier) implemented in the quanteda.textmodels package `textmodel_nb()`. Naive Bayes is a common starting algorithm for text classification. To train our model we need to pass the `sms_dfm_train` document-feature matrix which contains the values for each of our feature tokens to `x` and then the class labels ('ham' and 'spam') for each document using the document variables of the `sms_dfm_train` object. We will assign the model to `nb1` and use `summary()` to see an overview of the training results.
 
 ```{r sms-dfm-train-model}
 nb1 <- 
@@ -256,7 +256,7 @@ nb1 <-
 summary(nb1) # model summary
 ```
 
-In the `nb1` model summary we see the 'Call', the 'Class Priors' and a preview of the 'Estimated Feature Scores'. The class priors are set to 50/50 for ham and spam which means our model does not assume one class is more prevalent than the other. We will leave it this way as we don't want to bias our model towards one class over the other --even though our input data is biased. The posterior probabilities for the features can be seen in the estimated feature scores. For a given word we can see how the model weigh  individual features towards ham or spam. Our predictions will be based on the sum of these probabilities for the features in the testing dataset. We can see, for example, the probability of 'u' is higher for ham and 'free' leans towards 'spam'. A feature like 'a', however, does not have much discriminatory power as it is split quite equally.  
+In the `nb1` model summary we see the 'Call', the 'Class Priors' and a preview of the 'Estimated Feature Scores'. The class priors are set to 50/50 for ham and spam which means our model does not assume one class is more prevalent than the other. We will leave it this way as we don't want to bias our model towards one class over the other --even though our input data is biased. The posterior probabilities for the features can be seen in the estimated feature scores. For a given word we can see how the model weighs  individual features towards ham or spam. Our predictions will be based on the sum of these probabilities for the features of each text message in the testing dataset. We can see, for example, the probability of 'u' is higher for ham and 'free' leans towards 'spam'. A feature like 'a', however, does not have much discriminatory power as it is split quite equally.  
 
 We can explore more of the feature probabilities using the `coef()` function on the `nb1` model. 
 
@@ -350,16 +350,16 @@ tab_class <-
 caret::confusionMatrix(tab_class, mode = "prec_recall") # model performance statistics
 ```
 
-So we see that the trained `nb1` model does quite well at 96.7\% accuracy. If we did into the cross-tabulation we see that the errors tend to be more for cases when the model predicts that messages are spam when they are in fact ham. 
+So we see that the trained `nb1` model does quite well at 96.7\% accuracy. If we dig into the cross-tabulation we see that the errors tend to be more for cases when the model predicts that messages are spam when they are in fact ham. 
 
 Let's describe in more detail where the key statistics come from and how they are calculated. Below we have a summary of the meanings of the statistics:
 
-- Accuracy (measure of overall correct predictions)
-- Precision (measure of the quality of the predictions)
+- Accuracy: measure of overall correct predictions
+- Precision: measure of the quality of the predictions
   - Percentage of predicted 'ham' messages that were correct
-- Recall (measure of the quantity of the predictions)
+- Recall: measure of the quantity of the predictions
   - Percentage of actual 'ham' messages that were correct
-- F1-score (summarizes the balance between precision and recall)
+- F1-score: summarizes the balance between precision and recall
 
 To calculate these statistic by hand it is helpful to be able to read a confusion matrix as seen in Figure \@ref(fig:eval-confusion-matrix-image). 
 
@@ -396,15 +396,14 @@ f1_score <- 2 * ((precision * recall) / (precision + recall))
 
 Now, if we were satisfied with this model and wanted to put it into use to filter real SMS text messages, we could create a function to do just that.
 
-We just need to include the step to tokenize the new message in the same way we did to create the model and then create a dfm of these tokens as features. Then we match the features from the model and apply the model to the new message and report the class prediction as the result.
+We just need to include the step to tokenize the new messages in the same way we did to create the model and then create a dfm of these tokens as features. Then we match the features from the model and apply the model to the new message and report the class prediction as the result.
 
 ```{r sms-production}
 predict_sms_type <- function(sms_message, nb_model) {
   # Function
   # Takes a character vector of sms messages and provides
-  # a prediction as to whether the review is spam or ham
+  # a prediction as to whether the message is spam or ham
   # given the given trained NB model
-  
   
 sms_tokens <- 
   tokens(x = sms_message, # character vector
