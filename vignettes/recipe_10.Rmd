@@ -25,7 +25,7 @@ library(quanteda.textmodels) # naive bayes classifier
 
 ## Coding strategies
 
-## Orientation
+### Orientation
 
 Let's first read in a become familiar with the SMS dataset. We can access this dataset through the tadr package. 
 
