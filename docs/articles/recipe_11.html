@@ -650,27 +650,14 @@ Figure 4: Relationship between course rating and gender.
 <span class="va">keyness_target_male</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">feature</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">male</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># remove male-gendered terms</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nchar.html">nchar</a></span><span class="op">(</span><span class="va">feature</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># remove short terms (&lt; 3 characters)</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/quanteda.textplots/man/textplot_keyness.html">textplot_keyness</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># plot the indicative features.</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/quanteda.textplots/man/textplot_keyness.html">textplot_keyness</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>  <span class="co"># plot the indicative features.</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Chi-squared statistic"</span>,
       title <span class="op">=</span> <span class="st">"Term keyness"</span>, 
        subtitle <span class="op">=</span> <span class="st">"Gendered documents: male versus others"</span><span class="op">)</span> <span class="co"># labels</span></code></pre></div>
-<pre><code>## [[1]]</code></pre>
-<p><img src="recipe_11_files/figure-html/rmp-keyness-male-1.png" width="85%" style="display: block; margin: auto;"></p>
-<pre><code>## 
-## $x
-## [1] "Chi-squared statistic"
-## 
-## $title
-## [1] "Term keyness"
-## 
-## $subtitle
-## [1] "Gendered documents: male versus others"
-## 
-## attr(,"class")
-## [1] "labels"</code></pre>
-<p>Here we see that male gendered documents have a series of indicative features that are particularly telling: ‘funny,’ ‘jokes,’ ‘hilarious,’ ‘cool,’ ‘smart,’ ‘nice,’ and ‘cares.’ The bulk of these point to documents with male-oriented gender terms as also noting the jovial personality of the instructor. There’s not much we can make out of the ‘reference’ terms as they are a mixed-gendered bag of female-gendered terms and documents with no gendered terms.</p>
+<p><img src="recipe_11_files/figure-html/rmp-keyness-male-1.png" width="85%" style="display: block; margin: auto;">
+Here we see that male gendered documents have a series of indicative features that are particularly telling: ‘funny,’ ‘jokes,’ ‘hilarious,’ ‘cool,’ ‘smart,’ ‘nice,’ and ‘cares.’ The bulk of these point to documents with male-oriented gender terms as also noting the jovial personality of the instructor. There’s not much we can make out of the ‘reference’ terms as they are a mixed-gendered bag of female-gendered terms and documents with no gendered terms.</p>
 <p>Let’s now run the same analysis, but this time on female-gendered terms.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rmp_tokens_female_reference</span> <span class="op">&lt;-</span> 
   <span class="va">rmp_tokens</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://quanteda.io/reference/tokens_select.html">tokens_remove</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="va">female</span>, window <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># remove female-gendered terms</span>
@@ -689,25 +676,12 @@ Figure 4: Relationship between course rating and gender.
 <span class="va">keyness_target_female</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">feature</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">female</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># remove female-gendered terms</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nchar.html">nchar</a></span><span class="op">(</span><span class="va">feature</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># remove short terms (&lt; 3 characters)</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/quanteda.textplots/man/textplot_keyness.html">textplot_keyness</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># plot the indicative features.</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/quanteda.textplots/man/textplot_keyness.html">textplot_keyness</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># plot the indicative features.</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Chi-squared statistic"</span>,
       title <span class="op">=</span> <span class="st">"Term keyness"</span>, 
        subtitle <span class="op">=</span> <span class="st">"Gendered documents: male versus others"</span><span class="op">)</span> <span class="co"># labels</span></code></pre></div>
-<pre><code>## [[1]]</code></pre>
-<p><img src="recipe_11_files/figure-html/rmp-keyness-female-1.png" width="85%" style="display: block; margin: auto;"></p>
-<pre><code>## 
-## $x
-## [1] "Chi-squared statistic"
-## 
-## $title
-## [1] "Term keyness"
-## 
-## $subtitle
-## [1] "Gendered documents: male versus others"
-## 
-## attr(,"class")
-## [1] "labels"</code></pre>
-<p>In the indicative terms for female-gendered documents we see a bit more of a mixed bag. We have potentially two groups of interest: positive traits such as ‘sweet,’ ‘wonderful,’ ‘nice,’ ‘helpful,’ etc. and negative traits such as ‘rude’ and ‘feminist’ (I’m assuming this term is negative in this context).</p>
+<p><img src="recipe_11_files/figure-html/rmp-keyness-female-1.png" width="85%" style="display: block; margin: auto;">
+In the indicative terms for female-gendered documents we see a bit more of a mixed bag. We have potentially two groups of interest: positive traits such as ‘sweet,’ ‘wonderful,’ ‘nice,’ ‘helpful,’ etc. and negative traits such as ‘rude’ and ‘feminist’ (I’m assuming this term is negative in this context).</p>
 </div>
 <div id="sentiment-analysis" class="section level4">
 <h4 class="hasAnchor">
@@ -715,7 +689,7 @@ Figure 4: Relationship between course rating and gender.
 <p>The findings from these two keyness analysis for gendered terms makes me wonder if there are differences in the sentiment of the comments and how these sentiments may or may not relate to the course rating.</p>
 <p>Let’s perform a simple dictionary approach to sentiment analysis on this dataset. First we need to get a sentiment lexicon. I’ve chosen to use the NRC Word-Emotion Association Lexicon <span class="citation">(<a href="#ref-Mohammad2013" role="doc-biblioref">Mohammad and Turney 2013</a>)</span> which can be loaed from the textdata package <span class="citation">(<a href="#ref-R-textdata" role="doc-biblioref">Hvitfeldt 2020</a>)</span>. This lexicon contains 13,875 words classified for “positive,” “joy,” “trust,” “anticipation,” “surprise,” “negative,” “anger,” “fear,” “disgust,” and “sadness.”</p>
 <p>Once we have the sentiment lexicon in quanteda dictionary format, we then use the <code><a href="https://quanteda.io/reference/tokens_lookup.html">tokens_lookup()</a></code> function to label a tokens object with sentiment for those words that appear in both the tokens and dictionary objects. We do this for both the <code>rmp_tokens_male</code> and <code>rmp_tokens_female</code> tokens objects. Then I convert both to dfm objects, generate frequency measures (where the sentiments are the features), then create a barplot contrasting the course ratings. There is a lot going on in the code to generate the plots. You can refer to the <a href="https://ggplot2.tidyverse.org/index.html">ggplot2 documentation</a> for more information.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sentiment_dictionary</span> <span class="op">&lt;-</span> 
   <span class="fu">textdata</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/textdata/man/lexicon_nrc.html">lexicon_nrc</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># load the nrc lexicon</span>
   <span class="fu"><a href="https://quanteda.io/reference/as.dictionary.html">as.dictionary</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># convert the data frame to a dictionary object</span>

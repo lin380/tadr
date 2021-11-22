@@ -382,7 +382,7 @@ keyness_target_male <-
 keyness_target_male %>% 
   filter(!feature %in% male) %>% # remove male-gendered terms
   filter(nchar(feature) > 3) %>% # remove short terms (< 3 characters)
-  textplot_keyness() %>%  # plot the indicative features.
+  textplot_keyness() +  # plot the indicative features.
   labs(x = "Chi-squared statistic",
       title = "Term keyness", 
        subtitle = "Gendered documents: male versus others") # labels
@@ -410,7 +410,7 @@ keyness_target_female <-
 keyness_target_female %>% 
   filter(!feature %in% female) %>% # remove female-gendered terms
   filter(nchar(feature) > 3) %>% # remove short terms (< 3 characters)
-  textplot_keyness() %>% # plot the indicative features.
+  textplot_keyness() + # plot the indicative features.
   labs(x = "Chi-squared statistic",
       title = "Term keyness", 
        subtitle = "Gendered documents: male versus others") # labels
