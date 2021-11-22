@@ -8,6 +8,7 @@ template:
   bootstrap: 4
   params:
     bootswatch: cosmo
+    ganalytics: 294282281
 
 reference:
 - title: "Functions"

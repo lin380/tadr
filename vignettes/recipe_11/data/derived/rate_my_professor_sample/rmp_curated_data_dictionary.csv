@@ -1,0 +1,7 @@
+variable_name,name,description
+doc_id,Document ID,Unique ID for each student course rating
+student_id,Student ID,Unique ID for each student
+student_star,Student Rating,Scalar rating provided by the student
+course_rating,Course Rating,"Course rating groupings (< 3.5 ""low"", > 3.5 ""high"")"
+online,Online Course,Was the course online (TRUE or FALSE)
+comments,Student Comments,Student comments provided for the course
