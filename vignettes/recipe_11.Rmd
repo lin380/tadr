@@ -479,11 +479,3 @@ There is so much more that could be done with this dataset, but this should be e
 
 ## References
 
-
-<!-- Outline:
-
-- Tweets [Recipe]
-  - US Census data and US regionalisms
-  - /Users/francojc/Documents/Academic/Research/Data/_code/collect_tweets/data/original/tweets_us_regionalisms.csv
-
--->

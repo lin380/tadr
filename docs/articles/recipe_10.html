@@ -17,12 +17,12 @@
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=294282281"></script><script>
+<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-P69131XJC0"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', '294282281');
+  gtag('config', 'G-P69131XJC0');
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
@@ -130,7 +130,7 @@
 <div class="tip">
 <p>In this recipe I will be suffixing the object names to reflect the object type. We will work with our dataset in four main formats: data frame (<code>_df</code>), corpus <code>_corpus</code>, tokens <code>_tokens</code>, and document-frequency matrix (<code>_dfm</code>).</p>
 </div>
-<p>Let’s see the proportion of spam to ham messages in our dataset. I will use the <code><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl()</a></code> function from the janitor package to get the counts and proportions.</p>
+<p>Let’s see the proportion of spam to ham messages in our dataset. I will use the <code>tabyl()</code> function from the janitor package to get the counts and proportions.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sms_df</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
     <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">sms_type</span><span class="op">)</span></code></pre></div>
@@ -285,7 +285,7 @@
 </tbody>
 </table>
 </div>
-<p>Of note, if at any time we would like to convert our corpus object back into a data frame we can use the <code><a href="https://generics.r-lib.org/reference/tidy.html">tidy()</a></code> function from the tidytext package.</p>
+<p>Of note, if at any time we would like to convert our corpus object back into a data frame we can use the <code>tidy()</code> function from the tidytext package.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sms_corpus</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># corpus object</span>
   <span class="fu">tidytext</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># convert back to a data frame</span>
@@ -673,7 +673,7 @@
 <span class="va">sms_dfm_test</span> <span class="op">&lt;-</span> 
   <span class="va">sms_dfm</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dfm object</span>
   <span class="fu"><a href="https://quanteda.io/reference/dfm_subset.html">dfm_subset</a></span><span class="op">(</span><span class="op">!</span><span class="va">doc_id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">train_ids</span><span class="op">)</span> <span class="co"># subset non-matching doc_id and train_ids</span></code></pre></div>
-<p>Let’s verify that the proportions of ham to spam are similar between the <code>sms_dfm_train</code> and <code>sms_dfm_test</code> sets. Again, I will use the <code><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl()</a></code> function.</p>
+<p>Let’s verify that the proportions of ham to spam are similar between the <code>sms_dfm_train</code> and <code>sms_dfm_test</code> sets. Again, I will use the <code>tabyl()</code> function.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sms_dfm</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dfm object</span>
   <span class="fu"><a href="https://quanteda.io/reference/docvars.html">docvars</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># pull the document variables</span>
