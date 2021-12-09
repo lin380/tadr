@@ -169,7 +169,7 @@
 <h3 class="hasAnchor">
 <a href="#single-vector" class="anchor"></a>Single vector</h3>
 <p><strong>Categorical</strong></p>
-<p>To get a descriptive summary of the categorical variables I will use the skimr package <span class="citation">(<a href="#ref-R-skimr" role="doc-biblioref"><strong>R-skimr?</strong></a>)</span> and call the <code><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim()</a></code> function and then pipe these results to <code><a href="https://docs.ropensci.org/skimr/reference/partition.html">yank()</a></code> and target only the factor variables.</p>
+<p>To get a descriptive summary of the categorical variables I will use the skimr package <span class="citation">(<a href="#ref-R-skimr" role="doc-biblioref">Waring et al. 2021</a>)</span> and call the <code><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim()</a></code> function and then pipe these results to <code><a href="https://docs.ropensci.org/skimr/reference/partition.html">yank()</a></code> and target only the factor variables.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
     <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
@@ -211,7 +211,7 @@
 </tr>
 </tbody>
 </table>
-<p>From this output we see a host of descriptive information about our categorical variables. What is important to note is that categorical variables are summarized by counts. The most common value for a categorical variable is called the mode. If we want to look at a specific variable, say <code>age_group</code> we can use the <code><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl()</a></code> function from the janitor package <span class="citation">(<a href="#ref-R-janitor" role="doc-biblioref"><strong>R-janitor?</strong></a>)</span>.</p>
+<p>From this output we see a host of descriptive information about our categorical variables. What is important to note is that categorical variables are summarized by counts. The most common value for a categorical variable is called the mode. If we want to look at a specific variable, say <code>age_group</code> we can use the <code><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl()</a></code> function from the janitor package <span class="citation">(<a href="#ref-R-janitor" role="doc-biblioref">Firke 2021</a>)</span>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
     <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">age_group</span><span class="op">)</span>  <span class="co"># create a tabulation of the `age_group` variable</span></code></pre></div>
@@ -248,7 +248,7 @@
 </div>
 <p>We see that the <code><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl()</a></code> function provides the counts but also the proportions of each of the values of the <code>age_group</code> variable. Note that when working with factors the values are often called ‘levels.’ We can see that this variable has two levels with the same count. This characterizes what is called a bimodal distribution as there are two most frequent levels.</p>
 <p>Tabular summaries are often the most effective way to assess categorical variables, but let’s set the stage for working with plotting in R.</p>
-<p>Among other package, the tidyverse package load the ggplot2 package <span class="citation">(<a href="#ref-R-ggplot2" role="doc-biblioref"><strong>R-ggplot2?</strong></a>)</span> which is a powerful package for creating plots in R. The ‘gg’ in ggplot2 refers to the use of “The Grammar of Graphics” approach to building plots. There are three basic elements for all ggplot2 plots: (1) data, (2) mappings, and (3) geometries. The data is, of course, the dataset that we want to use. The mappings used to select the variables to be used in the plot and how the variables are to be mapped to the plotting space. Finally the geometries specify how the mappings are organized.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p>Among other package, the tidyverse package load the ggplot2 package <span class="citation">(<a href="#ref-R-ggplot2" role="doc-biblioref">Wickham et al. 2021</a>)</span> which is a powerful package for creating plots in R. The ‘gg’ in ggplot2 refers to the use of “The Grammar of Graphics” approach to building plots. There are three basic elements for all ggplot2 plots: (1) data, (2) mappings, and (3) geometries. The data is, of course, the dataset that we want to use. The mappings used to select the variables to be used in the plot and how the variables are to be mapped to the plotting space. Finally the geometries specify how the mappings are organized.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 <p>Let’s create a simple plot for the <code>age_group</code> variable. First we pass the datset to <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>. The <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> function then requires that we provide the aesthetic mappings <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> in this case we have one variable and so we will want this variable to appear on the x axis. The <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code> function by default will then count the levels of our <code>age_group</code> factor variable and plot them on the y axis.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
@@ -340,7 +340,7 @@ Here we can graphically inspect the points that intersect on the x and y axis to
   <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="fl">.1</span><span class="op">)</span> <span class="co"># pull the value for the 10th percentile</span></code></pre></div>
 <pre><code>##  10% 
 ## 15.4</code></pre>
-<p>Now let’s move towards looking at distributions. This is done by creating either a histogram or a density plot. Let’s plot both here. I will assign each plot to an object and then have them output side-by-side using the gridExtra package <span class="citation">(<a href="#ref-R-gridExtra" role="doc-biblioref"><strong>R-gridExtra?</strong></a>)</span></p>
+<p>Now let’s move towards looking at distributions. This is done by creating either a histogram or a density plot. Let’s plot both here. I will assign each plot to an object and then have them output side-by-side using the gridExtra package <span class="citation">(<a href="#ref-R-gridExtra" role="doc-biblioref">Auguie 2017</a>)</span></p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p1</span> <span class="op">&lt;-</span> 
   <span class="va">belc</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
@@ -609,9 +609,7 @@ In QQ-plots the more the points diverge from the line, the less likely that the 
 <p><img src="recipe_4_files/figure-html/belc-age-group-num-tokens-1.png" width="85%" style="display: block; margin: auto;"></p>
 <!-- Outline:
 
-
 Skills: 
-
 
 Text summaries
   - tidyverse
@@ -621,7 +619,6 @@ Text summaries
         - mean
   - skimr
     - five score summary
-
 
 Visual summaries
   - ggplot2
@@ -638,7 +635,6 @@ Visual summaries
     - geom_boxplot
     - geom_point
     - geom_smooth
-
 -->
 </div>
 </div>
@@ -651,11 +647,23 @@ Visual summaries
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-R-gridExtra" class="csl-entry">
+Auguie, Baptiste. 2017. <em>gridExtra: Miscellaneous Functions for "Grid" Graphics</em>. <a href="https://CRAN.R-project.org/package=gridExtra">https://CRAN.R-project.org/package=gridExtra</a>.
+</div>
+<div id="ref-R-janitor" class="csl-entry">
+Firke, Sam. 2021. <em>Janitor: Simple Tools for Examining and Cleaning Dirty Data</em>. <a href="https://github.com/sfirke/janitor">https://github.com/sfirke/janitor</a>.
+</div>
 <div id="ref-Munoz2006" class="csl-entry">
 Muñoz, Carme. 2006. <em>Age and the Rate of Foreign Language Learning</em>. Clevedon: Multilingual Matters.
 </div>
 <div id="ref-Munoz2007" class="csl-entry">
 Muñoz, Carmen. 2007. <span>“SLABank Catalan-English Barcelona Corpus.”</span> TalkBank. <a href="https://doi.org/10.21415/T5S89C">https://doi.org/10.21415/T5S89C</a>.
+</div>
+<div id="ref-R-skimr" class="csl-entry">
+Waring, Elin, Michael Quinn, Amelia McNamara, Eduardo Arino de la Rubia, Hao Zhu, and Shannon Ellis. 2021. <em>Skimr: Compact and Flexible Summaries of Data</em>. <a href="https://CRAN.R-project.org/package=skimr">https://CRAN.R-project.org/package=skimr</a>.
+</div>
+<div id="ref-R-ggplot2" class="csl-entry">
+Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, and Dewey Dunnington. 2021. <em>Ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics</em>. <a href="https://CRAN.R-project.org/package=ggplot2">https://CRAN.R-project.org/package=ggplot2</a>.
 </div>
 </div>
 </div>

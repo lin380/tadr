@@ -1,0 +1,21 @@
+---
+title: "3. Creating R Markdown websites"
+pkgdown:
+  as_is: true
+bibliography: bibliography.bib
+biblio-style: "apalike"
+link-citations: true
+---
+
+```{r, child="_common.Rmd"}
+```
+
+```{r setup, include=FALSE}
+pacman::p_load(tidyverse)
+```
+
+## Overview
+
+...coming soon...
+
+

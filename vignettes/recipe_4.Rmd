@@ -20,7 +20,7 @@ In this Recipe we will build on our R coding skills to implement descriptive ass
 
 ### Packages
 
-First let's load some packages that will help us manipulate and create summaries of data. 
+First let's load some packages that will help us manipulate and create summaries of data.
 
 ```{r setup}
 library(tidyverse) # to manipulate and visualize datasets
@@ -343,9 +343,7 @@ belc %>% # dataset
 
 <!-- Outline:
 
-
 Skills: 
-
 
 Text summaries
   - tidyverse
@@ -355,7 +353,6 @@ Text summaries
         - mean
   - skimr
     - five score summary
-
 
 Visual summaries
   - ggplot2
@@ -372,7 +369,6 @@ Visual summaries
     - geom_boxplot
     - geom_point
     - geom_smooth
-
 -->
 
 ## Summary
@@ -380,4 +376,3 @@ Visual summaries
 In this recipe we covered various common strategies for descriptively assessing variables in a dataset. We worked with single variables of both categorical and continuous types discussing the relationship between R's vector types and informational values as well as looking a descriptive stats and visualizations. We also looked at strategies for assessing multiple variables either of the same type or mixed.
 
 ## References
-
