@@ -4,16 +4,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="tadr">
 <title>2. Literate programming II • Text as Data Resources</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <script src="../extra.js"></script><meta property="og:title" content="2. Literate programming II">
 <meta property="og:description" content="tadr">
+<meta property="og:image" content="https://lin380.github.io/tadr/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -25,95 +32,82 @@
   gtag('config', 'G-P69131XJC0');
 </script>
 </head>
-<body data-spy="scroll" data-target="#toc">
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">Text as Data Resources</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
-      </span>
-    </div>
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
+    
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
+    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    
+    <a class="navbar-brand me-2" href="../index.html">Text as Data Resources</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="active nav-item">
+  <a class="nav-link" href="../articles/index.html">Articles</a>
 </li>
-<li>
-  <a href="../tutorials/index.html">Tutorials</a>
+<li class="nav-item">
+  <a class="nav-link" href="../tutorials/index.html">Tutorials</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="../reference/index.html">Reference</a>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="https://github.com/lin380/tadr">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/lin380/tadr">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
       </ul>
 </div>
-<!--/.nav-collapse -->
+
+    
   </div>
-<!--/.container -->
-</div>
-<!--/.navbar -->
+</nav><div class="container template-article">
 
-      
 
-      </header><script src="recipe_2_files/header-attrs-2.11/header-attrs.js"></script><script src="recipe_2_files/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="recipe_2_files/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet">
-<script src="recipe_2_files/bootstrap-3.3.5/js/bootstrap.min.js"></script><script src="recipe_2_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script><script src="recipe_2_files/bootstrap-3.3.5/shim/respond.min.js"></script><style>h1 {font-size: 34px;}
-       h1.title {font-size: 38px;}
-       h2 {font-size: 30px;}
-       h3 {font-size: 24px;}
-       h4 {font-size: 18px;}
-       h5 {font-size: 16px;}
-       h6 {font-size: 12px;}
-       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-       pre:not([class]) { background-color: white }</style>
-<script src="recipe_2_files/navigation-1.1/tabsets.js"></script><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>2. Literate programming II</h1>
+<div class="row">
+  <main id="main"><div class="page-header">
+      <img src="../logo.png" class="logo" alt=""><h1>2. Literate programming II</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/lin380/tadr/blob/master/vignettes/recipe_2.Rmd"><code>vignettes/recipe_2.Rmd</code></a></small>
-      <div class="hidden name"><code>recipe_2.Rmd</code></div>
-
+      <small class="dont-index">Source: <a href="https://github.com/lin380/tadr/blob/HEAD/vignettes/recipe_2.Rmd" class="external-link"><code>vignettes/recipe_2.Rmd</code></a></small>
+      <div class="d-none name"><code>recipe_2.Rmd</code></div>
     </div>
 
     
     
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
 <p>In this Recipe we are going to explore additional functionality in R Markdown. This will include how to number sections, add a table of contents, how to add in-line citations and a document-final references list, and cross-reference tables and figures.</p>
 </div>
-<div id="toolbar-options" class="section level2">
-<h2 class="hasAnchor">
-<a href="#toolbar-options" class="anchor"></a>Toolbar options</h2>
-<p>Let’s explore some of the functionality that RStudio provides quick access to through the toolbar. In the RStudio toolbar to the right of the ‘Knit’ button, there is a cog icon. Click the dropdown menu from this icon and select ‘Output Options…,’ as seen in Figure <a href="#fig:image-output-options">1</a>.</p>
+<div class="section level2">
+<h2 id="toolbar-options">Toolbar options<a class="anchor" aria-label="anchor" href="#toolbar-options"></a>
+</h2>
+<p>Let’s explore some of the functionality that RStudio provides quick access to through the toolbar. In the RStudio toolbar to the right of the ‘Knit’ button, there is a cog icon. Click the dropdown menu from this icon and select ‘Output Options…’, as seen in Figure <a href="#fig:image-output-options">1</a>.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:image-output-options"></span>
 <img src="images/recipe_2/toolbar-output-options.png" alt="RStudio 'Output Options...'." width="25%"><p class="caption">
-Figure 1: RStudio ‘Output Options….’
+Figure 1: RStudio ‘Output Options…’.
 </p>
 </div>
 <p>A dialogue box will open (Figure <a href="#fig:image-document-options">2</a>). This dialogue box, provides the option to add a document output type to the front matter (of the three principle types –HTML, PDF, and Word) and/ or modify the output type options. Looking at the general options for HTML, we can add a table of contents, change theme colors (for code syntax and general), and add numbers to section headings (among other options).</p>
@@ -123,7 +117,7 @@ Figure 1: RStudio ‘Output Options….’
 Figure 2: RStudio toolbar document options.
 </p>
 </div>
-<p>If we check “Include table of contents” and “Number section headings” and click “OK,” you will see that the front matter is modified by RStudio –specifically, the last four lines.</p>
+<p>If we check “Include table of contents” and “Number section headings” and click “OK”, you will see that the front matter is modified by RStudio –specifically, the last four lines.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Literate Programming II"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Jerid Francom"</span></span>
@@ -142,11 +136,11 @@ Figure 3: HTML output with table of contents and numbered section headings.
 </div>
 <p>There is nothing magical about what RStudio has done. We could have changed the front matter manually to include this functionality, as we will see in the next section. The toolbar, however, does provide convenient access to some of the most common options and is a great way to get started modifying R Markdown front matter.</p>
 </div>
-<div id="manual-options" class="section level2">
-<h2 class="hasAnchor">
-<a href="#manual-options" class="anchor"></a>Manual options</h2>
-<p>The options provided in the RStudio toolbar are some of the most commonly used of the many potential attributes you can use to modify an R Markdown document’s output. A good first resource for exploring these options and other functionality not accessible through the RStudio toolbar is <a href="https://bookdown.org/yihui/rmarkdown/">R Markdown: The Definitive Guide</a> <span class="citation">(<a href="#ref-Xie2021a" role="doc-biblioref">Xie, Allaire, and Grolemund 2021</a>)</span>. The section on Output Formats provides descriptions of attributes and values for many output types.</p>
-<p>Let’s look at the <a href="https://bookdown.org/yihui/rmarkdown/html-document.html#table-of-contents">HTML document section for Table of contents output options</a>. Here we can see that we can manually add to the front matter seen in specifying what level of header depth to include (<code>toc_depth:</code>) and if we want to have the table of contents positioned floating to the left of the document (<code>toc_float:</code>), as well as how a floating table of contents should behave.</p>
+<div class="section level2">
+<h2 id="manual-options">Manual options<a class="anchor" aria-label="anchor" href="#manual-options"></a>
+</h2>
+<p>The options provided in the RStudio toolbar are some of the most commonly used of the many potential attributes you can use to modify an R Markdown document’s output. A good first resource for exploring these options and other functionality not accessible through the RStudio toolbar is <a href="https://bookdown.org/yihui/rmarkdown/" class="external-link">R Markdown: The Definitive Guide</a> <span class="citation">(<a href="#ref-Xie2021a" role="doc-biblioref">Xie, Allaire, and Grolemund 2021</a>)</span>. The section on Output Formats provides descriptions of attributes and values for many output types.</p>
+<p>Let’s look at the <a href="https://bookdown.org/yihui/rmarkdown/html-document.html#table-of-contents" class="external-link">HTML document section for Table of contents output options</a>. Here we can see that we can manually add to the front matter seen in specifying what level of header depth to include (<code>toc_depth:</code>) and if we want to have the table of contents positioned floating to the left of the document (<code>toc_float:</code>), as well as how a floating table of contents should behave.</p>
 <p>To add these options to the R Markdown document manually, we need to make sure to tab-indent the attribute under the appropriate attribute it modifies. So, to add a table of contents to our <code>html_document:</code> attribute, the <code>toc:</code> attribute is tab-indented under <code>html_document:</code>. The value it takes, if we want it to appear is <code>true</code> or <code>yes</code> (either will work). Floating a table of contents also modifies the <code>html_document:</code> attribute, and is also tab-indented in the same fashion. If, however, we want to modify how the table of contents floats (say, to have the table of contents ‘collapsed’ by default), then these attributes need to be tab-indented relative to the <code>toc_float:</code> attribute. The configuration just described is shown below.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Literate Programming II"</span></span>
@@ -168,13 +162,13 @@ Figure 4: HTML output with added floating table of contents.
 </div>
 <p><em>A very important note: not all output formats have the same available options, by simple nature of the type of output document. For example, a floating table of contents makes sense for HTML output, but does not for PDF or Word documents. So be mindful of the output format you are using and the options that are available.</em></p>
 </div>
-<div id="advanced-options" class="section level2">
-<h2 class="hasAnchor">
-<a href="#advanced-options" class="anchor"></a>Advanced options</h2>
-<p>There are many other options to explore. A good resource to explore for more advanced functionality is <a href="https://bookdown.org/yihui/rmarkdown-cookbook/">R Markdown Cookbook</a> <span class="citation">(<a href="#ref-Xie2021" role="doc-biblioref">Xie, Dervieux, and Riederer 2021</a>)</span>. In this resource we find information that will be very useful for creating research reports: <a href="https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html">bibliographies and citations</a> and <a href="https://bookdown.org/yihui/rmarkdown-cookbook/cross-ref.html">cross-referencing within documents</a>.</p>
-<div id="bibliographies-and-citations" class="section level3">
-<h3 class="hasAnchor">
-<a href="#bibliographies-and-citations" class="anchor"></a>Bibliographies and citations</h3>
+<div class="section level2">
+<h2 id="advanced-options">Advanced options<a class="anchor" aria-label="anchor" href="#advanced-options"></a>
+</h2>
+<p>There are many other options to explore. A good resource to explore for more advanced functionality is <a href="https://bookdown.org/yihui/rmarkdown-cookbook/" class="external-link">R Markdown Cookbook</a> <span class="citation">(<a href="#ref-Xie2021" role="doc-biblioref">Xie, Dervieux, and Riederer 2021</a>)</span>. In this resource we find information that will be very useful for creating research reports: <a href="https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html" class="external-link">bibliographies and citations</a> and <a href="https://bookdown.org/yihui/rmarkdown-cookbook/cross-ref.html" class="external-link">cross-referencing within documents</a>.</p>
+<div class="section level3">
+<h3 id="bibliographies-and-citations">Bibliographies and citations<a class="anchor" aria-label="anchor" href="#bibliographies-and-citations"></a>
+</h3>
 <p>The ability to add citations and references to an R Markdown document is a very useful option for documenting literature for a report. There are three things that an R Markdown document needs to be able to include in-line citations and a document-final references section.</p>
 <ol style="list-style-type: decimal">
 <li>A bibliography file in <code>.bib</code> (BibTeX) format in the project’s main directory (folder)</li>
@@ -212,15 +206,15 @@ This is an in-line citation [@tottie2011].</code></pre>
 Figure 6: HTML output with an in-line citation and full reference.
 </p>
 </div>
-<p>Now to manage references, get the BibTeX format, and add it to a <code>.bib</code> file in RStudio Cloud we will use <a href="https://www.zotero.org">Zotero</a>. In the following video I describe the process to set up and use Zotero in RStudio Cloud (length 22:02 minutes).</p>
+<p>Now to manage references, get the BibTeX format, and add it to a <code>.bib</code> file in RStudio Cloud we will use <a href="https://www.zotero.org" class="external-link">Zotero</a>. In the following video I describe the process to set up and use Zotero in RStudio Cloud (length 22:02 minutes).</p>
 <p align="center">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/gngJ86WCiXA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 </p>
 </div>
-<div id="cross-referencing-within-documents" class="section level3">
-<h3 class="hasAnchor">
-<a href="#cross-referencing-within-documents" class="anchor"></a>Cross-referencing within documents</h3>
+<div class="section level3">
+<h3 id="cross-referencing-within-documents">Cross-referencing within documents<a class="anchor" aria-label="anchor" href="#cross-referencing-within-documents"></a>
+</h3>
 <p>Another useful feature for reports is the ability to reference tables and graphics in an R Markdown document, as seen in Figure <a href="#fig:image-output-cross-references">7</a>.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:image-output-cross-references"></span>
@@ -231,9 +225,9 @@ Figure 7: HTML output with figure and table cross-references.
 <p>The standard R Markdown document outputs (<code>html_document</code>, <code>pdf_document</code> and <code>word_document</code>) do not provide this functionality. To be able to create cross-references, we need to use the <code>bookdown</code> package. If it is not already installed, we need to do that first in the R Console.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install the bookdown package</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"bookdown"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"bookdown"</span><span class="op">)</span></code></pre></div>
 <p><em>Note: In the LIN 380 workspace on RStudio Cloud, <code>bookdown</code> is already installed.</em></p>
-<p>Then, we need to edit the front matter to make use of the document outputs <code>html_document2</code>, <code>pdf_document2</code> and <code>word_document2</code>. The output formats need to make reference to the package directly, so we include <code><a href="https://pkgs.rstudio.com/bookdown/reference/html_document2.html">bookdown::html_document2</a></code>, as seen below.</p>
+<p>Then, we need to edit the front matter to make use of the document outputs <code>html_document2</code>, <code>pdf_document2</code> and <code>word_document2</code>. The output formats need to make reference to the package directly, so we include <code><a href="https://pkgs.rstudio.com/bookdown/reference/html_document2.html" class="external-link">bookdown::html_document2</a></code>, as seen below.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Literate Programming II"</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Jerid Francom"</span></span>
@@ -250,7 +244,7 @@ Figure 7: HTML output with figure and table cross-references.
 <pre><code>```{r cars-figure, fig.cap='Example plot'}
 plot(cars)
 ```</code></pre>
-<p>For a table, again, we find the code-chunk name (<code>cars-table</code>) and make sure there is a caption associated. Captions for tables, however, is not part of the code chunk options, but rather the function that creates the table needs to add the caption. In the example below, I’ve used the <code>kable()</code> function from the <code>knitr</code> package (referenced directly with <code><a href="https://rdrr.io/pkg/knitr/man/kable.html">knitr::kable()</a></code>). One of the arguments of the <code>kable()</code> function is <code>caption =</code>.</p>
+<p>For a table, again, we find the code-chunk name (<code>cars-table</code>) and make sure there is a caption associated. Captions for tables, however, is not part of the code chunk options, but rather the function that creates the table needs to add the caption. In the example below, I’ve used the <code>kable()</code> function from the <code>knitr</code> package (referenced directly with <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable()</a></code>). One of the arguments of the <code>kable()</code> function is <code>caption =</code>.</p>
 <pre><code>```{r cars-table}
 knitr::kable(head(cars), caption = "Example table.")
 ```</code></pre>
@@ -276,15 +270,15 @@ knitr::kable(head(cars), caption = "Example table.")
 <p><em>Note: the attributes associated with a floating table of contents have been removed from the <code>pdf_document2</code> output as they are not applicable to PDF documents. The same is the case for <code>word_document2</code>.</em></p>
 </div>
 </div>
-<div id="summary" class="section level2">
-<h2 class="hasAnchor">
-<a href="#summary" class="anchor"></a>Summary</h2>
+<div class="section level2">
+<h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
+</h2>
 <p>In this Recipe I introduced a variety of features that we can add to R Markdown documents to help us generate informative reports. This included how to number sections, add a table of contents, how to add in-line citations and a document-final references list, and how to cross-reference tables and figures.</p>
 <p>In the next Recipe we will turn out attention to working with R. We will continue to use R Markdown, however, as our vehicle to interleave R code and prose description so we will continue to work with and extend the knowledge we have gained in these first two Recipes on Literate Programming in R Markdown.</p>
 </div>
-<div id="references" class="section level2 unnumbered">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<div class="section level2 unnumbered">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Xie2021a" class="csl-entry">
 Xie, Yihui, Joseph J. Allaire, and Garrett Grolemund. 2021. <em>R Markdown: The Definitive Guide</em>.
@@ -294,31 +288,29 @@ Xie, Yihui, Christophe Dervieux, and Emily Riederer. 2021. <em>R Markdown Cookbo
 </div>
 </div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
-
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
-      <footer><div class="copyright">
-  <p>Developed by Jerid Francom.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p></p>
+<p>Developed by Jerid Francom.</p>
 </div>
 
-<div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+<div class="pkgdown-footer-right">
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
   
 
+  
 
   </body>
 </html>

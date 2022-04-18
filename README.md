@@ -35,15 +35,13 @@ Then load the package with:
 library(tadr)
 ```
 
-<!-- 
-
 ## `swirl` lessons
 
-### Installation 
+### Installation
 
 The swirl lessons can be downloaded within an R console by running:
 
-```r
+``` r
 install.packages("swirl")
 library("swirl")
 install_course_github("lin380", "swirl")
@@ -51,12 +49,10 @@ install_course_github("lin380", "swirl")
 
 ### Load and run
 
-To load and start a lesson run: 
+To load and start a lesson run:
 
-```r
+``` r
 swirl()
 ```
 
 and follow the instructions to get started and to select a lesson.
-
--->

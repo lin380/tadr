@@ -29,7 +29,7 @@ The goal of `tadr` is to provide supporting resources for the coursebook ["Text 
 
 You can install a development version of `tadr` from [GitHub](https://github.com/) with:
 
-``` r
+```r
 install.packages("devtools")
 devtools::install_github("lin380/tadr")
 ```
@@ -38,11 +38,9 @@ devtools::install_github("lin380/tadr")
 
 Then load the package with:
 
-```{r example}
+```r
 library(tadr)
 ```
-
-<!-- 
 
 ## `swirl` lessons
 
@@ -65,5 +63,3 @@ swirl()
 ```
 
 and follow the instructions to get started and to select a lesson.
-
--->

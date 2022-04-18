@@ -1,9 +1,10 @@
-pandoc: 2.14.0.3
-pkgdown: 1.6.1
+pandoc: 2.17.1.1
+pkgdown: 2.0.2
 pkgdown_sha: ~
 articles:
   guide_1: guide_1.html
   guide_2: guide_2.html
+  guide_3: guide_3.html
   recipe_1: recipe_1.html
   recipe_10: recipe_10.html
   recipe_11: recipe_11.html
@@ -15,7 +16,7 @@ articles:
   recipe_7: recipe_7.html
   recipe_8: recipe_8.html
   recipe_9: recipe_9.html
-last_built: 2021-11-28T17:16Z
+last_built: 2022-04-18T17:09Z
 urls:
   reference: https://lin380.github.io/tadr/reference
   article: https://lin380.github.io/tadr/articles

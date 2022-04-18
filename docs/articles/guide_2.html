@@ -4,16 +4,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="tadr">
 <title>2. Working with tidycensus and Twitter geolocation • Text as Data Resources</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <script src="../extra.js"></script><meta property="og:title" content="2. Working with tidycensus and Twitter geolocation">
 <meta property="og:description" content="tadr">
+<meta property="og:image" content="https://lin380.github.io/tadr/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -25,112 +32,99 @@
   gtag('config', 'G-P69131XJC0');
 </script>
 </head>
-<body data-spy="scroll" data-target="#toc">
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">Text as Data Resources</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
-      </span>
-    </div>
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
+    
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
+    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    
+    <a class="navbar-brand me-2" href="../index.html">Text as Data Resources</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="active nav-item">
+  <a class="nav-link" href="../articles/index.html">Articles</a>
 </li>
-<li>
-  <a href="../tutorials/index.html">Tutorials</a>
+<li class="nav-item">
+  <a class="nav-link" href="../tutorials/index.html">Tutorials</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="../reference/index.html">Reference</a>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="https://github.com/lin380/tadr">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/lin380/tadr">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
       </ul>
 </div>
-<!--/.nav-collapse -->
+
+    
   </div>
-<!--/.container -->
-</div>
-<!--/.navbar -->
+</nav><div class="container template-article">
 
-      
 
-      </header><script src="guide_2_files/header-attrs-2.11/header-attrs.js"></script><script src="guide_2_files/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="guide_2_files/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet">
-<script src="guide_2_files/bootstrap-3.3.5/js/bootstrap.min.js"></script><script src="guide_2_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script><script src="guide_2_files/bootstrap-3.3.5/shim/respond.min.js"></script><style>h1 {font-size: 34px;}
-       h1.title {font-size: 38px;}
-       h2 {font-size: 30px;}
-       h3 {font-size: 24px;}
-       h4 {font-size: 18px;}
-       h5 {font-size: 16px;}
-       h6 {font-size: 12px;}
-       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-       pre:not([class]) { background-color: white }</style>
-<script src="guide_2_files/navigation-1.1/tabsets.js"></script><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>2. Working with tidycensus and Twitter geolocation</h1>
+<div class="row">
+  <main id="main"><div class="page-header">
+      <img src="../logo.png" class="logo" alt=""><h1>2. Working with tidycensus and Twitter geolocation</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/lin380/tadr/blob/master/vignettes/guide_2.Rmd"><code>vignettes/guide_2.Rmd</code></a></small>
-      <div class="hidden name"><code>guide_2.Rmd</code></div>
-
+      <small class="dont-index">Source: <a href="https://github.com/lin380/tadr/blob/HEAD/vignettes/guide_2.Rmd" class="external-link"><code>vignettes/guide_2.Rmd</code></a></small>
+      <div class="d-none name"><code>guide_2.Rmd</code></div>
     </div>
 
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>        <span class="co"># data manipulation</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://walker-data.com/tidycensus/">tidycensus</a></span><span class="op">)</span>       <span class="co"># access US Census data</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span>               <span class="co"># manipulate spatial objects</span></code></pre></div>
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>        <span class="co"># data manipulation</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://walker-data.com/tidycensus/" class="external-link">tidycensus</a></span><span class="op">)</span>       <span class="co"># access US Census data</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span>               <span class="co"># manipulate spatial objects</span></code></pre></div>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
 <p>In this guide I will provide an overview of how to coordinate US Census demographic information with Twitter status posts collected from the Twitter API that include geolocation information (i.e. latitude and longitude coordinates).</p>
 </div>
-<div id="access-to-the-us-census" class="section level2">
-<h2 class="hasAnchor">
-<a href="#access-to-the-us-census" class="anchor"></a>Access to the US Census</h2>
-<p>The first step is to acquire a US Census API Key. You can do so by <a href="https://api.census.gov/data/key_signup.html">following this link</a>. Once you have your API key, you will now want to add it to RStudio –but you want to add it to the R environment, not in a script in your project directory. To do this we can run the <code><a href="https://walker-data.com/tidycensus/reference/census_api_key.html">tidycensus::census_api_key()</a></code> function and use your API key as a character vector as the first argument then set <code>install = TRUE</code>.</p>
+<div class="section level2">
+<h2 id="access-to-the-us-census">Access to the US Census<a class="anchor" aria-label="anchor" href="#access-to-the-us-census"></a>
+</h2>
+<p>The first step is to acquire a US Census API Key. You can do so by <a href="https://api.census.gov/data/key_signup.html" class="external-link">following this link</a>. Once you have your API key, you will now want to add it to RStudio –but you want to add it to the R environment, not in a script in your project directory. To do this we can run the <code><a href="https://walker-data.com/tidycensus/reference/census_api_key.html" class="external-link">tidycensus::census_api_key()</a></code> function and use your API key as a character vector as the first argument then set <code>install = TRUE</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">tidycensus</span><span class="fu">::</span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/census_api_key.html">census_api_key</a></span><span class="op">(</span>key <span class="op">=</span> <span class="st">"&lt;your-api-key-here&gt;"</span>, install <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">tidycensus</span><span class="fu">::</span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/census_api_key.html" class="external-link">census_api_key</a></span><span class="op">(</span>key <span class="op">=</span> <span class="st">"&lt;your-api-key-here&gt;"</span>, install <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div class="tip">
 <p>The <code>install = TRUE</code> argument will make this API key available across your RStudio sessions.</p>
 </div>
-<div id="query-us-census-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#query-us-census-data" class="anchor"></a>Query US Census data</h3>
-<p>We use the tidycensus package <span class="citation">(<a href="#ref-R-tidycensus" role="doc-biblioref">Walker and Herman 2021</a>)</span> to query the US Census. In particular we will look at querying the American Community Survey (ACS) data which is a rolling survey over 5 years (“acs5”). To make it easier to find the codes for the various variables that the survey provides, we can acess the variables table with the <code><a href="https://walker-data.com/tidycensus/reference/load_variables.html">load_variables()</a></code> function.</p>
+<div class="section level3">
+<h3 id="query-us-census-data">Query US Census data<a class="anchor" aria-label="anchor" href="#query-us-census-data"></a>
+</h3>
+<p>We use the tidycensus package <span class="citation">(<a href="#ref-R-tidycensus" role="doc-biblioref">Walker and Herman 2022</a>)</span> to query the US Census. In particular we will look at querying the American Community Survey (ACS) data which is a rolling survey over 5 years (“acs5”). To make it easier to find the codes for the various variables that the survey provides, we can acess the variables table with the <code><a href="https://walker-data.com/tidycensus/reference/load_variables.html" class="external-link">load_variables()</a></code> function.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">acs_5</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="https://walker-data.com/tidycensus/reference/load_variables.html">load_variables</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2019</span>, <span class="co"># select last year of 5-year summary</span>
+  <span class="fu"><a href="https://walker-data.com/tidycensus/reference/load_variables.html" class="external-link">load_variables</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2019</span>, <span class="co"># select last year of 5-year summary</span>
                  dataset <span class="op">=</span> <span class="st">"acs5"</span>, <span class="co"># select the dataset</span>
                  cache <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># cache the results (to speed subsequent queries)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/utils/View.html">View</a></span><span class="op">(</span><span class="va">acs_5</span><span class="op">)</span> <span class="co"># view in RStudio editor pane</span></code></pre></div>
-<p>Assigning it to an object and then calling <code><a href="https://rdrr.io/r/utils/View.html">View()</a></code> allows us to peruse the variables and search them with the filter tool in RStudio, as seen in Figure <a href="#fig:acs-variables-graphic">1</a>.</p>
+<span class="fu"><a href="https://rdrr.io/r/utils/View.html" class="external-link">View</a></span><span class="op">(</span><span class="va">acs_5</span><span class="op">)</span> <span class="co"># view in RStudio editor pane</span></code></pre></div>
+<p>Assigning it to an object and then calling <code><a href="https://rdrr.io/r/utils/View.html" class="external-link">View()</a></code> allows us to peruse the variables and search them with the filter tool in RStudio, as seen in Figure <a href="#fig:acs-variables-graphic">1</a>.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:acs-variables-graphic"></span>
 <img src="images/guide_2/acs_variables.png" alt="ACS 5 survey variable codes and descriptions" width="85%"><p class="caption">
@@ -138,32 +132,32 @@ Figure 1: ACS 5 survey variable codes and descriptions
 </p>
 </div>
 <!-- -   B19013_001 - MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2019 INFLATION-ADJUSTED DOLLARS) -->
-<p>We use the <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs()</a></code> function to pull the demographic information. We can specify the state(s) to query and the type of geography (block, tract, county, state) that we want along with the variable(s) that we want. In addition we can pull the geometry of the geography so we can have the geographic limits of these geographies.</p>
+<p>We use the <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html" class="external-link">get_acs()</a></code> function to pull the demographic information. We can specify the state(s) to query and the type of geography (block, tract, county, state) that we want along with the variable(s) that we want. In addition we can pull the geometry of the geography so we can have the geographic limits of these geographies.</p>
 <p>Let’s use the variable <code>B19013_001</code> which is the median household income in the past 12 months for the counties in Arizona. We will also request the geometry of the counties for graphic visualization.</p>
 <div class="tip">
-<p><code><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs()</a></code> defaults to 2019 ACS 5-year sample.</p>
+<p><code><a href="https://walker-data.com/tidycensus/reference/get_acs.html" class="external-link">get_acs()</a></code> defaults to 2019 ACS 5-year sample.</p>
 </div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">az_county_sf</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span>state <span class="op">=</span> <span class="st">"AZ"</span>, <span class="co"># state</span>
+  <span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html" class="external-link">get_acs</a></span><span class="op">(</span>state <span class="op">=</span> <span class="st">"AZ"</span>, <span class="co"># state</span>
           geography <span class="op">=</span> <span class="st">"county"</span>, <span class="co"># census geography</span>
           variables <span class="op">=</span> <span class="st">"B19013_001"</span>, <span class="co"># median income</span>
           geometry <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># get simple features (sf) geography</span></code></pre></div>
 <p>Let’s take a look at the structure of the dataset that is returned.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">az_county_sf</span><span class="op">)</span>  <span class="co"># preview</span></code></pre></div>
-<pre><code>## Rows: 15
-## Columns: 6
-## $ GEOID    &lt;chr&gt; "04025", "04009", "04001", "04005", "04013", "04007", "04012"…
-## $ NAME     &lt;chr&gt; "Yavapai County, Arizona", "Graham County, Arizona", "Apache …
-## $ variable &lt;chr&gt; "B19013_001", "B19013_001", "B19013_001", "B19013_001", "B190…
-## $ estimate &lt;dbl&gt; 52451, 51353, 32508, 59460, 64468, 43524, 34643, 58174, 45243…
-## $ moe      &lt;dbl&gt; 1376, 2121, 1723, 1953, 326, 2214, 4945, 930, 1279, 1297, 264…
-## $ geometry &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-113 35.5, ..., MULTIPOLYGON (((…</code></pre>
+<code class="sourceCode R"><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">az_county_sf</span><span class="op">)</span>  <span class="co"># preview</span></code></pre></div>
+<pre><code><span class="co">## Rows: 15</span>
+<span class="co">## Columns: 6</span>
+<span class="co">## $ GEOID    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "04027", "04001", "04017", "04013", "04012", "04005", "04021"…</span>
+<span class="co">## $ NAME     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Yuma County, Arizona", "Apache County, Arizona", "Navajo Cou…</span>
+<span class="co">## $ variable <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "B19013_001", "B19013_001", "B19013_001", "B19013_001", "B190…</span>
+<span class="co">## $ estimate <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 48790, 33967, 43140, 67799, 34956, 59000, 60968, 46907, 47686…</span>
+<span class="co">## $ moe      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1981, 2108, 2357, 444, 5708, 1900, 1223, 3169, 1355, 3071, 11…</span>
+<span class="co">## $ geometry <span style="color: #949494; font-style: italic;">&lt;MULTIPOLYGON [°]&gt;</span> MULTIPOLYGON (((-115 32.5, ..., MULTIPOLYGON (((…</span></code></pre>
 <p>This dataset has 15 observations corresponding to the 15 counties in Arizona. The columns include the <code>GEOID</code>, <code>NAME</code> (county name in this case), <code>variable</code> (median income), <code>estimate</code> (median income values), <code>moe</code> (margin of error of the sample), and the <code>geometry</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">az_county_sf</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">az_county_sf</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
 <div class="kable-table">
 <table class="table">
 <colgroup>
@@ -184,55 +178,55 @@ Figure 1: ACS 5 survey variable codes and descriptions
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">04025</td>
-<td align="left">Yavapai County, Arizona</td>
+<td align="left">04027</td>
+<td align="left">Yuma County, Arizona</td>
 <td align="left">B19013_001</td>
-<td align="right">52451</td>
-<td align="right">1376</td>
-<td align="left">MULTIPOLYGON (((-113 35.5, …</td>
+<td align="right">48790</td>
+<td align="right">1981</td>
+<td align="left">MULTIPOLYGON (((-115 32.5, …</td>
 </tr>
 <tr class="even">
-<td align="left">04009</td>
-<td align="left">Graham County, Arizona</td>
-<td align="left">B19013_001</td>
-<td align="right">51353</td>
-<td align="right">2121</td>
-<td align="left">MULTIPOLYGON (((-110 33.3, …</td>
-</tr>
-<tr class="odd">
 <td align="left">04001</td>
 <td align="left">Apache County, Arizona</td>
 <td align="left">B19013_001</td>
-<td align="right">32508</td>
-<td align="right">1723</td>
+<td align="right">33967</td>
+<td align="right">2108</td>
 <td align="left">MULTIPOLYGON (((-110 37, -1…</td>
 </tr>
-<tr class="even">
-<td align="left">04005</td>
-<td align="left">Coconino County, Arizona</td>
-<td align="left">B19013_001</td>
-<td align="right">59460</td>
-<td align="right">1953</td>
-<td align="left">MULTIPOLYGON (((-113 36, -1…</td>
-</tr>
 <tr class="odd">
+<td align="left">04017</td>
+<td align="left">Navajo County, Arizona</td>
+<td align="left">B19013_001</td>
+<td align="right">43140</td>
+<td align="right">2357</td>
+<td align="left">MULTIPOLYGON (((-111 35, -1…</td>
+</tr>
+<tr class="even">
 <td align="left">04013</td>
 <td align="left">Maricopa County, Arizona</td>
 <td align="left">B19013_001</td>
-<td align="right">64468</td>
-<td align="right">326</td>
+<td align="right">67799</td>
+<td align="right">444</td>
 <td align="left">MULTIPOLYGON (((-113 33.6, …</td>
+</tr>
+<tr class="odd">
+<td align="left">04012</td>
+<td align="left">La Paz County, Arizona</td>
+<td align="left">B19013_001</td>
+<td align="right">34956</td>
+<td align="right">5708</td>
+<td align="left">MULTIPOLYGON (((-115 33.3, …</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Let’s visualize median income in counties in Arizona with <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> and the <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf()</a></code> function.</p>
+<p>Let’s visualize median income in counties in Arizona with <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code> and the <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf()</a></code> function.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">az_county_sf</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">estimate</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># mapping</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># plot the county geometries</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># use a minimal ggplot theme</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Arizona: Median income by county"</span>, 
+<code class="sourceCode R"><span class="va">az_county_sf</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">estimate</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># mapping</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># plot the county geometries</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># use a minimal ggplot theme</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Arizona: Median income by county"</span>, 
        fill <span class="op">=</span> <span class="st">"Median income"</span><span class="op">)</span> <span class="co"># labels</span></code></pre></div>
 <p><img src="guide_2_files/figure-html/example-census-acs-plot-i-1.png" width="85%" style="display: block; margin: auto;"></p>
 <p>We can also query multiple states or variables. Let’s look into education which is the <code>B07009</code> category. The sample total is <code>B07009_001</code> and the estimate of the sample which have less than a high school education is <code>B07009_002</code>.</p>
@@ -248,28 +242,28 @@ B01003_001 - TOTAL POPULATION
  -->
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">az_county_sf</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span>state <span class="op">=</span> <span class="st">"AZ"</span>, <span class="co"># state</span>
+  <span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html" class="external-link">get_acs</a></span><span class="op">(</span>state <span class="op">=</span> <span class="st">"AZ"</span>, <span class="co"># state</span>
           geography <span class="op">=</span> <span class="st">"county"</span>, <span class="co"># census geography</span>
-          variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"B07009_001"</span>, <span class="st">"B07009_002"</span><span class="op">)</span>, <span class="co"># edu: total, &lt; high school</span>
+          variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"B07009_001"</span>, <span class="st">"B07009_002"</span><span class="op">)</span>, <span class="co"># edu: total, &lt; high school</span>
           geometry <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># get simple features (sf) geography</span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">az_county_sf</span><span class="op">)</span>  <span class="co"># preview structure</span></code></pre></div>
-<pre><code>## Rows: 30
-## Columns: 6
-## $ GEOID    &lt;chr&gt; "04025", "04025", "04009", "04009", "04001", "04001", "04005"…
-## $ NAME     &lt;chr&gt; "Yavapai County, Arizona", "Yavapai County, Arizona", "Graham…
-## $ variable &lt;chr&gt; "B07009_001", "B07009_002", "B07009_001", "B07009_002", "B070…
-## $ estimate &lt;dbl&gt; 175215, 15683, 23706, 3495, 44949, 8809, 83080, 7876, 2878815…
-## $ moe      &lt;dbl&gt; 178, 1167, 101, 321, 138, 445, 123, 627, NA, 5056, 44, 470, 1…
-## $ geometry &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-113 35.5, ..., MULTIPOLYGON (((…</code></pre>
+<code class="sourceCode R"><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">az_county_sf</span><span class="op">)</span>  <span class="co"># preview structure</span></code></pre></div>
+<pre><code><span class="co">## Rows: 30</span>
+<span class="co">## Columns: 6</span>
+<span class="co">## $ GEOID    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "04027", "04027", "04001", "04001", "04017", "04017", "04013"…</span>
+<span class="co">## $ NAME     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Yuma County, Arizona", "Yuma County, Arizona", "Apache Count…</span>
+<span class="co">## $ variable <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "B07009_001", "B07009_002", "B07009_001", "B07009_002", "B070…</span>
+<span class="co">## $ estimate <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 134749, 34280, 45607, 8459, 71918, 11620, 2952370, 342904, 16…</span>
+<span class="co">## $ moe      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 297, 1420, 109, 410, 76, 609, NA, 5371, 194, 473, 157, 600, 1…</span>
+<span class="co">## $ geometry <span style="color: #949494; font-style: italic;">&lt;MULTIPOLYGON [°]&gt;</span> MULTIPOLYGON (((-115 32.5, ..., MULTIPOLYGON (((…</span></code></pre>
 <p>In this dataset we have the same columns as before, yet we have double the observations. This is due to the fact that each variable is by default added in tidy format as seen below.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">az_county_sf</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>  <span class="co"># preview data frame</span></code></pre></div>
+<code class="sourceCode R"><span class="va">az_county_sf</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>  <span class="co"># preview data frame</span></code></pre></div>
 <div class="kable-table">
 <table class="table">
 <colgroup>
-<col width="6%">
+<col width="7%">
 <col width="27%">
 <col width="12%">
 <col width="10%">
@@ -286,44 +280,44 @@ B01003_001 - TOTAL POPULATION
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">04025</td>
-<td align="left">Yavapai County, Arizona</td>
+<td align="left">04027</td>
+<td align="left">Yuma County, Arizona</td>
 <td align="left">B07009_001</td>
-<td align="right">175215</td>
-<td align="right">178</td>
-<td align="left">MULTIPOLYGON (((-113 35.5, …</td>
+<td align="right">134749</td>
+<td align="right">297</td>
+<td align="left">MULTIPOLYGON (((-115 32.5, …</td>
 </tr>
 <tr class="even">
-<td align="left">04025</td>
-<td align="left">Yavapai County, Arizona</td>
+<td align="left">04027</td>
+<td align="left">Yuma County, Arizona</td>
 <td align="left">B07009_002</td>
-<td align="right">15683</td>
-<td align="right">1167</td>
-<td align="left">MULTIPOLYGON (((-113 35.5, …</td>
-</tr>
-<tr class="odd">
-<td align="left">04009</td>
-<td align="left">Graham County, Arizona</td>
-<td align="left">B07009_001</td>
-<td align="right">23706</td>
-<td align="right">101</td>
-<td align="left">MULTIPOLYGON (((-110 33.3, …</td>
-</tr>
-<tr class="even">
-<td align="left">04009</td>
-<td align="left">Graham County, Arizona</td>
-<td align="left">B07009_002</td>
-<td align="right">3495</td>
-<td align="right">321</td>
-<td align="left">MULTIPOLYGON (((-110 33.3, …</td>
+<td align="right">34280</td>
+<td align="right">1420</td>
+<td align="left">MULTIPOLYGON (((-115 32.5, …</td>
 </tr>
 <tr class="odd">
 <td align="left">04001</td>
 <td align="left">Apache County, Arizona</td>
 <td align="left">B07009_001</td>
-<td align="right">44949</td>
-<td align="right">138</td>
+<td align="right">45607</td>
+<td align="right">109</td>
 <td align="left">MULTIPOLYGON (((-110 37, -1…</td>
+</tr>
+<tr class="even">
+<td align="left">04001</td>
+<td align="left">Apache County, Arizona</td>
+<td align="left">B07009_002</td>
+<td align="right">8459</td>
+<td align="right">410</td>
+<td align="left">MULTIPOLYGON (((-110 37, -1…</td>
+</tr>
+<tr class="odd">
+<td align="left">04017</td>
+<td align="left">Navajo County, Arizona</td>
+<td align="left">B07009_001</td>
+<td align="right">71918</td>
+<td align="right">76</td>
+<td align="left">MULTIPOLYGON (((-111 35, -1…</td>
 </tr>
 </tbody>
 </table>
@@ -331,26 +325,26 @@ B01003_001 - TOTAL POPULATION
 <p>For variables in which we want may want to compare the particular variable to the variable’s total estimate to get a percentage, it is often better to have the data in wide format. We can run a similar query and add the argument <code>output = "wide"</code>.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">az_county_sf</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span>state <span class="op">=</span> <span class="st">"AZ"</span>, <span class="co"># state</span>
+  <span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html" class="external-link">get_acs</a></span><span class="op">(</span>state <span class="op">=</span> <span class="st">"AZ"</span>, <span class="co"># state</span>
           geography <span class="op">=</span> <span class="st">"county"</span>, <span class="co"># census geography</span>
-          variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"B07009_001"</span>, <span class="st">"B07009_002"</span><span class="op">)</span>, <span class="co"># edu: total, &lt; high school</span>
+          variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"B07009_001"</span>, <span class="st">"B07009_002"</span><span class="op">)</span>, <span class="co"># edu: total, &lt; high school</span>
           geometry <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># get simple features (sf) geography</span>
           output <span class="op">=</span> <span class="st">"wide"</span><span class="op">)</span> <span class="co"># get wide output</span></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">az_county_sf</span><span class="op">)</span>  <span class="co"># preview structure</span></code></pre></div>
-<pre><code>## Rows: 15
-## Columns: 7
-## $ GEOID       &lt;chr&gt; "04025", "04009", "04001", "04005", "04013", "04007", "040…
-## $ NAME        &lt;chr&gt; "Yavapai County, Arizona", "Graham County, Arizona", "Apac…
-## $ B07009_001E &lt;dbl&gt; 175215, 23706, 44949, 83080, 2878815, 39330, 16053, 299353…
-## $ B07009_001M &lt;dbl&gt; 178, 101, 138, 123, NA, 44, 171, 172, 242, 164, 105, 61, 1…
-## $ B07009_002E &lt;dbl&gt; 15683, 3495, 8809, 7876, 353350, 5378, 3702, 42607, 35444,…
-## $ B07009_002M &lt;dbl&gt; 1167, 321, 445, 627, 5056, 470, 551, 1468, 1206, 1274, 526…
-## $ geometry    &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-113 35.5, ..., MULTIPOLYGON …</code></pre>
+<code class="sourceCode R"><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">az_county_sf</span><span class="op">)</span>  <span class="co"># preview structure</span></code></pre></div>
+<pre><code><span class="co">## Rows: 15</span>
+<span class="co">## Columns: 7</span>
+<span class="co">## $ GEOID       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "04027", "04001", "04017", "04013", "04012", "04005", "040…</span>
+<span class="co">## $ NAME        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Yuma County, Arizona", "Apache County, Arizona", "Navajo …</span>
+<span class="co">## $ B07009_001E <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 134749, 45607, 71918, 2952370, 16600, 84314, 311415, 39740…</span>
+<span class="co">## $ B07009_001M <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 297, 109, 76, NA, 194, 157, 128, 39, 130, 105, 131, 123, 1…</span>
+<span class="co">## $ B07009_002E <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 34280, 8459, 11620, 342904, 3245, 7597, 40308, 5063, 22045…</span>
+<span class="co">## $ B07009_002M <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1420, 410, 609, 5371, 473, 600, 1602, 577, 1325, 389, 913,…</span>
+<span class="co">## $ geometry    <span style="color: #949494; font-style: italic;">&lt;MULTIPOLYGON [°]&gt;</span> MULTIPOLYGON (((-115 32.5, ..., MULTIPOLYGON …</span></code></pre>
 <p>In this dataset we have the same number of observations, but additional columns. The estimate (E) and the margin of error (M) appear for each variable.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">az_county_sf</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>  <span class="co"># preview data frame</span></code></pre></div>
+<code class="sourceCode R"><span class="va">az_county_sf</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>  <span class="co"># preview data frame</span></code></pre></div>
 <div class="kable-table">
 <table class="table">
 <colgroup>
@@ -373,62 +367,62 @@ B01003_001 - TOTAL POPULATION
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">04025</td>
-<td align="left">Yavapai County, Arizona</td>
-<td align="right">175215</td>
-<td align="right">178</td>
-<td align="right">15683</td>
-<td align="right">1167</td>
-<td align="left">MULTIPOLYGON (((-113 35.5, …</td>
+<td align="left">04027</td>
+<td align="left">Yuma County, Arizona</td>
+<td align="right">134749</td>
+<td align="right">297</td>
+<td align="right">34280</td>
+<td align="right">1420</td>
+<td align="left">MULTIPOLYGON (((-115 32.5, …</td>
 </tr>
 <tr class="even">
-<td align="left">04009</td>
-<td align="left">Graham County, Arizona</td>
-<td align="right">23706</td>
-<td align="right">101</td>
-<td align="right">3495</td>
-<td align="right">321</td>
-<td align="left">MULTIPOLYGON (((-110 33.3, …</td>
-</tr>
-<tr class="odd">
 <td align="left">04001</td>
 <td align="left">Apache County, Arizona</td>
-<td align="right">44949</td>
-<td align="right">138</td>
-<td align="right">8809</td>
-<td align="right">445</td>
+<td align="right">45607</td>
+<td align="right">109</td>
+<td align="right">8459</td>
+<td align="right">410</td>
 <td align="left">MULTIPOLYGON (((-110 37, -1…</td>
 </tr>
-<tr class="even">
-<td align="left">04005</td>
-<td align="left">Coconino County, Arizona</td>
-<td align="right">83080</td>
-<td align="right">123</td>
-<td align="right">7876</td>
-<td align="right">627</td>
-<td align="left">MULTIPOLYGON (((-113 36, -1…</td>
-</tr>
 <tr class="odd">
+<td align="left">04017</td>
+<td align="left">Navajo County, Arizona</td>
+<td align="right">71918</td>
+<td align="right">76</td>
+<td align="right">11620</td>
+<td align="right">609</td>
+<td align="left">MULTIPOLYGON (((-111 35, -1…</td>
+</tr>
+<tr class="even">
 <td align="left">04013</td>
 <td align="left">Maricopa County, Arizona</td>
-<td align="right">2878815</td>
+<td align="right">2952370</td>
 <td align="right">NA</td>
-<td align="right">353350</td>
-<td align="right">5056</td>
+<td align="right">342904</td>
+<td align="right">5371</td>
 <td align="left">MULTIPOLYGON (((-113 33.6, …</td>
+</tr>
+<tr class="odd">
+<td align="left">04012</td>
+<td align="left">La Paz County, Arizona</td>
+<td align="right">16600</td>
+<td align="right">194</td>
+<td align="right">3245</td>
+<td align="right">473</td>
+<td align="left">MULTIPOLYGON (((-115 33.3, …</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Now with the multiple variables for education in wide format we can use the total estimate (<code>B07009_001E</code>) and the less than high school estimate (<code>B07009_002E</code>) to create a percentage of the county’s population with less than a high school education. We use our data manipulation skills to do this. I will use the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> to calculate the percentage and add it to our data frame.</p>
+<p>Now with the multiple variables for education in wide format we can use the total estimate (<code>B07009_001E</code>) and the less than high school estimate (<code>B07009_002E</code>) to create a percentage of the county’s population with less than a high school education. We use our data manipulation skills to do this. I will use the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> to calculate the percentage and add it to our data frame.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">az_county_sf</span> <span class="op">&lt;-</span> 
-  <span class="va">az_county_sf</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>perc_less_hs <span class="op">=</span> <span class="op">(</span><span class="va">B07009_002E</span> <span class="op">/</span> <span class="va">B07009_001E</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span> <span class="co"># calculate percent of county with less than high school edu</span>
+  <span class="va">az_county_sf</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>perc_less_hs <span class="op">=</span> <span class="op">(</span><span class="va">B07009_002E</span> <span class="op">/</span> <span class="va">B07009_001E</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span> <span class="co"># calculate percent of county with less than high school edu</span>
 
-<span class="va">az_county_sf</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"M"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># filter out margin of error columns</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="co"># preview</span></code></pre></div>
+<span class="va">az_county_sf</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"M"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># filter out margin of error columns</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="co"># preview</span></code></pre></div>
 <div class="kable-table">
 <table class="table">
 <colgroup>
@@ -449,86 +443,86 @@ B01003_001 - TOTAL POPULATION
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">04025</td>
-<td align="left">Yavapai County, Arizona</td>
-<td align="right">175215</td>
-<td align="right">15683</td>
-<td align="right">8.95</td>
-<td align="left">MULTIPOLYGON (((-113 35.5, …</td>
+<td align="left">04027</td>
+<td align="left">Yuma County, Arizona</td>
+<td align="right">134749</td>
+<td align="right">34280</td>
+<td align="right">25.4</td>
+<td align="left">MULTIPOLYGON (((-115 32.5, …</td>
 </tr>
 <tr class="even">
-<td align="left">04009</td>
-<td align="left">Graham County, Arizona</td>
-<td align="right">23706</td>
-<td align="right">3495</td>
-<td align="right">14.74</td>
-<td align="left">MULTIPOLYGON (((-110 33.3, …</td>
-</tr>
-<tr class="odd">
 <td align="left">04001</td>
 <td align="left">Apache County, Arizona</td>
-<td align="right">44949</td>
-<td align="right">8809</td>
-<td align="right">19.60</td>
+<td align="right">45607</td>
+<td align="right">8459</td>
+<td align="right">18.5</td>
 <td align="left">MULTIPOLYGON (((-110 37, -1…</td>
 </tr>
-<tr class="even">
-<td align="left">04005</td>
-<td align="left">Coconino County, Arizona</td>
-<td align="right">83080</td>
-<td align="right">7876</td>
-<td align="right">9.48</td>
-<td align="left">MULTIPOLYGON (((-113 36, -1…</td>
-</tr>
 <tr class="odd">
+<td align="left">04017</td>
+<td align="left">Navajo County, Arizona</td>
+<td align="right">71918</td>
+<td align="right">11620</td>
+<td align="right">16.2</td>
+<td align="left">MULTIPOLYGON (((-111 35, -1…</td>
+</tr>
+<tr class="even">
 <td align="left">04013</td>
 <td align="left">Maricopa County, Arizona</td>
-<td align="right">2878815</td>
-<td align="right">353350</td>
-<td align="right">12.27</td>
+<td align="right">2952370</td>
+<td align="right">342904</td>
+<td align="right">11.6</td>
 <td align="left">MULTIPOLYGON (((-113 33.6, …</td>
+</tr>
+<tr class="odd">
+<td align="left">04012</td>
+<td align="left">La Paz County, Arizona</td>
+<td align="right">16600</td>
+<td align="right">3245</td>
+<td align="right">19.5</td>
+<td align="left">MULTIPOLYGON (((-115 33.3, …</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>And again we can visualize this information with <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>.</p>
+<p>And again we can visualize this information with <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code>.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">az_county_sf</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">perc_less_hs</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># mapping</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># plot the county geometries</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># use a minimal ggplot theme</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Arizona: Less than high school by county"</span>, 
+<code class="sourceCode R"><span class="va">az_county_sf</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">perc_less_hs</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># mapping</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># plot the county geometries</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># use a minimal ggplot theme</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Arizona: Less than high school by county"</span>, 
        subtitle <span class="op">=</span> <span class="st">"Percentage"</span>,
        fill <span class="op">=</span> <span class="st">"Less than high school"</span><span class="op">)</span> <span class="co"># labels</span></code></pre></div>
 <p><img src="guide_2_files/figure-html/example-census-acs-plot-ii-1.png" width="85%" style="display: block; margin: auto;"></p>
 </div>
 </div>
-<div id="twitter" class="section level2">
-<h2 class="hasAnchor">
-<a href="#twitter" class="anchor"></a>Twitter</h2>
+<div class="section level2">
+<h2 id="twitter">Twitter<a class="anchor" aria-label="anchor" href="#twitter"></a>
+</h2>
 <p>Now let’s look at how to join the information from the US Census with Twitter status posts (tweets) with geolocation information (i.e. latitude and longitude coordinates).</p>
-<div id="orientation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#orientation" class="anchor"></a>Orientation</h3>
-<p>As an example, I will read in a dataset collected from the Twitter API via rtweet <span class="citation">(<a href="#ref-R-rtweet" role="doc-biblioref">Kearney 2020</a>)</span>. The collection includes various regionalisms (faucet, spigot, frying pan, skillet, pail, bucket, coke, pop, soda, you guys, yall). We will focus on the terms “y’all” (and “yall”) and “you guys.” I will also remove all tweets with no geolocation coordinate information.</p>
+<div class="section level3">
+<h3 id="orientation">Orientation<a class="anchor" aria-label="anchor" href="#orientation"></a>
+</h3>
+<p>As an example, I will read in a dataset collected from the Twitter API via rtweet <span class="citation">(<a href="#ref-R-rtweet" role="doc-biblioref">Kearney 2020</a>)</span>. The collection includes various regionalisms (faucet, spigot, frying pan, skillet, pail, bucket, coke, pop, soda, you guys, yall). We will focus on the terms “y’all” (and “yall”) and “you guys”. I will also remove all tweets with no geolocation coordinate information.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">typ_df</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"guide_2/data/derived/tusr_curated.csv"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># read dataset</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>user_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">user_id</span><span class="op">)</span>, <span class="co"># convert to character</span>
-         status_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">status_id</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># convert to character</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">search_term</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"yall"</span>, <span class="st">"you guys"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># only keep you plural search terms</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>search_term <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">search_term</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># make search term a factor</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">lat</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span> <span class="co"># remove tweets with no geolocation information</span>
+  <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"guide_2/data/derived/tusr_curated.csv"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># read dataset</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>user_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">user_id</span><span class="op">)</span>, <span class="co"># convert to character</span>
+         status_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">status_id</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>  <span class="co"># convert to character</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">search_term</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"yall"</span>, <span class="st">"you guys"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># only keep you plural search terms</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>search_term <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">search_term</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>  <span class="co"># make search term a factor</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lat</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span> <span class="co"># remove tweets with no geolocation information</span>
 
-<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">typ_df</span><span class="op">)</span> <span class="co"># preview</span></code></pre></div>
-<pre><code>## Rows: 3,018
-## Columns: 6
-## $ user_id     &lt;chr&gt; "29038175", "191434404", "1383299286373265408", "127876171…
-## $ status_id   &lt;chr&gt; "1452684447824887808", "1452684402715201536", "14526843251…
-## $ search_term &lt;fct&gt; you guys, you guys, you guys, you guys, you guys, you guys…
-## $ text        &lt;chr&gt; "@WingfieldNFL @ckparrot Can you guys tell Grier and Co, s…
-## $ lat         &lt;dbl&gt; 41.8, 43.6, 45.1, 43.0, 49.9, 49.9, 41.8, 41.8, 41.8, 33.9…
-## $ lng         &lt;dbl&gt; -71.4, -79.3, -93.3, -80.6, -97.2, -97.2, -72.8, -72.8, -7…</code></pre>
+<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">typ_df</span><span class="op">)</span> <span class="co"># preview</span></code></pre></div>
+<pre><code><span class="co">## Rows: 3,018</span>
+<span class="co">## Columns: 6</span>
+<span class="co">## $ user_id     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "29038175", "191434404", "1383299286373265408", "127876171…</span>
+<span class="co">## $ status_id   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1452684447824887808", "1452684402715201536", "14526843251…</span>
+<span class="co">## $ search_term <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> you guys, you guys, you guys, you guys, you guys, you guys…</span>
+<span class="co">## $ text        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "@WingfieldNFL @ckparrot Can you guys tell Grier and Co, s…</span>
+<span class="co">## $ lat         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 41.8, 43.6, 45.1, 43.0, 49.9, 49.9, 41.8, 41.8, 41.8, 33.9…</span>
+<span class="co">## $ lng         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -71.4, -79.3, -93.3, -80.6, -97.2, -97.2, -72.8, -72.8, -7…</span></code></pre>
 <p>We have 3018 observations and 6 variables.</p>
 <p>Now let’s take a look at the data dictionary for this dataset.</p>
 <table class="table">
@@ -572,28 +566,28 @@ B01003_001 - TOTAL POPULATION
 </tr>
 </tbody>
 </table>
-<p>Since we have geolocation coordinates, we can map these using <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> with a base map from the <code><a href="https://ggplot2.tidyverse.org/reference/map_data.html">map_data()</a></code> function.</p>
+<p>Since we have geolocation coordinates, we can map these using <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code> with a base map from the <code><a href="https://ggplot2.tidyverse.org/reference/map_data.html" class="external-link">map_data()</a></code> function.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">states_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/map_data.html">map_data</a></span><span class="op">(</span><span class="st">"state"</span><span class="op">)</span> <span class="co"># get US map of states</span>
+<code class="sourceCode R"><span class="va">states_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/map_data.html" class="external-link">map_data</a></span><span class="op">(</span><span class="st">"state"</span><span class="op">)</span> <span class="co"># get US map of states</span>
 
-<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># base plot</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">states_map</span>, <span class="co"># map data</span>
-               <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"white"</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># set background/ lines</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Tweets in the USA"</span>, subtitle <span class="op">=</span> <span class="st">"Regional terms"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># labels</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># base plot</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html" class="external-link">geom_polygon</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">states_map</span>, <span class="co"># map data</span>
+               <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"white"</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># set background/ lines</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Tweets in the USA"</span>, subtitle <span class="op">=</span> <span class="st">"Regional terms"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># labels</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">p</span> <span class="op">+</span> <span class="co"># add to previous base plot</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">typ_df</span>, <span class="co"># tweet data with lat and lng coordinates and languages</span>
-             <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lng</span>, y <span class="op">=</span> <span class="va">lat</span>, group <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="va">search_term</span><span class="op">)</span>, <span class="co"># map lat and lng and color for language names</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">typ_df</span>, <span class="co"># tweet data with lat and lng coordinates and languages</span>
+             <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lng</span>, y <span class="op">=</span> <span class="va">lat</span>, group <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="va">search_term</span><span class="op">)</span>, <span class="co"># map lat and lng and color for language names</span>
              alpha <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">4</span>, size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span> <span class="co"># transparency and size of points</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"Regional terms"</span><span class="op">)</span> <span class="co"># labels</span></code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"Regional terms"</span><span class="op">)</span> <span class="co"># labels</span></code></pre></div>
 <p><img src="guide_2_files/figure-html/tusr-plot-1.png" width="85%" style="display: block; margin: auto;"></p>
 <p>Trends towards “Y’all” in the South and eastern metropolitan areas. “You guys” is interspersed with “Y’all” to some degree but appears to be more common in the Mid-West and northern states.</p>
 <p>The overlap appears to be quite extensive in some states. Let’s look at California in particular and explore how we can associate demographic variables with the tweets emanating from tracts (sub-divisions of counties) in this state.</p>
 </div>
-<div id="us-census" class="section level3">
-<h3 class="hasAnchor">
-<a href="#us-census" class="anchor"></a>US Census</h3>
+<div class="section level3">
+<h3 id="us-census">US Census<a class="anchor" aria-label="anchor" href="#us-census"></a>
+</h3>
 <p>Let’s pull the demographic estimates for median income, as an example, for all the tracts in California.</p>
 <!--
 # B01003_001 - TOTAL POPULATION
@@ -602,120 +596,118 @@ B01003_001 - TOTAL POPULATION
 -->
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ca_tract_sf</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span>state <span class="op">=</span> <span class="st">"CA"</span>, <span class="co"># state</span>
+  <span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html" class="external-link">get_acs</a></span><span class="op">(</span>state <span class="op">=</span> <span class="st">"CA"</span>, <span class="co"># state</span>
           geography <span class="op">=</span> <span class="st">"tract"</span>, <span class="co"># census geography</span>
-          variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"B19013_001"</span><span class="op">)</span>, <span class="co"># median income</span>
+          variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"B19013_001"</span><span class="op">)</span>, <span class="co"># median income</span>
           geometry <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># get simple features (sf) geography</span></code></pre></div>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">ca_tract_sf</span><span class="op">)</span>  <span class="co"># preview ACS tracts for CA</span></code></pre></div>
-<pre><code>## Rows: 8,057
-## Columns: 6
-## $ GEOID    &lt;chr&gt; "06013370000", "06001442301", "06037405101", "06037199800", "…
-## $ NAME     &lt;chr&gt; "Census Tract 3700, Contra Costa County, California", "Census…
-## $ variable &lt;chr&gt; "B19013_001", "B19013_001", "B19013_001", "B19013_001", "B190…
-## $ estimate &lt;dbl&gt; 102450, 110761, 78667, 37755, 81281, 42135, 61607, 76992, 558…
-## $ moe      &lt;dbl&gt; 10160, 21966, 10132, 5885, 11317, 9442, 7872, 10796, 9062, 86…
-## $ geometry &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122 37.9, ..., MULTIPOLYGON (((…</code></pre>
-<p>The dataset has 8057 observations corresponding to the number of tracts in California and 6 columns –the same we saw earlier for the single variable, tidy version of the ACS query.</p>
+<code class="sourceCode R"><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">ca_tract_sf</span><span class="op">)</span>  <span class="co"># preview ACS tracts for CA</span></code></pre></div>
+<pre><code><span class="co">## Rows: 9,129</span>
+<span class="co">## Columns: 6</span>
+<span class="co">## $ GEOID    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "06077005127", "06077003406", "06077004402", "06077005124", "…</span>
+<span class="co">## $ NAME     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Census Tract 51.27, San Joaquin County, California", "Census…</span>
+<span class="co">## $ variable <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "B19013_001", "B19013_001", "B19013_001", "B19013_001", "B190…</span>
+<span class="co">## $ estimate <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 87125, 33750, 65850, 54034, 31098, 55956, 54754, 46696, 88897…</span>
+<span class="co">## $ moe      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 15157, 6659, 8817, 6463, 6802, 14313, 6871, 9628, 13887, 1033…</span>
+<span class="co">## $ geometry <span style="color: #949494; font-style: italic;">&lt;MULTIPOLYGON [°]&gt;</span> MULTIPOLYGON (((-121 37.8, ..., MULTIPOLYGON (((…</span></code></pre>
+<p>The dataset has 9129 observations corresponding to the number of tracts in California and 6 columns –the same we saw earlier for the single variable, tidy version of the ACS query.</p>
 <p>For fun, let’s plot the census information for tract median income in California.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ca_tract_sf</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">estimate</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># mapping</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># plot the county geometries</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># use a minimal ggplot theme</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"California: Median income by tract"</span>, 
+<code class="sourceCode R"><span class="va">ca_tract_sf</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">estimate</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># mapping</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># plot the county geometries</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># use a minimal ggplot theme</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"California: Median income by tract"</span>, 
        fill <span class="op">=</span> <span class="st">"Median income"</span><span class="op">)</span> <span class="co"># labels</span></code></pre></div>
 <p><img src="guide_2_files/figure-html/ca-tracts-plot-i-1.png" width="85%" style="display: block; margin: auto;"></p>
-<p>Now let’s add the appropriate CRS (coordinate reference system) scheme to the <code>lng</code> and <code>lat</code> variables in the tweet dataset (<code>typ_df</code>). We use the <code><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf()</a></code> function to do this. ‘sf’ stands for spatial features object and we map the <code>lng</code> and <code>lat</code> to <code>coords</code> and set the <code>crs</code> to the CRS of the <code>ca_tract_sf</code> object.</p>
+<p>Now let’s add the appropriate CRS (coordinate reference system) scheme to the <code>lng</code> and <code>lat</code> variables in the tweet dataset (<code>typ_df</code>). We use the <code><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf()</a></code> function to do this. ‘sf’ stands for spatial features object and we map the <code>lng</code> and <code>lat</code> to <code>coords</code> and set the <code>crs</code> to the CRS of the <code>ca_tract_sf</code> object.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">typ_sf</span> <span class="op">&lt;-</span> 
-  <span class="va">typ_df</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># original dataset</span>
-  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lng"</span>, <span class="st">"lat"</span><span class="op">)</span>, <span class="co"># map x/long, y/lat values to coords</span>
-           crs <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">ca_tract_sf</span><span class="op">)</span><span class="op">)</span> <span class="co"># align coordinate reference systems</span>
+  <span class="va">typ_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># original dataset</span>
+  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lng"</span>, <span class="st">"lat"</span><span class="op">)</span>, <span class="co"># map x/long, y/lat values to coords</span>
+           crs <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="va">ca_tract_sf</span><span class="op">)</span><span class="op">)</span> <span class="co"># align coordinate reference systems</span>
 
-<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">typ_sf</span><span class="op">)</span> <span class="co"># preview</span></code></pre></div>
-<pre><code>## Rows: 3,018
-## Columns: 5
-## $ user_id     &lt;chr&gt; "29038175", "191434404", "1383299286373265408", "127876171…
-## $ status_id   &lt;chr&gt; "1452684447824887808", "1452684402715201536", "14526843251…
-## $ search_term &lt;fct&gt; you guys, you guys, you guys, you guys, you guys, you guys…
-## $ text        &lt;chr&gt; "@WingfieldNFL @ckparrot Can you guys tell Grier and Co, s…
-## $ geometry    &lt;POINT [°]&gt; POINT (-71.4 41.8), POINT (-79.3 43.6), POINT (-93.3…</code></pre>
-<p>We now see that our data frame has converted the latitude and longitude to a geometry vector. We can now use the <code><a href="https://r-spatial.github.io/sf/reference/st_join.html">st_join()</a></code> function to associate those geolocation points from our tweet data with the demographic information from the US Census.</p>
+<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">typ_sf</span><span class="op">)</span> <span class="co"># preview</span></code></pre></div>
+<pre><code><span class="co">## Rows: 3,018</span>
+<span class="co">## Columns: 5</span>
+<span class="co">## $ user_id     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "29038175", "191434404", "1383299286373265408", "127876171…</span>
+<span class="co">## $ status_id   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1452684447824887808", "1452684402715201536", "14526843251…</span>
+<span class="co">## $ search_term <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> you guys, you guys, you guys, you guys, you guys, you guys…</span>
+<span class="co">## $ text        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "@WingfieldNFL @ckparrot Can you guys tell Grier and Co, s…</span>
+<span class="co">## $ geometry    <span style="color: #949494; font-style: italic;">&lt;POINT [°]&gt;</span> POINT (-71.4 41.8), POINT (-79.3 43.6), POINT (-93.3…</span></code></pre>
+<p>We now see that our data frame has converted the latitude and longitude to a geometry vector. We can now use the <code><a href="https://r-spatial.github.io/sf/reference/st_join.html" class="external-link">st_join()</a></code> function to associate those geolocation points from our tweet data with the demographic information from the US Census.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">typ_census_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_join.html">st_join</a></span><span class="op">(</span><span class="va">typ_sf</span>, <span class="va">ca_tract_sf</span><span class="op">)</span>  <span class="co"># join tweets and census by geometry</span>
+<code class="sourceCode R"><span class="va">typ_census_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_join.html" class="external-link">st_join</a></span><span class="op">(</span><span class="va">typ_sf</span>, <span class="va">ca_tract_sf</span><span class="op">)</span>  <span class="co"># join tweets and census by geometry</span>
 
-<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">typ_census_sf</span><span class="op">)</span>  <span class="co"># preview</span></code></pre></div>
-<pre><code>## Rows: 3,018
-## Columns: 10
-## $ user_id     &lt;chr&gt; "29038175", "191434404", "1383299286373265408", "127876171…
-## $ status_id   &lt;chr&gt; "1452684447824887808", "1452684402715201536", "14526843251…
-## $ search_term &lt;fct&gt; you guys, you guys, you guys, you guys, you guys, you guys…
-## $ text        &lt;chr&gt; "@WingfieldNFL @ckparrot Can you guys tell Grier and Co, s…
-## $ geometry    &lt;POINT [°]&gt; POINT (-71.4 41.8), POINT (-79.3 43.6), POINT (-93.3…
-## $ GEOID       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, "06037650502", NA, NA,…
-## $ NAME        &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, "Census Tract 6505.02,…
-## $ variable    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, "B19013_001", NA, NA, …
-## $ estimate    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, 118558, NA, NA, NA, NA…
-## $ moe         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, 9893, NA, NA, NA, NA, …</code></pre>
+<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">typ_census_sf</span><span class="op">)</span>  <span class="co"># preview</span></code></pre></div>
+<pre><code><span class="co">## Rows: 3,018</span>
+<span class="co">## Columns: 10</span>
+<span class="co">## $ user_id     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "29038175", "191434404", "1383299286373265408", "127876171…</span>
+<span class="co">## $ status_id   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1452684447824887808", "1452684402715201536", "14526843251…</span>
+<span class="co">## $ search_term <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> you guys, you guys, you guys, you guys, you guys, you guys…</span>
+<span class="co">## $ text        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "@WingfieldNFL @ckparrot Can you guys tell Grier and Co, s…</span>
+<span class="co">## $ geometry    <span style="color: #949494; font-style: italic;">&lt;POINT [°]&gt;</span> POINT (-71.4 41.8), POINT (-79.3 43.6), POINT (-93.3…</span>
+<span class="co">## $ GEOID       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, "06037650502", NA, NA,…</span>
+<span class="co">## $ NAME        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, "Census Tract 6505.02,…</span>
+<span class="co">## $ variable    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, "B19013_001", NA, NA, …</span>
+<span class="co">## $ estimate    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, 122240, NA, NA, NA, NA…</span>
+<span class="co">## $ moe         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, 13636, NA, NA, NA, NA,…</span></code></pre>
 <p>We have combined the tweets and census data resulting in 3018 observations. Notice, however, that there are various observations with <code>NA</code> values. These are tweets that do not emanate from within California. So we can eliminate them from the dataset for our purposes here.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">typ_census_ca_sf</span> <span class="op">&lt;-</span> <span class="va">typ_census_sf</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">GEOID</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span>  <span class="co"># keep observations with GEOIDs</span>
+<code class="sourceCode R"><span class="va">typ_census_ca_sf</span> <span class="op">&lt;-</span> <span class="va">typ_census_sf</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">GEOID</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span>  <span class="co"># keep observations with GEOIDs</span>
 
-<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">typ_census_ca_sf</span><span class="op">)</span>  <span class="co"># preview</span></code></pre></div>
-<pre><code>## Rows: 344
-## Columns: 10
-## $ user_id     &lt;chr&gt; "1087968900", "15723895", "38469445", "61715298", "4398000…
-## $ status_id   &lt;chr&gt; "1452683638881984512", "1452677571825467392", "14526762309…
-## $ search_term &lt;fct&gt; you guys, you guys, you guys, you guys, you guys, you guys…
-## $ text        &lt;chr&gt; "@melissawisz @StevieLynnne @delanieewisz @wiszrealestate …
-## $ geometry    &lt;POINT [°]&gt; POINT (-118 33.9), POINT (-118 34), POINT (-118 34),…
-## $ GEOID       &lt;chr&gt; "06037650502", "06037271802", "06037271802", "06059088801"…
-## $ NAME        &lt;chr&gt; "Census Tract 6505.02, Los Angeles County, California", "C…
-## $ variable    &lt;chr&gt; "B19013_001", "B19013_001", "B19013_001", "B19013_001", "B…
-## $ estimate    &lt;dbl&gt; 118558, 85318, 85318, 51472, 85318, 104643, 85318, 91250, …
-## $ moe         &lt;dbl&gt; 9893, 6160, 6160, 10004, 6160, 13806, 6160, 16336, NA, 258…</code></pre>
+<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">typ_census_ca_sf</span><span class="op">)</span>  <span class="co"># preview</span></code></pre></div>
+<pre><code><span class="co">## Rows: 344</span>
+<span class="co">## Columns: 10</span>
+<span class="co">## $ user_id     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1087968900", "15723895", "38469445", "61715298", "4398000…</span>
+<span class="co">## $ status_id   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1452683638881984512", "1452677571825467392", "14526762309…</span>
+<span class="co">## $ search_term <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> you guys, you guys, you guys, you guys, you guys, you guys…</span>
+<span class="co">## $ text        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "@melissawisz @StevieLynnne @delanieewisz @wiszrealestate …</span>
+<span class="co">## $ geometry    <span style="color: #949494; font-style: italic;">&lt;POINT [°]&gt;</span> POINT (-118 33.9), POINT (-118 34), POINT (-118 34),…</span>
+<span class="co">## $ GEOID       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "06037650502", "06037271803", "06037271803", "06059088801"…</span>
+<span class="co">## $ NAME        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Census Tract 6505.02, Los Angeles County, California", "C…</span>
+<span class="co">## $ variable    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "B19013_001", "B19013_001", "B19013_001", "B19013_001", "B…</span>
+<span class="co">## $ estimate    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 122240, 83226, 83226, 62273, 83226, 132950, 83226, 155074,…</span>
+<span class="co">## $ moe         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 13636, 6367, 6367, 10934, 6367, 27282, 6367, 96400, NA, 17…</span></code></pre>
 <p>After filtering out tweets not originating from California we now have 344 observations.</p>
 </div>
 </div>
-<div id="references" class="section level2 unnumbered">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<div class="section level2 unnumbered">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-R-rtweet" class="csl-entry">
-Kearney, Michael W. 2020. <em>Rtweet: Collecting Twitter Data</em>. <a href="https://CRAN.R-project.org/package=rtweet">https://CRAN.R-project.org/package=rtweet</a>.
+Kearney, Michael W. 2020. <em>Rtweet: Collecting Twitter Data</em>. <a href="https://CRAN.R-project.org/package=rtweet" class="external-link">https://CRAN.R-project.org/package=rtweet</a>.
 </div>
 <div id="ref-R-tidycensus" class="csl-entry">
-Walker, Kyle, and Matt Herman. 2021. <em>Tidycensus: Load US Census Boundary and Attribute Data as Tidyverse and Sf-Ready Data Frames</em>. <a href="https://walker-data.com/tidycensus/">https://walker-data.com/tidycensus/</a>.
+Walker, Kyle, and Matt Herman. 2022. <em>Tidycensus: Load US Census Boundary and Attribute Data as Tidyverse and Sf-Ready Data Frames</em>. <a href="https://walker-data.com/tidycensus/" class="external-link">https://walker-data.com/tidycensus/</a>.
 </div>
 </div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
-
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
-      <footer><div class="copyright">
-  <p>Developed by Jerid Francom.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p></p>
+<p>Developed by Jerid Francom.</p>
 </div>
 
-<div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+<div class="pkgdown-footer-right">
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
   
 
+  
 
   </body>
 </html>

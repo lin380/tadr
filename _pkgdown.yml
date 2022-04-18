@@ -5,9 +5,11 @@ authors:
   Jerid C. Francom:
     href: https://francojc.github.io
 template:
-  bootstrap: 4
+  bootstrap: 5
+  bootswatch: cosmo
+  # navbar:
+  #   bg: light
   params:
-    bootswatch: cosmo
     ganalytics: G-P69131XJC0
 
 reference:

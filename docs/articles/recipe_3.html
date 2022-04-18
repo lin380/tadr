@@ -4,16 +4,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="tadr">
 <title>3. Reading, inspecting, and writing data • Text as Data Resources</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <script src="../extra.js"></script><meta property="og:title" content="3. Reading, inspecting, and writing data">
 <meta property="og:description" content="tadr">
+<meta property="og:image" content="https://lin380.github.io/tadr/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -25,91 +32,78 @@
   gtag('config', 'G-P69131XJC0');
 </script>
 </head>
-<body data-spy="scroll" data-target="#toc">
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">Text as Data Resources</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
-      </span>
-    </div>
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
+    
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
+    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    
+    <a class="navbar-brand me-2" href="../index.html">Text as Data Resources</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="active nav-item">
+  <a class="nav-link" href="../articles/index.html">Articles</a>
 </li>
-<li>
-  <a href="../tutorials/index.html">Tutorials</a>
+<li class="nav-item">
+  <a class="nav-link" href="../tutorials/index.html">Tutorials</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="../reference/index.html">Reference</a>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="https://github.com/lin380/tadr">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/lin380/tadr">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
       </ul>
 </div>
-<!--/.nav-collapse -->
+
+    
   </div>
-<!--/.container -->
-</div>
-<!--/.navbar -->
+</nav><div class="container template-article">
 
-      
 
-      </header><script src="recipe_3_files/header-attrs-2.11/header-attrs.js"></script><script src="recipe_3_files/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="recipe_3_files/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet">
-<script src="recipe_3_files/bootstrap-3.3.5/js/bootstrap.min.js"></script><script src="recipe_3_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script><script src="recipe_3_files/bootstrap-3.3.5/shim/respond.min.js"></script><style>h1 {font-size: 34px;}
-       h1.title {font-size: 38px;}
-       h2 {font-size: 30px;}
-       h3 {font-size: 24px;}
-       h4 {font-size: 18px;}
-       h5 {font-size: 16px;}
-       h6 {font-size: 12px;}
-       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-       pre:not([class]) { background-color: white }</style>
-<script src="recipe_3_files/navigation-1.1/tabsets.js"></script><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>3. Reading, inspecting, and writing data</h1>
+<div class="row">
+  <main id="main"><div class="page-header">
+      <img src="../logo.png" class="logo" alt=""><h1>3. Reading, inspecting, and writing data</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/lin380/tadr/blob/master/vignettes/recipe_3.Rmd"><code>vignettes/recipe_3.Rmd</code></a></small>
-      <div class="hidden name"><code>recipe_3.Rmd</code></div>
-
+      <small class="dont-index">Source: <a href="https://github.com/lin380/tadr/blob/HEAD/vignettes/recipe_3.Rmd" class="external-link"><code>vignettes/recipe_3.Rmd</code></a></small>
+      <div class="d-none name"><code>recipe_3.Rmd</code></div>
     </div>
 
     
     
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
-<p>In this Recipe we will now start to turn our focus to using literate programming in R markdown to work with R coding strategies. This means we will make more extensive use of ‘code chunks.’ This is where actual R code will be entered, the work will be done, and when output from the R code returns some value, table, or graphic, it will appear in our document output.</p>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
+<p>In this Recipe we will now start to turn our focus to using literate programming in R markdown to work with R coding strategies. This means we will make more extensive use of ‘code chunks’. This is where actual R code will be entered, the work will be done, and when output from the R code returns some value, table, or graphic, it will appear in our document output.</p>
 <p>Here we will focus on reading, inspecting, and writing data.</p>
 </div>
-<div id="setup" class="section level2">
-<h2 class="hasAnchor">
-<a href="#setup" class="anchor"></a>Setup</h2>
+<div class="section level2">
+<h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
+</h2>
 <p>Before we get work, let’s do some housekeeping to set up our R Markdown document for the type of work we are going to be doing. First, it is common to include a code chunk at the top of the prose section. We will use this code chunk to load the necessary R packages that have functions that we will use extensively through the document. It can also be used for other various settings that affect code execution or display document-wide.</p>
 <p>It is typical to name this chunk ‘setup’ and add the code-chunk option-value pair <code>message=FALSE</code> to suppress some of the message information that is typically returned when loading packages.</p>
 <pre><code>```{r setup, message=FALSE}
@@ -119,19 +113,19 @@ library(tidyverse) # for general data manipulation
 <p>So I’m going to load the tidyverse package that we will use extensively in this Recipe, and almost every Recipe.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Load packages</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>  <span class="co"># for general data manipulation</span></code></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>  <span class="co"># for general data manipulation</span></code></pre></div>
 <div class="tip">
-<p>If we want to use a function from a package once or sporadically, we can also reference the function with the <code>package::function()</code> syntax to access the function without having to load it with <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> function.</p>
+<p>If we want to use a function from a package once or sporadically, we can also reference the function with the <code>package::function()</code> syntax to access the function without having to load it with <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code> function.</p>
 </div>
 <p>Second, in this Recipe many of the code chunks will return tabular data (data.frame or tibble). By default, tabular format will look like this:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span><span class="va">iris</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
-<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-## 1          5.1         3.5          1.4         0.2  setosa
-## 2          4.9         3.0          1.4         0.2  setosa
-## 3          4.7         3.2          1.3         0.2  setosa
-## 4          4.6         3.1          1.5         0.2  setosa
-## 5          5.0         3.6          1.4         0.2  setosa</code></pre>
+<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span><span class="va">iris</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
+<span class="co">## 1          5.1         3.5          1.4         0.2  setosa</span>
+<span class="co">## 2          4.9         3.0          1.4         0.2  setosa</span>
+<span class="co">## 3          4.7         3.2          1.3         0.2  setosa</span>
+<span class="co">## 4          4.6         3.1          1.5         0.2  setosa</span>
+<span class="co">## 5          5.0         3.6          1.4         0.2  setosa</span></code></pre>
 <p>To have the output of the tabular data show up in a pretty, human-readable format across the entire document we can also add the <code>df_print: kable</code> attribute-value pair to our front-matter under the output document type.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Recipe #3"</span></span>
@@ -143,7 +137,7 @@ library(tidyverse) # for general data manipulation
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
 <p>Now the output of code chunk that returns a data.frame or tibble will appear like this:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span><span class="va">iris</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span><span class="va">iris</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
 <div class="kable-table">
 <table class="table">
 <thead><tr class="header">
@@ -193,30 +187,30 @@ library(tidyverse) # for general data manipulation
 </table>
 </div>
 </div>
-<div id="working-with-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#working-with-data" class="anchor"></a>Working with data</h2>
+<div class="section level2">
+<h2 id="working-with-data">Working with data<a class="anchor" aria-label="anchor" href="#working-with-data"></a>
+</h2>
 <p>With our setup in place, let’s now turn to reading, inspecting, and writing data! In this Recipe we will focus on working with datasets, that is, data that is in a relational, tabular format.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
-<div id="reading-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#reading-data" class="anchor"></a>Reading data</h3>
+<div class="section level3">
+<h3 id="reading-data">Reading data<a class="anchor" aria-label="anchor" href="#reading-data"></a>
+</h3>
 <p>Datasets can be read into an R session and assigned to an object from various sources: package data, local data, or remote data. Let’s look at each of these in turn.</p>
-<div id="package-data" class="section level4">
-<h4 class="hasAnchor">
-<a href="#package-data" class="anchor"></a>Package data</h4>
-<p>Some packages will either include data in combination with a set of functions or may be dedicated solely to making data accessible. A list of all the data for packages (currently) installed can be accessed by running <code><a href="https://rdrr.io/r/utils/data.html">data()</a></code> in the R console. If you want to explore the data within a particular package you can run the same function with the argument <code>package =</code> and the name of the package in quotes. In Figure <a href="#fig:image-tadr-datasets">1</a> we see the datasets included in the tadr package (this is the Text as Data Resources package).</p>
+<div class="section level4">
+<h4 id="package-data">Package data<a class="anchor" aria-label="anchor" href="#package-data"></a>
+</h4>
+<p>Some packages will either include data in combination with a set of functions or may be dedicated solely to making data accessible. A list of all the data for packages (currently) installed can be accessed by running <code><a href="https://rdrr.io/r/utils/data.html" class="external-link">data()</a></code> in the R console. If you want to explore the data within a particular package you can run the same function with the argument <code>package =</code> and the name of the package in quotes. In Figure <a href="#fig:image-tadr-datasets">1</a> we see the datasets included in the tadr package (this is the Text as Data Resources package).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># view datasets for all installed packages</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"tadr"</span><span class="op">)</span>  <span class="co"># view datasets for the tadr package</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># view datasets for all installed packages</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"tadr"</span><span class="op">)</span>  <span class="co"># view datasets for the tadr package</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:image-tadr-datasets"></span>
 <img src="images/recipe_3/tadr-datasets.png" alt="Viewing the datasets in the tadr package." width="85%"><p class="caption">
 Figure 1: Viewing the datasets in the tadr package.
 </p>
 </div>
-<p>Once you’ve identified a package with data you would like to explore, you can either load the package with <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> and then enter the name of the data object or use the <code>package::dataset-name</code> convention to skip loading the package into the R session. In either case, it is always a good idea to find out more about the data before outputting the object contents to an R Markdown document or in the R Console. We can do this by simply adding <code>?</code> before the object name to bring up the R documentation for the data.</p>
+<p>Once you’ve identified a package with data you would like to explore, you can either load the package with <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code> and then enter the name of the data object or use the <code>package::dataset-name</code> convention to skip loading the package into the R session. In either case, it is always a good idea to find out more about the data before outputting the object contents to an R Markdown document or in the R Console. We can do this by simply adding <code>?</code> before the object name to bring up the R documentation for the data.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lin380/tadr">tadr</a></span><span class="op">)</span> <span class="co"># load the package into the R session</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lin380/tadr" class="external-link">tadr</a></span><span class="op">)</span> <span class="co"># load the package into the R session</span>
 <span class="op">?</span><span class="va">brown</span> <span class="co"># view the R documentation</span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">?</span><span class="fu">tadr</span><span class="fu">::</span><span class="va"><a href="../reference/brown.html">brown</a></span> <span class="co"># view the R documentation, without loading the package into the R session</span></code></pre></div>
@@ -232,10 +226,10 @@ Figure 2: R documentation for the <code>brown</code> dataset from the tadr packa
 <p>If we have loaded the library that contains the data, then we can then just use the object’s name to access the data. If in the case where we have only explored the data, without loading the package (<code>package::dataset-name</code>), then it is often best to now load the library to have direct acess to the data and the data documentation in R.</p>
 </div>
 </div>
-<div id="local-data" class="section level4">
-<h4 class="hasAnchor">
-<a href="#local-data" class="anchor"></a>Local data</h4>
-<p>Packages often contain datasets for demonstration purposes, but datasets used in research are often stored on your computer (or your cloud computer!). This data is considered ‘local.’ There are <a href="https://en.wikipedia.org/wiki/File_format">many formats for storing local data</a>. We will start with the most accessible format for tabular data the <a href="https://en.wikipedia.org/wiki/Delimiter-separated_values">delimited-text file</a>. In this type of dataset format the delimiter is typically a comma or tab space giving the most common delimited-text files their names: <a href="https://en.wikipedia.org/wiki/Comma-separated_values">comma-separated values (csv)</a> and <a href="https://en.wikipedia.org/wiki/Tab-separated_values">tab-separated values (tsv)</a>. The delimiter marks columns (variables) and new lines denote new rows (observations).</p>
+<div class="section level4">
+<h4 id="local-data">Local data<a class="anchor" aria-label="anchor" href="#local-data"></a>
+</h4>
+<p>Packages often contain datasets for demonstration purposes, but datasets used in research are often stored on your computer (or your cloud computer!). This data is considered ‘local’. There are <a href="https://en.wikipedia.org/wiki/File_format" class="external-link">many formats for storing local data</a>. We will start with the most accessible format for tabular data the <a href="https://en.wikipedia.org/wiki/Delimiter-separated_values" class="external-link">delimited-text file</a>. In this type of dataset format the delimiter is typically a comma or tab space giving the most common delimited-text files their names: <a href="https://en.wikipedia.org/wiki/Comma-separated_values" class="external-link">comma-separated values (csv)</a> and <a href="https://en.wikipedia.org/wiki/Tab-separated_values" class="external-link">tab-separated values (tsv)</a>. The delimiter marks columns (variables) and new lines denote new rows (observations).</p>
 <p>CSV file example</p>
 <pre><code>column_1,column_2,column_3
 value,value,value
@@ -267,7 +261,7 @@ value   value   value</code></pre>
 </table>
 </div>
 <p>The advantage to working with delimited-text files is that they are plain-text files which means they are easy to share and are widely supported in programming languages (R, Python, etc.) and open-source (OpenOffice) and proprietary software (MS Office).</p>
-<p>So how do we read a local csv or tsv file into R? There are a multitude of ways to read delimited-text files into an R session. Here we will use the aptly named <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> and <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv()</a></code> functions from the readr package <span class="citation">(<a href="#ref-R-readr" role="doc-biblioref">Wickham and Hester 2021</a>)</span>, which is part of the tidyverse meta package <span class="citation">(<a href="#ref-tidyverse2019" role="doc-biblioref">Wickham et al. 2019</a>)</span> which we already loaded earlier in this recipe!</p>
+<p>So how do we read a local csv or tsv file into R? There are a multitude of ways to read delimited-text files into an R session. Here we will use the aptly named <code><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv()</a></code> and <code><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_tsv()</a></code> functions from the readr package <span class="citation">(<a href="#ref-R-readr" role="doc-biblioref">Wickham, Hester, and Bryan 2022</a>)</span>, which is part of the tidyverse meta package <span class="citation">(<a href="#ref-tidyverse2019" role="doc-biblioref">Wickham et al. 2019</a>)</span> which we already loaded earlier in this recipe!</p>
 <p>If we inspect these functions (using the <code>?</code> before the function name in the R Console), we see that both have only one required argument, <code>file</code>. The value for the <code>file</code> argument is a path to the file that we want to read. The a path can be understood as a file’s address. By default when working with an R Markdown document, a file’s path is the directory structure relative to where the R Markdown document is saved. So, if I graphically show the directory structure for this recipe, we see that the path from <code>recipe_3.Rmd</code> to the <code>inaugCorpus.csv</code> file is: <code>data/csv/inaugCorpus.csv</code>.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> recipe_3.Rmd</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> data/</span>
@@ -275,83 +269,83 @@ value   value   value</code></pre>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│</span>   └── inaugCorpus.csv</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">└──</span> tsv/</span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="ex">└──</span> dailsample.tsv</span></code></pre></div>
-<p>Let’s then add this path as the value of the <code>file</code> argument of the <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> function and assign the result to <code>inaug_corpus</code>.</p>
+<p>Let’s then add this path as the value of the <code>file</code> argument of the <code><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv()</a></code> function and assign the result to <code>inaug_corpus</code>.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># read local 'inaugCorpus.csv' file</span>
-<span class="va">inaug_corpus</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"data/csv/inaugCorpus.csv"</span><span class="op">)</span></code></pre></div>
+<span class="va">inaug_corpus</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"data/csv/inaugCorpus.csv"</span><span class="op">)</span></code></pre></div>
 <p>That’s all we need to read a delimited-text file into R. The contents of the file are now contained in the <code>inaug_corpus</code> object.</p>
 </div>
-<div id="remote-data" class="section level4">
-<h4 class="hasAnchor">
-<a href="#remote-data" class="anchor"></a>Remote data</h4>
+<div class="section level4">
+<h4 id="remote-data">Remote data<a class="anchor" aria-label="anchor" href="#remote-data"></a>
+</h4>
 <p>In addition to reading delimited-text files locally, we can also read files that are stored on the internet. All we need is a web path, otherwise known as a URL (Uniform Resource Locator). Datasets in delimited-text files (and other data storage format files) can be commonly found at data repository sites which are dedicated to storing data and making it accessible to the (research) community.</p>
-<p>Let’s take for example the <a href="https://github.com/francojc/activ-es">ACTIV-ES Corpus</a> which is available on <a href="https://github.com/">GitHub</a>. This corpus is available in corpus and wordlist forms. If, for example, we want to read the word frequency list for this corpus we can find and copy the link to the <code>aes1grams.csv</code> file. Then we use the same <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> function with the URL as the value for the <code>file</code> argument.</p>
+<p>Let’s take for example the <a href="https://github.com/francojc/activ-es" class="external-link">ACTIV-ES Corpus</a> which is available on <a href="https://github.com/" class="external-link">GitHub</a>. This corpus is available in corpus and wordlist forms. If, for example, we want to read the word frequency list for this corpus we can find and copy the link to the <code>aes1grams.csv</code> file. Then we use the same <code><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv()</a></code> function with the URL as the value for the <code>file</code> argument.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># read the 'aes1grams.csv' file from github</span>
-<span class="va">aes_unigrams</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"https://github.com/francojc/activ-es/raw/master/activ-es-v.02/wordlists/plain/aes1grams.csv"</span><span class="op">)</span></code></pre></div>
+<span class="va">aes_unigrams</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"https://github.com/francojc/activ-es/raw/master/activ-es-v.02/wordlists/plain/aes1grams.csv"</span><span class="op">)</span></code></pre></div>
 <p>Now the contents of the <code>aes1grams.csv</code> file are contained in our R session in the <code>aes_unigrams</code> object.</p>
 </div>
 </div>
-<div id="inspecting-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#inspecting-data" class="anchor"></a>Inspecting data</h3>
+<div class="section level3">
+<h3 id="inspecting-data">Inspecting data<a class="anchor" aria-label="anchor" href="#inspecting-data"></a>
+</h3>
 <p>At this point we are able to read datasets into an R session from packages and local and remote delimited-text files. The next step is to inspect datasets. For package datasets, we already saw that we can use the <code>?</code> operator to get an overview of the dataset viewing the R documentation. But for package data and for data we read from local or remote files nothing beats getting into the data and inspecting the data ourselves.</p>
-<p>To see the objects that we have read into memory we use the <code><a href="https://rdrr.io/r/base/ls.html">ls()</a></code> function.</p>
+<p>To see the objects that we have read into memory we use the <code><a href="https://rdrr.io/r/base/ls.html" class="external-link">ls()</a></code> function.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># list objects</span></code></pre></div>
-<pre><code>## [1] "aes_unigrams" "inaug_corpus"</code></pre>
-<p>The <code>brown</code> dataset from the tadr package does not appear because we did not load it into the R session. To do this we load the tadr package and call the <code><a href="https://rdrr.io/r/utils/data.html">data()</a></code> function with <code>brown</code> as the only argument.</p>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/ls.html" class="external-link">ls</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># list objects</span></code></pre></div>
+<pre><code><span class="co">## [1] "aes_unigrams" "inaug_corpus"</span></code></pre>
+<p>The <code>brown</code> dataset from the tadr package does not appear because we did not load it into the R session. To do this we load the tadr package and call the <code><a href="https://rdrr.io/r/utils/data.html" class="external-link">data()</a></code> function with <code>brown</code> as the only argument.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lin380/tadr">tadr</a></span><span class="op">)</span>  <span class="co"># load tadr package</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">brown</span><span class="op">)</span>  <span class="co"># read brown dataset into our R session</span></code></pre></div>
-<p>Now if we run <code><a href="https://rdrr.io/r/base/ls.html">ls()</a></code> the <code>brown</code> dataset will appear as an object in our session.</p>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lin380/tadr" class="external-link">tadr</a></span><span class="op">)</span>  <span class="co"># load tadr package</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">brown</span><span class="op">)</span>  <span class="co"># read brown dataset into our R session</span></code></pre></div>
+<p>Now if we run <code><a href="https://rdrr.io/r/base/ls.html" class="external-link">ls()</a></code> the <code>brown</code> dataset will appear as an object in our session.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># list objects</span></code></pre></div>
-<pre><code>## [1] "aes_unigrams" "brown"        "inaug_corpus"</code></pre>
-<p><a href="https://rstudio-education.github.io/hopr/r-objects.html">Objects are always of some type</a> <span class="citation">(<a href="#ref-Grolemund2021" role="doc-biblioref">Grolemund 2021</a>)</span>. To find the object type or class, we can use the <code><a href="https://rdrr.io/r/base/class.html">class()</a></code> function and the object name as the only argument.</p>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/ls.html" class="external-link">ls</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># list objects</span></code></pre></div>
+<pre><code><span class="co">## [1] "aes_unigrams" "brown"        "inaug_corpus"</span></code></pre>
+<p><a href="https://rstudio-education.github.io/hopr/r-objects.html" class="external-link">Objects are always of some type</a> <span class="citation">(<a href="#ref-Grolemund2021" role="doc-biblioref">Grolemund 2021</a>)</span>. To find the object type or class, we can use the <code><a href="https://rdrr.io/r/base/class.html" class="external-link">class()</a></code> function and the object name as the only argument.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">aes_unigrams</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame"</code></pre>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">aes_unigrams</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame"</span></code></pre>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">brown</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "tbl_df"     "tbl"        "data.frame"</code></pre>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">brown</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] "tbl_df"     "tbl"        "data.frame"</span></code></pre>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">inaug_corpus</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame"</code></pre>
-<p>Now for each of these three objects we see that they all indicate that they are ‘data.frame,’ ‘tbl,’ and ‘tbl_df’ and that the <code>aes_unigrams</code> and <code>inaug_corpus</code> objects also have the <code>spec_tbl_df</code>. The key for us here is to recognize that each of these objects is a ‘data.frame’ and that they are also a particular type of data frame called a ‘tibble’ (<code>tbl_df</code>). Functions from the readr package (as part of the tidyverse meta-package) read all rectangular data (tables) into memory as tibbles. Tibbles have a few extra properties that extend the standard data.frame type, but for our purposes at this moment let’s consider them synonymous object types.</p>
-<p>Another aspect we we would like to inspect about our tibble objects is their structure, namely the columns, column types, and the number of rows. The <code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code> function accomplishes this.</p>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">inaug_corpus</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame"</span></code></pre>
+<p>Now for each of these three objects we see that they all indicate that they are ‘data.frame’, ‘tbl’, and ‘tbl_df’ and that the <code>aes_unigrams</code> and <code>inaug_corpus</code> objects also have the <code>spec_tbl_df</code>. The key for us here is to recognize that each of these objects is a ‘data.frame’ and that they are also a particular type of data frame called a ‘tibble’ (<code>tbl_df</code>). Functions from the readr package (as part of the tidyverse meta-package) read all rectangular data (tables) into memory as tibbles. Tibbles have a few extra properties that extend the standard data.frame type, but for our purposes at this moment let’s consider them synonymous object types.</p>
+<p>Another aspect we we would like to inspect about our tibble objects is their structure, namely the columns, column types, and the number of rows. The <code><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse()</a></code> function accomplishes this.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">brown</span><span class="op">)</span>  <span class="co"># get info on the structure of a data.frame or tibble</span></code></pre></div>
-<pre><code>## Rows: 1,155,866
-## Columns: 5
-## $ document_id          &lt;chr&gt; "01", "01", "01", "01", "01", "01", "01", "01", "…
-## $ category             &lt;chr&gt; "A", "A", "A", "A", "A", "A", "A", "A", "A", "A",…
-## $ category_description &lt;chr&gt; "PRESS: REPORTAGE", "PRESS: REPORTAGE", "PRESS: R…
-## $ words                &lt;chr&gt; "The", "Fulton", "County", "Grand", "Jury", "said…
-## $ pos                  &lt;chr&gt; "AT", "NP", "NN", "JJ", "NN", "VBD", "NR", "AT", …</code></pre>
-<p>Looking at the output from <code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code> we see that the <code>brown</code> object has five columns and over 1 million rows. Looking at each of the columns we see their names and also see the vector type for each column. In this object all the columns are character vectors <code>&lt;chr&gt;</code>.</p>
+<code class="sourceCode R"><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">brown</span><span class="op">)</span>  <span class="co"># get info on the structure of a data.frame or tibble</span></code></pre></div>
+<pre><code><span class="co">## Rows: 1,155,866</span>
+<span class="co">## Columns: 5</span>
+<span class="co">## $ document_id          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "01", "01", "01", "01", "01", "01", "01", "01", "…</span>
+<span class="co">## $ category             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "A", "A", "A", "A", "A", "A", "A", "A", "A", "A",…</span>
+<span class="co">## $ category_description <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "PRESS: REPORTAGE", "PRESS: REPORTAGE", "PRESS: R…</span>
+<span class="co">## $ words                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "The", "Fulton", "County", "Grand", "Jury", "said…</span>
+<span class="co">## $ pos                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "AT", "NP", "NN", "JJ", "NN", "VBD", "NR", "AT", …</span></code></pre>
+<p>Looking at the output from <code><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse()</a></code> we see that the <code>brown</code> object has five columns and over 1 million rows. Looking at each of the columns we see their names and also see the vector type for each column. In this object all the columns are character vectors <code>&lt;chr&gt;</code>.</p>
 <p>Let’s take a look at the <code>aes_unigrams</code> object in the same fashion.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">aes_unigrams</span><span class="op">)</span>  <span class="co"># get info on the structure</span></code></pre></div>
-<pre><code>## Rows: 80,787
-## Columns: 10
-## $ ...1    &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,…
-## $ word    &lt;chr&gt; "a", "á", "aa", "aaaaaa", "aaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaah…
-## $ ar_orf  &lt;dbl&gt; 2654.57, 0.24, 0.36, 0.12, 0.36, 0.12, 0.12, 0.12, 0.12, 0.24,…
-## $ es_orf  &lt;dbl&gt; 2541.01, 0.10, 0.10, 0.00, 0.00, 0.00, 0.48, 0.00, 1.05, 0.00,…
-## $ mx_orf  &lt;dbl&gt; 2537.99, 0.13, 0.13, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00,…
-## $ aes_orf &lt;dbl&gt; 2576.18, 0.15, 0.19, 0.04, 0.11, 0.04, 0.23, 0.04, 0.46, 0.08,…
-## $ ar_ord  &lt;dbl&gt; 9.92, 0.16, 0.16, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.…
-## $ es_ord  &lt;dbl&gt; 10.00, 0.05, 0.05, 0.00, 0.00, 0.00, 0.16, 0.00, 0.16, 0.00, 0…
-## $ mx_ord  &lt;dbl&gt; 10.00, 0.08, 0.08, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0…
-## $ aes_ord &lt;dbl&gt; 9.98, 0.09, 0.09, 0.02, 0.02, 0.02, 0.09, 0.02, 0.09, 0.02, 0.…</code></pre>
-<p>The same information is given, but now we see that the majority of the columns are of type <code>&lt;dbl&gt;</code> which stands for ‘double,’ which itself is a special type of numeric vector which allows for decimal points.</p>
+<code class="sourceCode R"><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">aes_unigrams</span><span class="op">)</span>  <span class="co"># get info on the structure</span></code></pre></div>
+<pre><code><span class="co">## Rows: 80,787</span>
+<span class="co">## Columns: 10</span>
+<span class="co">## $ ...1    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,…</span>
+<span class="co">## $ word    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "a", "á", "aa", "aaaaaa", "aaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaah…</span>
+<span class="co">## $ ar_orf  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2654.57, 0.24, 0.36, 0.12, 0.36, 0.12, 0.12, 0.12, 0.12, 0.24,…</span>
+<span class="co">## $ es_orf  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2541.01, 0.10, 0.10, 0.00, 0.00, 0.00, 0.48, 0.00, 1.05, 0.00,…</span>
+<span class="co">## $ mx_orf  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2537.99, 0.13, 0.13, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00,…</span>
+<span class="co">## $ aes_orf <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2576.18, 0.15, 0.19, 0.04, 0.11, 0.04, 0.23, 0.04, 0.46, 0.08,…</span>
+<span class="co">## $ ar_ord  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 9.92, 0.16, 0.16, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.…</span>
+<span class="co">## $ es_ord  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 10.00, 0.05, 0.05, 0.00, 0.00, 0.00, 0.16, 0.00, 0.16, 0.00, 0…</span>
+<span class="co">## $ mx_ord  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 10.00, 0.08, 0.08, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0…</span>
+<span class="co">## $ aes_ord <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 9.98, 0.09, 0.09, 0.02, 0.02, 0.02, 0.09, 0.02, 0.09, 0.02, 0.…</span></code></pre>
+<p>The same information is given, but now we see that the majority of the columns are of type <code>&lt;dbl&gt;</code> which stands for ‘double’, which itself is a special type of numeric vector which allows for decimal points.</p>
 <div class="tip">
 <p>Inside RStudio the objects in the R session and information about them (class, structure, memory size, etc.) can also be found in the ‘Environment’ pane.</p>
 </div>
-<p>If we want to see a dataset in a tabular format, but limit the number of rows that we print (either to our R Markdown document or the R Console), we can ‘slice’ the data with one of a set of functions from the dplyr package <span class="citation">(<a href="#ref-R-dplyr" role="doc-biblioref">Wickham et al. 2021</a>)</span> with the prefix <code>slice_</code>. Let’s use <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head()</a></code> to get the first 10 rows of the <code>brown</code> dataset.</p>
+<p>If we want to see a dataset in a tabular format, but limit the number of rows that we print (either to our R Markdown document or the R Console), we can ‘slice’ the data with one of a set of functions from the dplyr package <span class="citation">(<a href="#ref-R-dplyr" role="doc-biblioref">Wickham et al. 2022</a>)</span> with the prefix <code>slice_</code>. Let’s use <code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head()</a></code> to get the first 10 rows of the <code>brown</code> dataset.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span><span class="va">brown</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span><span class="va">brown</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
 <div class="kable-table">
 <table class="table">
 <thead><tr class="header">
@@ -435,10 +429,10 @@ value   value   value</code></pre>
 </tbody>
 </table>
 </div>
-<p>Other examples of <code>slice_</code> is <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_tail()</a></code> which is used to get the last <code>n</code> rows and <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample()</a></code> which is used to get a random sample of some size.</p>
-<p>Now we might want to explore values of a particular column to get a better understanding of the dataset. The <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> function can be of help here.</p>
+<p>Other examples of <code>slice_</code> is <code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_tail()</a></code> which is used to get the last <code>n</code> rows and <code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_sample()</a></code> which is used to get a random sample of some size.</p>
+<p>Now we might want to explore values of a particular column to get a better understanding of the dataset. The <code><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct()</a></code> function can be of help here.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">brown</span>, <span class="va">category_description</span><span class="op">)</span>  <span class="co"># get the distinct values for 'category_description'</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">brown</span>, <span class="va">category_description</span><span class="op">)</span>  <span class="co"># get the distinct values for 'category_description'</span></code></pre></div>
 <div class="kable-table">
 <table class="table">
 <thead><tr class="header">
@@ -495,17 +489,17 @@ value   value   value</code></pre>
 </div>
 <p>Note that syntax we used <code>distinct(brown, category_description)</code> can also be expressed using the pipe operator <code>%&gt;%</code>.</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">brown</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">category_description</span><span class="op">)</span> <span class="co"># get distinct values for 'category_description'</span></code></pre></div>
+<code class="sourceCode R"><span class="va">brown</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">category_description</span><span class="op">)</span> <span class="co"># get distinct values for 'category_description'</span></code></pre></div>
 <p>The pipe will be very helpful when our code becomes more complex. That is, when the output of one function becomes the input for the next function.</p>
 <div class="tip">
 <p>In RStudio you can use the keyboard shortcut SHIFT+CMD+M to insert the <code>%&gt;%</code> operator.</p>
 </div>
-<p>Now back to inspection. We can also use a combination of <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> to achieve something similar to the <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> function, but also provide the number of rows that have each distinct value.</p>
+<p>Now back to inspection. We can also use a combination of <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count()</a></code> to achieve something similar to the <code><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct()</a></code> function, but also provide the number of rows that have each distinct value.</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">brown</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">category_description</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># group by 'category_description'</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># count the rows with each grouped value</span></code></pre></div>
+<code class="sourceCode R"><span class="va">brown</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">category_description</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># group by 'category_description'</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># count the rows with each grouped value</span></code></pre></div>
 <div class="kable-table">
 <table class="table">
 <thead><tr class="header">
@@ -580,10 +574,10 @@ value   value   value</code></pre>
 <p>Furthermore, we can build on the last code chunk and arrange the output so that the values of <code>n</code> are sorted. In addition, let’s assign the output to a new object called <code>brown_categories</code>.</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">brown_categories</span> <span class="op">&lt;-</span> 
-  <span class="va">brown</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">category_description</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># group by 'category_description'</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># count the rows with each grouped value</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="co"># sort output by 'n'</span>
+  <span class="va">brown</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">category_description</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># group by 'category_description'</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>  <span class="co"># count the rows with each grouped value</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="co"># sort output by 'n'</span>
 
 <span class="va">brown_categories</span></code></pre></div>
 <div class="kable-table">
@@ -658,28 +652,28 @@ value   value   value</code></pre>
 </div>
 <p>Now if we check our R session object list we will see that <code>brown_categories</code> also appears.</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "aes_unigrams"     "brown"            "brown_categories" "inaug_corpus"</code></pre>
-<p>If we now <code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code> the structure of <code>brown_categories</code> we see a new attribute <code>Groups</code>, which tells us that the tibble is holding on to the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> function.</p>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/ls.html" class="external-link">ls</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] "aes_unigrams"     "brown"            "brown_categories" "inaug_corpus"</span></code></pre>
+<p>If we now <code><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse()</a></code> the structure of <code>brown_categories</code> we see a new attribute <code>Groups</code>, which tells us that the tibble is holding on to the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> function.</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">brown_categories</span><span class="op">)</span></code></pre></div>
-<pre><code>## Rows: 15
-## Columns: 2
-## Groups: category_description [15]
-## $ category_description &lt;chr&gt; "FICTION: SCIENCE", "HUMOR", "RELIGION", "PRESS: …
-## $ n                    &lt;int&gt; 14354, 21519, 39356, 40622, 56240, 61404, 67959, …</code></pre>
-<p>In most cases it is best to remove this grouping after the grouping has been applied. To do this we use the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code> function after we are done with the operations that needed the grouping. We can do that as part of the process that is assigned to the object we create or after we call that object as part of another code phrase.</p>
+<code class="sourceCode R"><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">brown_categories</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## Rows: 15</span>
+<span class="co">## Columns: 2</span>
+<span class="co">## Groups: category_description [15]</span>
+<span class="co">## $ category_description <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "FICTION: SCIENCE", "HUMOR", "RELIGION", "PRESS: …</span>
+<span class="co">## $ n                    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 14354, 21519, 39356, 40622, 56240, 61404, 67959, …</span></code></pre>
+<p>In most cases it is best to remove this grouping after the grouping has been applied. To do this we use the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup()</a></code> function after we are done with the operations that needed the grouping. We can do that as part of the process that is assigned to the object we create or after we call that object as part of another code phrase.</p>
 <p>Let’s go one step further and group two columns, count, and arrange the output sort by <code>category_description</code> and <code>n</code> (in descending order). After assigning the output to a new object <code>brown_categories_pos</code>, we call this object, remove the grouping, and print the first 10 lines.</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">brown_categories_pos</span> <span class="op">&lt;-</span> 
-  <span class="va">brown</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">category_description</span>, <span class="va">pos</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># group 'category_description' and 'pos'</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># count grouped columns</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">category_description</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="co"># sort by 'category_description' and descending 'n'</span>
+  <span class="va">brown</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">category_description</span>, <span class="va">pos</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># group 'category_description' and 'pos'</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># count grouped columns</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">category_description</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="co"># sort by 'category_description' and descending 'n'</span>
 
-<span class="va">brown_categories_pos</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># remove groups</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># first 10 rows</span></code></pre></div>
+<span class="va">brown_categories_pos</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># remove groups</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># first 10 rows</span></code></pre></div>
 <div class="kable-table">
 <table class="table">
 <thead><tr class="header">
@@ -742,12 +736,12 @@ value   value   value</code></pre>
 </table>
 </div>
 <p>The output shows the most common <code>pos</code> (Part of Speech) for each category. Pretty cool.</p>
-<p>Another operation that can prove useful to explore a dataset is the <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> function, which does what it suggests. Using the <code>brown_categories_pos</code> object, let’s filter the <code>pos</code> column for only ‘NN’ (nouns), this will give us only the rows where the value for <code>pos</code> is <code>NN</code>.</p>
+<p>Another operation that can prove useful to explore a dataset is the <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> function, which does what it suggests. Using the <code>brown_categories_pos</code> object, let’s filter the <code>pos</code> column for only ‘NN’ (nouns), this will give us only the rows where the value for <code>pos</code> is <code>NN</code>.</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">brown_categories_pos</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># remove groupings</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">pos</span> <span class="op">==</span> <span class="st">"NN"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># filter 'pos' for 'NN' values</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="co"># sort by 'n' in descending order</span></code></pre></div>
+<code class="sourceCode R"><span class="va">brown_categories_pos</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># remove groupings</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">pos</span> <span class="op">==</span> <span class="st">"NN"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># filter 'pos' for 'NN' values</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="co"># sort by 'n' in descending order</span></code></pre></div>
 <div class="kable-table">
 <table class="table">
 <thead><tr class="header">
@@ -836,18 +830,18 @@ value   value   value</code></pre>
 </div>
 <p>We now see that the ‘LEARNED’ category has the most nouns of all the categories and ‘FICTION: SCIENCE’ the least.</p>
 <div class="tip">
-<p><code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> takes a logical expression. For character vectors the values are quoted <code>"value"</code> or numeric type values, the values are not quoted.</p>
+<p><code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> takes a logical expression. For character vectors the values are quoted <code>"value"</code> or numeric type values, the values are not quoted.</p>
 </div>
-<p>Let’s touch on one more useful function for exploring datasets: <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>. This function also does what it suggests, it allows us to select columns (or subset) from a dataset.</p>
+<p>Let’s touch on one more useful function for exploring datasets: <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code>. This function also does what it suggests, it allows us to select columns (or subset) from a dataset.</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">brown_categories_nouns</span> <span class="op">&lt;-</span> 
-  <span class="va">brown_categories_pos</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># remove groupings</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">pos</span> <span class="op">==</span> <span class="st">"NN"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># filter 'pos' for 'NN' values</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="co"># sort by 'n' in descending order</span>
+  <span class="va">brown_categories_pos</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># remove groupings</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">pos</span> <span class="op">==</span> <span class="st">"NN"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># filter 'pos' for 'NN' values</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="co"># sort by 'n' in descending order</span>
 
-<span class="va">brown_categories_nouns</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">category_description</span>, <span class="va">n</span><span class="op">)</span></code></pre></div>
+<span class="va">brown_categories_nouns</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">category_description</span>, <span class="va">n</span><span class="op">)</span></code></pre></div>
 <div class="kable-table">
 <table class="table">
 <thead><tr class="header">
@@ -918,11 +912,11 @@ value   value   value</code></pre>
 </tbody>
 </table>
 </div>
-<p>In addition to selecting columns, <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> can be used to rename columns that are selected.</p>
+<p>In addition to selecting columns, <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code> can be used to rename columns that are selected.</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">brown_categories_num_nouns</span> <span class="op">&lt;-</span> 
-  <span class="va">brown_categories_nouns</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># dataset</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">category_description</span>, num_nouns <span class="op">=</span> <span class="va">n</span><span class="op">)</span> <span class="co"># select and rename</span>
+  <span class="va">brown_categories_nouns</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># dataset</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">category_description</span>, num_nouns <span class="op">=</span> <span class="va">n</span><span class="op">)</span> <span class="co"># select and rename</span>
 
 <span class="va">brown_categories_num_nouns</span></code></pre></div>
 <div class="kable-table">
@@ -997,13 +991,13 @@ value   value   value</code></pre>
 </div>
 <p>With this set of functions in our R programming toolbox we can do some quite thorough inspection of datasets.</p>
 </div>
-<div id="writing-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#writing-data" class="anchor"></a>Writing data</h3>
+<div class="section level3">
+<h3 id="writing-data">Writing data<a class="anchor" aria-label="anchor" href="#writing-data"></a>
+</h3>
 <p>When working with datasets, either to inspect them or to transform them, the objects we create along the way can be useful to keep for later use when we leave the R session. To make these objects available for us to read into another R session, we have two main options: to write the object to (1) a plain-text file (.csv, .tsv, etc.) or (2) an R Storage Data (.rds) file.</p>
-<p>To write a plain-text file we can again use the readr package. It has various functions for writing CSV or other text-delimited files. Let’s write the <code>brown_categories_num_nouns</code> object we created to a CSV file using <code><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv()</a></code>.</p>
+<p>To write a plain-text file we can again use the readr package. It has various functions for writing CSV or other text-delimited files. Let’s write the <code>brown_categories_num_nouns</code> object we created to a CSV file using <code><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_csv()</a></code>.</p>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">brown_categories_num_nouns</span>, file <span class="op">=</span> <span class="st">"data/csv/brown_categories_num_nouns.csv"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_csv</a></span><span class="op">(</span><span class="va">brown_categories_num_nouns</span>, file <span class="op">=</span> <span class="st">"data/csv/brown_categories_num_nouns.csv"</span><span class="op">)</span></code></pre></div>
 <p>We now see that the file is in our <code>data/csv/</code> directory.</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> recipe_3.Rmd</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> data/</span>
@@ -1012,10 +1006,10 @@ value   value   value</code></pre>
 <span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│</span>   └── brown_categories_num_nouns.csv</span>
 <span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">└──</span> tsv/</span>
 <span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>        <span class="ex">└──</span> dailsample.tsv</span></code></pre></div>
-<p>We can also write an RDS file. The function is <code><a href="https://readr.tidyverse.org/reference/read_rds.html">write_rds()</a></code>. To keep our file types organized, I will first create an <code>rds/</code> directory inside the <code>data/</code> directory.</p>
+<p>We can also write an RDS file. The function is <code><a href="https://readr.tidyverse.org/reference/read_rds.html" class="external-link">write_rds()</a></code>. To keep our file types organized, I will first create an <code>rds/</code> directory inside the <code>data/</code> directory.</p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span><span class="op">(</span><span class="st">"data/rds"</span><span class="op">)</span>  <span class="co"># create the `data/rds/` directory</span>
-<span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html">write_rds</a></span><span class="op">(</span><span class="va">brown_categories_num_nouns</span>, file <span class="op">=</span> <span class="st">"data/rds/brown_categories_num_nouns.rds"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="st">"data/rds"</span><span class="op">)</span>  <span class="co"># create the `data/rds/` directory</span>
+<span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html" class="external-link">write_rds</a></span><span class="op">(</span><span class="va">brown_categories_num_nouns</span>, file <span class="op">=</span> <span class="st">"data/rds/brown_categories_num_nouns.rds"</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb46"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> recipe_3.Rmd</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> data/</span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">├──</span> csv/</span>
@@ -1028,60 +1022,58 @@ value   value   value</code></pre>
 <p>Now there are a couple key reasons that one might choose to write either a plain-text file or an RDS file. The first is that plain-text files are more widely accessible to anyone –it does not require the use of R. RDS files, however, do require the use of R. A second concern is that a dataset written to a plain-text files does not retain any R-specific properties. As we continue to learn more about transforming and analyzing datasets we will see more R-specific properties that we add to datasets when working in R that help facilitate working with datasets. For the moment, however, we can point to one that was introduced in this recipe. The ‘Group’ attribute that a tibble can retain cannot be written to a plain-text file. An RDS file, however, retains the dataset as it was when is was part of the R session.</p>
 </div>
 </div>
-<div id="summary" class="section level2">
-<h2 class="hasAnchor">
-<a href="#summary" class="anchor"></a>Summary</h2>
+<div class="section level2">
+<h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
+</h2>
 <p>To sum up this recipe, we covered a lot of ground in the area of reading, inspecting, and writing datasets. This included key functions from the readr and dplyr package, which are both loaded into an R session with the tidyverse meta-package. There are many more functions and strategies for working with datasets, but this introduction provides the scaffolding for some of the most common applications. In the next recipe we will build on the skills presented here and move beyond inspecting datasets to be able to describe and summarize datasets in both tabular and graphical forms.</p>
 </div>
-<div id="references" class="section level2 unnumbered">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<div class="section level2 unnumbered">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Grolemund2021" class="csl-entry">
 Grolemund, Garrett. 2021. <em>Hands-on Programming with r</em>.
 </div>
 <div id="ref-tidyverse2019" class="csl-entry">
-Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. <span>“Welcome to the <span class="nocase">tidyverse</span>.”</span> <em>Journal of Open Source Software</em> 4 (43): 1686. <a href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>.
+Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. <span>“Welcome to the <span class="nocase">tidyverse</span>.”</span> <em>Journal of Open Source Software</em> 4 (43): 1686. <a href="https://doi.org/10.21105/joss.01686" class="external-link">https://doi.org/10.21105/joss.01686</a>.
 </div>
 <div id="ref-R-dplyr" class="csl-entry">
-Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2021. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.
+Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2022. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr" class="external-link">https://CRAN.R-project.org/package=dplyr</a>.
 </div>
 <div id="ref-R-readr" class="csl-entry">
-Wickham, Hadley, and Jim Hester. 2021. <em>Readr: Read Rectangular Text Data</em>. <a href="https://CRAN.R-project.org/package=readr">https://CRAN.R-project.org/package=readr</a>.
+Wickham, Hadley, Jim Hester, and Jennifer Bryan. 2022. <em>Readr: Read Rectangular Text Data</em>. <a href="https://CRAN.R-project.org/package=readr" class="external-link">https://CRAN.R-project.org/package=readr</a>.
 </div>
 </div>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr>
 <ol>
 <li id="fn1"><p>We will work with data in other formats later in this Recipe series.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
-
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
-      <footer><div class="copyright">
-  <p>Developed by Jerid Francom.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p></p>
+<p>Developed by Jerid Francom.</p>
 </div>
 
-<div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+<div class="pkgdown-footer-right">
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
   
 
+  
 
   </body>
 </html>

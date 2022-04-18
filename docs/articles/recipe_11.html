@@ -4,16 +4,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="tadr">
 <title>11. Exploratory methods: descriptive and unsupervised learning analysis methods • Text as Data Resources</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <script src="../extra.js"></script><meta property="og:title" content="11. Exploratory methods: descriptive and unsupervised learning analysis methods">
 <meta property="og:description" content="tadr">
+<meta property="og:image" content="https://lin380.github.io/tadr/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -25,116 +32,103 @@
   gtag('config', 'G-P69131XJC0');
 </script>
 </head>
-<body data-spy="scroll" data-target="#toc">
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">Text as Data Resources</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
-      </span>
-    </div>
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
+    
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
+    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    
+    <a class="navbar-brand me-2" href="../index.html">Text as Data Resources</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="active nav-item">
+  <a class="nav-link" href="../articles/index.html">Articles</a>
 </li>
-<li>
-  <a href="../tutorials/index.html">Tutorials</a>
+<li class="nav-item">
+  <a class="nav-link" href="../tutorials/index.html">Tutorials</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="../reference/index.html">Reference</a>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="https://github.com/lin380/tadr">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/lin380/tadr">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
       </ul>
 </div>
-<!--/.nav-collapse -->
+
+    
   </div>
-<!--/.container -->
-</div>
-<!--/.navbar -->
+</nav><div class="container template-article">
 
-      
 
-      </header><script src="recipe_11_files/header-attrs-2.11/header-attrs.js"></script><script src="recipe_11_files/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="recipe_11_files/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet">
-<script src="recipe_11_files/bootstrap-3.3.5/js/bootstrap.min.js"></script><script src="recipe_11_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script><script src="recipe_11_files/bootstrap-3.3.5/shim/respond.min.js"></script><style>h1 {font-size: 34px;}
-       h1.title {font-size: 38px;}
-       h2 {font-size: 30px;}
-       h3 {font-size: 24px;}
-       h4 {font-size: 18px;}
-       h5 {font-size: 16px;}
-       h6 {font-size: 12px;}
-       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-       pre:not([class]) { background-color: white }</style>
-<script src="recipe_11_files/navigation-1.1/tabsets.js"></script><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>11. Exploratory methods: descriptive and unsupervised learning analysis methods</h1>
+<div class="row">
+  <main id="main"><div class="page-header">
+      <img src="../logo.png" class="logo" alt=""><h1>11. Exploratory methods: descriptive and unsupervised learning analysis methods</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/lin380/tadr/blob/master/vignettes/recipe_11.Rmd"><code>vignettes/recipe_11.Rmd</code></a></small>
-      <div class="hidden name"><code>recipe_11.Rmd</code></div>
-
+      <small class="dont-index">Source: <a href="https://github.com/lin380/tadr/blob/HEAD/vignettes/recipe_11.Rmd" class="external-link"><code>vignettes/recipe_11.Rmd</code></a></small>
+      <div class="d-none name"><code>recipe_11.Rmd</code></div>
     </div>
 
     
     
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
-<p>In this Recipe we will aim to explore the <a href="https://data.mendeley.com/datasets/fvtfjyvw7d/2">Rate My Professor sample dataset</a> <span class="citation">(<a href="#ref-He2020" role="doc-biblioref">He 2020</a>)</span>. We will investigate the language associated with higher and lower course ratings using various methods. We will again lean heavily on the Quanteda package <span class="citation">(<a href="#ref-R-quanteda" role="doc-biblioref">Benoit et al. 2021</a>)</span> for preparing, exploring, and visualizing the student ratings.</p>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
+<p>In this Recipe we will aim to explore the <a href="https://data.mendeley.com/datasets/fvtfjyvw7d/2" class="external-link">Rate My Professor sample dataset</a> <span class="citation">(<a href="#ref-He2020" role="doc-biblioref">He 2020</a>)</span>. We will investigate the language associated with higher and lower course ratings using various methods. We will again lean heavily on the Quanteda package <span class="citation">(<a href="#ref-R-quanteda" role="doc-biblioref">Benoit et al. 2022</a>)</span> for preparing, exploring, and visualizing the student ratings.</p>
 <p>Let’s load the packages we will use in this Recipe.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>           <span class="co"># data manipulation</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span>           <span class="co"># organize plots</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sfirke/janitor">janitor</a></span><span class="op">)</span>             <span class="co"># cross tabulations</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/juliasilge/tidytext">tidytext</a></span><span class="op">)</span>            <span class="co"># text operations</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://quanteda.io">quanteda</a></span><span class="op">)</span>            <span class="co"># tokenization and document-frequency matrices</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://quanteda.io">quanteda.textstats</a></span><span class="op">)</span>  <span class="co"># descriptive text statistics</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/quanteda/quanteda.textmodels">quanteda.textmodels</a></span><span class="op">)</span> <span class="co"># topic modeling</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">quanteda.textplots</span><span class="op">)</span>  <span class="co"># plotting quanteda objects</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>           <span class="co"># data manipulation</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span>           <span class="co"># organize plots</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sfirke/janitor" class="external-link">janitor</a></span><span class="op">)</span>             <span class="co"># cross tabulations</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/juliasilge/tidytext" class="external-link">tidytext</a></span><span class="op">)</span>            <span class="co"># text operations</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://quanteda.io" class="external-link">quanteda</a></span><span class="op">)</span>            <span class="co"># tokenization and document-frequency matrices</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://quanteda.io" class="external-link">quanteda.textstats</a></span><span class="op">)</span>  <span class="co"># descriptive text statistics</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/quanteda/quanteda.textmodels" class="external-link">quanteda.textmodels</a></span><span class="op">)</span> <span class="co"># topic modeling</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">quanteda.textplots</span><span class="op">)</span>  <span class="co"># plotting quanteda objects</span></code></pre></div>
 </div>
-<div id="coding-strategies" class="section level2">
-<h2 class="hasAnchor">
-<a href="#coding-strategies" class="anchor"></a>Coding strategies</h2>
-<div id="orientation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#orientation" class="anchor"></a>Orientation</h3>
+<div class="section level2">
+<h2 id="coding-strategies">Coding strategies<a class="anchor" aria-label="anchor" href="#coding-strategies"></a>
+</h2>
+<div class="section level3">
+<h3 id="orientation">Orientation<a class="anchor" aria-label="anchor" href="#orientation"></a>
+</h3>
 <p>Let’s get familiar with the Rate My Professor dataset.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rmp_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"recipe_11/data/derived/rate_my_professor_sample/rmp_curated.csv"</span><span class="op">)</span>  <span class="co"># read data</span>
+<code class="sourceCode R"><span class="va">rmp_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"recipe_11/data/derived/rate_my_professor_sample/rmp_curated.csv"</span><span class="op">)</span>  <span class="co"># read data</span>
 
-<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">rmp_df</span><span class="op">)</span>  <span class="co"># preview</span></code></pre></div>
-<pre><code>## Rows: 19,026
-## Columns: 6
-## $ doc_id        &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1…
-## $ student_id    &lt;dbl&gt; 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, …
-## $ student_star  &lt;dbl&gt; 5.0, 5.0, 4.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 4.5, 5…
-## $ course_rating &lt;chr&gt; "high", "high", "high", "high", "high", "high", "high", …
-## $ online        &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, …
-## $ comments      &lt;chr&gt; "This class is hard, but its a two-in-one gen-ed knockou…</code></pre>
+<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">rmp_df</span><span class="op">)</span>  <span class="co"># preview</span></code></pre></div>
+<pre><code><span class="co">## Rows: 19,026</span>
+<span class="co">## Columns: 6</span>
+<span class="co">## $ doc_id        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1…</span>
+<span class="co">## $ student_id    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, …</span>
+<span class="co">## $ student_star  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 5.0, 5.0, 4.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 4.5, 5…</span>
+<span class="co">## $ course_rating <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "high", "high", "high", "high", "high", "high", "high", …</span>
+<span class="co">## $ online        <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, …</span>
+<span class="co">## $ comments      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "This class is hard, but its a two-in-one gen-ed knockou…</span></code></pre>
 <p>The <code>rmp_df</code> data frame contains 19,026 observations and 6 variables. Each variable corresponds to a course rating. (Note that this dataset has been curated removing many variables which will not be explored in this Recipe and all observations with ‘No comments’ were removed.)</p>
 <div class="kable-table">
 <table class="table">
@@ -167,7 +161,7 @@
 <tr class="even">
 <td align="left">course_rating</td>
 <td align="left">Course Rating</td>
-<td align="left">Course rating groupings (&lt; 3.5 “low,” &gt; 3.5 “high”)</td>
+<td align="left">Course rating groupings (&lt; 3.5 “low”, &gt; 3.5 “high”)</td>
 </tr>
 <tr class="odd">
 <td align="left">online</td>
@@ -184,8 +178,8 @@
 </div>
 <p>Look at the number of ratings for our <code>course_rating</code> category to see how many ‘high’ and ‘low’ ratings we have in the dataset.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rmp_df</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># data frame</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">course_rating</span><span class="op">)</span> <span class="co"># cross-tabulate</span></code></pre></div>
+<code class="sourceCode R"><span class="va">rmp_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># data frame</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html" class="external-link">tabyl</a></span><span class="op">(</span><span class="va">course_rating</span><span class="op">)</span> <span class="co"># cross-tabulate</span></code></pre></div>
 <div class="kable-table">
 <table class="table">
 <thead><tr class="header">
@@ -207,37 +201,47 @@
 </tbody>
 </table>
 </div>
-<p>We can see that of the 19026 observations roughly 60% are labeled ‘high’ and the rest ‘low.’</p>
+<p>We can see that of the 19026 observations roughly 60% are labeled ‘high’ and the rest ‘low’.</p>
 <p>If we look at the <code>student_star</code> variable which was provided by students we can see the distribution. In this case I will use a visualization to more easily see the distribution given the number of levels.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rmp_df</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># data frame</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">student_star</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># cross-tabulate</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">student_star</span><span class="op">)</span>, y <span class="op">=</span> <span class="op">(</span><span class="va">percent</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Student star"</span>, y <span class="op">=</span> <span class="st">"Percent"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">rmp_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># data frame</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html" class="external-link">tabyl</a></span><span class="op">(</span><span class="va">student_star</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># cross-tabulate</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">student_star</span><span class="op">)</span>, y <span class="op">=</span> <span class="op">(</span><span class="va">percent</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Student star"</span>, y <span class="op">=</span> <span class="st">"Percent"</span><span class="op">)</span></code></pre></div>
 <p><img src="recipe_11_files/figure-html/rmp-orientation-student-star-1.png" width="85%" style="display: block; margin: auto;"></p>
 <p>We see here that a good proportion of the courses were rated ‘5’ by students followed by ‘1’ and from there a scattering of other rating values (more skewed towards the positive values). There does seem to be a drop off between 3.5 and 4 (Note this is why I curated this dataset splitting ‘high’ and ‘low’ at 3.5!)</p>
 </div>
-<div id="preparation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#preparation" class="anchor"></a>Preparation</h3>
-<p>Let’s now prepare our data frame for exploration. We first create a Quanteda corpus object using the <code>comments</code> variable as the text field. Then I will apply the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function to the corpus object (<code>rmp_corpus</code>) and assign the output to a new object <code>rmp_corpus_summary</code>. Note that the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function will only return 100 documents by default, so let’s set the number of documents to return to capture all of our documents. We could hardcode the number of documents in the corpus object (<code>n = 19026</code>) or we can use the <code><a href="https://quanteda.io/reference/ndoc.html">ndoc()</a></code> function to find that number automatically –let’s take the second approach.</p>
+<div class="section level3">
+<h3 id="preparation">Preparation<a class="anchor" aria-label="anchor" href="#preparation"></a>
+</h3>
+<p>Let’s now prepare our data frame for exploration. We first create a Quanteda corpus object using the <code>comments</code> variable as the text field. Then I will apply the <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> function to the corpus object (<code>rmp_corpus</code>) and assign the output to a new object <code>rmp_corpus_summary</code>. Note that the <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> function will only return 100 documents by default, so let’s set the number of documents to return to capture all of our documents. We could hardcode the number of documents in the corpus object (<code>n = 19026</code>) or we can use the <code><a href="https://quanteda.io/reference/ndoc.html" class="external-link">ndoc()</a></code> function to find that number automatically –let’s take the second approach.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rmp_corpus</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_df</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># data frame</span>
-  <span class="fu"><a href="https://quanteda.io/reference/corpus.html">corpus</a></span><span class="op">(</span>text_field <span class="op">=</span> <span class="st">"comments"</span><span class="op">)</span> <span class="co"># create corpus object</span>
+  <span class="va">rmp_df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># data frame</span>
+  <span class="fu"><a href="https://quanteda.io/reference/corpus.html" class="external-link">corpus</a></span><span class="op">(</span>text_field <span class="op">=</span> <span class="st">"comments"</span><span class="op">)</span> <span class="co"># create corpus object</span>
 
 <span class="va">rmp_corpus_summary</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_corpus</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># corpus object</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://quanteda.io/reference/ndoc.html">ndoc</a></span><span class="op">(</span><span class="va">rmp_corpus</span><span class="op">)</span><span class="op">)</span> <span class="co"># get summary information from the corpus object</span></code></pre></div>
+  <span class="va">rmp_corpus</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># corpus object</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://quanteda.io/reference/ndoc.html" class="external-link">ndoc</a></span><span class="op">(</span><span class="va">rmp_corpus</span><span class="op">)</span><span class="op">)</span> <span class="co"># get summary information from the corpus object</span></code></pre></div>
 <p>Let’s take a sample from the <code>rmp_corpus_summary</code> to get an idea of what the summary statistics are the are available.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span> <span class="co"># set seed for reproducible sampling</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span> <span class="co"># set seed for reproducible sampling</span>
 
-<span class="va">rmp_corpus_summary</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># corpus summary</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># sample 10 observations/ documents</span></code></pre></div>
+<span class="va">rmp_corpus_summary</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># corpus summary</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_sample</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># sample 10 observations/ documents</span></code></pre></div>
 <div class="kable-table">
 <table class="table">
+<colgroup>
+<col width="8%">
+<col width="8%">
+<col width="9%">
+<col width="13%">
+<col width="14%">
+<col width="17%">
+<col width="18%">
+<col width="9%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">Text</th>
 <th align="right">Types</th>
@@ -354,15 +358,15 @@
 </div>
 <p>Now something that I think might be important to consider is if there are different rating distributions for in-person and online courses. Let’s visualize the difference.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">rmp_corpus_summary</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">course_rating</span>, fill <span class="op">=</span> <span class="va">online</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Course rating"</span>, y <span class="op">=</span> <span class="st">"Count"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">rmp_corpus_summary</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">course_rating</span>, fill <span class="op">=</span> <span class="va">online</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Course rating"</span>, y <span class="op">=</span> <span class="st">"Count"</span><span class="op">)</span>
 
-<span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">rmp_corpus_summary</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">course_rating</span>, fill <span class="op">=</span> <span class="va">online</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"fill"</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Course rating"</span>, y <span class="op">=</span> <span class="st">"Proportion"</span>, fill <span class="op">=</span> <span class="st">"Online"</span><span class="op">)</span>
+<span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">rmp_corpus_summary</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">course_rating</span>, fill <span class="op">=</span> <span class="va">online</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"fill"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Course rating"</span>, y <span class="op">=</span> <span class="st">"Proportion"</span>, fill <span class="op">=</span> <span class="st">"Online"</span><span class="op">)</span>
 
-<span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>tag_levels <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span></code></pre></div>
+<span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html" class="external-link">plot_annotation</a></span><span class="op">(</span>tag_levels <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:rmp-rating-online-visual"></span>
 <img src="recipe_11_files/figure-html/rmp-rating-online-visual-1.png" alt="Relationship between course rating and modality." width="85%"><p class="caption">
@@ -373,34 +377,34 @@ Figure 1: Relationship between course rating and modality.
 <p>Let’s test this difference to see if there is in fact an effect for modality in our dataset. To do this we will create a cross-tabulation of <code>course_rating</code> and <code>online</code> and then run a Chi-squared test on this table.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">online_rating_tab</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span><span class="va">course_rating</span> <span class="op">+</span> <span class="va">online</span>, <span class="co"># relationship</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="op">~</span><span class="va">course_rating</span> <span class="op">+</span> <span class="va">online</span>, <span class="co"># relationship</span>
         data <span class="op">=</span> <span class="va">rmp_corpus_summary</span><span class="op">)</span> <span class="co"># dataset</span>
 
 <span class="va">online_rating_tab</span> <span class="co"># cross-tabulation</span></code></pre></div>
-<pre><code>##              online
-## course_rating FALSE  TRUE
-##          high 11130   199
-##          low   7494   203</code></pre>
+<pre><code><span class="co">##              online</span>
+<span class="co">## course_rating FALSE  TRUE</span>
+<span class="co">##          high 11130   199</span>
+<span class="co">##          low   7494   203</span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">c1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="va">online_rating_tab</span><span class="op">)</span> <span class="co"># chi-squared test</span>
+<code class="sourceCode R"><span class="va">c1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/chisq.test.html" class="external-link">chisq.test</a></span><span class="op">(</span><span class="va">online_rating_tab</span><span class="op">)</span> <span class="co"># chi-squared test</span>
 
 <span class="va">c1</span><span class="op">$</span><span class="va">p.value</span> <span class="op">&lt;</span> <span class="fl">.05</span> <span class="co"># statistical confirmation</span></code></pre></div>
-<pre><code>## [1] TRUE</code></pre>
+<pre><code><span class="co">## [1] TRUE</span></code></pre>
 <p>The results suggest that there is in fact a significant effect for modality. Given this finding and the fact that there are relatively few online courses in the dataset, let’s remove the online courses from the dataset so we can focus on in-person courses.</p>
-<p>To do this we can use the <code><a href="https://quanteda.io/reference/corpus_subset.html">corpus_subset()</a></code> function from quanteda.</p>
+<p>To do this we can use the <code><a href="https://quanteda.io/reference/corpus_subset.html" class="external-link">corpus_subset()</a></code> function from quanteda.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rmp_corpus</span> <span class="op">&lt;-</span> <span class="co"># new corpus object</span>
-  <span class="va">rmp_corpus</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># original corpus object</span>
-  <span class="fu"><a href="https://quanteda.io/reference/corpus_subset.html">corpus_subset</a></span><span class="op">(</span><span class="va">online</span> <span class="op">==</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># remove online courses</span></code></pre></div>
+  <span class="va">rmp_corpus</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># original corpus object</span>
+  <span class="fu"><a href="https://quanteda.io/reference/corpus_subset.html" class="external-link">corpus_subset</a></span><span class="op">(</span><span class="va">online</span> <span class="op">==</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># remove online courses</span></code></pre></div>
 <p>Now let’s get the summary statistics for the new subsetted corpus object.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rmp_corpus_summary</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_corpus</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># corpus object</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://quanteda.io/reference/ndoc.html">ndoc</a></span><span class="op">(</span><span class="va">rmp_corpus</span><span class="op">)</span><span class="op">)</span> <span class="co"># get summary information from the corpus object</span></code></pre></div>
+  <span class="va">rmp_corpus</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># corpus object</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://quanteda.io/reference/ndoc.html" class="external-link">ndoc</a></span><span class="op">(</span><span class="va">rmp_corpus</span><span class="op">)</span><span class="op">)</span> <span class="co"># get summary information from the corpus object</span></code></pre></div>
 <p>Let’s now see if our distribution between <code>course_rating</code> changed as a result of removing online courses.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rmp_corpus_summary</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># data frame</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">course_rating</span><span class="op">)</span> <span class="co"># cross-tabulate</span></code></pre></div>
+<code class="sourceCode R"><span class="va">rmp_corpus_summary</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># data frame</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html" class="external-link">tabyl</a></span><span class="op">(</span><span class="va">course_rating</span><span class="op">)</span> <span class="co"># cross-tabulate</span></code></pre></div>
 <div class="kable-table">
 <table class="table">
 <thead><tr class="header">
@@ -424,37 +428,37 @@ Figure 1: Relationship between course rating and modality.
 </div>
 <p>The proportions are very similar. But now we only have in-person classes which will make our subsequent exploration a bit more homogeneous and therefore more straightforward to interpret.</p>
 </div>
-<div id="exploration" class="section level3">
-<h3 class="hasAnchor">
-<a href="#exploration" class="anchor"></a>Exploration</h3>
+<div class="section level3">
+<h3 id="exploration">Exploration<a class="anchor" aria-label="anchor" href="#exploration"></a>
+</h3>
 <p>Now let’s start to explore the language use in our dataset.</p>
-<div id="frequency-analysis" class="section level4">
-<h4 class="hasAnchor">
-<a href="#frequency-analysis" class="anchor"></a>Frequency analysis</h4>
+<div class="section level4">
+<h4 id="frequency-analysis">Frequency analysis<a class="anchor" aria-label="anchor" href="#frequency-analysis"></a>
+</h4>
 <p>As a first step, let’s consider word frequency distributions. We can use the <code>rmp_corpus_summary</code> object which contains <code>Types</code> and <code>Tokens</code> counts for each of the courses.</p>
 <p>Let’s look at some descriptive visualizations of the distribution of the tokens.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p1</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_corpus_summary</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># corpus summary data frame</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Tokens</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># mappings</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span> <span class="co"># histogram, 5-token bin groupings</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Count"</span><span class="op">)</span> <span class="co"># labels</span>
+  <span class="va">rmp_corpus_summary</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># corpus summary data frame</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Tokens</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># mappings</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span> <span class="co"># histogram, 5-token bin groupings</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Count"</span><span class="op">)</span> <span class="co"># labels</span>
 
 <span class="va">p2</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_corpus_summary</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># corpus summary data frame</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Tokens</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># mappings</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># density plot</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Density"</span><span class="op">)</span> <span class="co"># labels</span>
+  <span class="va">rmp_corpus_summary</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># corpus summary data frame</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Tokens</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># mappings</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html" class="external-link">geom_density</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># density plot</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Density"</span><span class="op">)</span> <span class="co"># labels</span>
 
 <span class="va">p3</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_corpus_summary</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># corpus summary data frame</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">Tokens</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># mappings</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>notch <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="co"># box plot</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">135</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># add y-axis breaks</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># remove x-axis breaks</span>
+  <span class="va">rmp_corpus_summary</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># corpus summary data frame</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">Tokens</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># mappings</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span>notch <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="co"># box plot</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">135</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># add y-axis breaks</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># remove x-axis breaks</span>
 
 <span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p2</span> <span class="op">|</span> <span class="va">p3</span><span class="op">)</span> <span class="op">+</span> <span class="co"># positions</span>
-  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Token distribution"</span>, 
+  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html" class="external-link">plot_annotation</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Token distribution"</span>, 
                   tag_levels <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span> <span class="co"># annotations</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:rmp-corpus-visual-tokens"></span>
@@ -465,10 +469,10 @@ Figure 2: Token distribution for the Rate My Professor dataset.
 <p>In Figure <a href="#fig:rmp-corpus-visual-tokens">2</a> A and B we see the distribution in a histogram and a density plot. It appears that there is a drop off in the number of tokens around 75. In C we see a boxplot which suggests that the majority of the course ratings have token counts between around 25 and 70 tokens with a larger tail on the higher end.</p>
 <p>One question we may be interested in exploring is whether students write more or less depending on their overall rating of the course. Let’s visualize this potential relationship by creating a boxplot which compares <code>course_rating</code> and <code>Tokens</code>.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rmp_corpus_summary</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># corpus summary data frame</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">course_rating</span>, y <span class="op">=</span> <span class="va">Tokens</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># mappings</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>notch <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="co"># box plot with notches</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Course rating category"</span><span class="op">)</span> <span class="co"># labels</span></code></pre></div>
+<code class="sourceCode R"><span class="va">rmp_corpus_summary</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># corpus summary data frame</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">course_rating</span>, y <span class="op">=</span> <span class="va">Tokens</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># mappings</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span>notch <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="co"># box plot with notches</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Course rating category"</span><span class="op">)</span> <span class="co"># labels</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:rmp-corpus-visual-tokens-ratings"></span>
 <img src="recipe_11_files/figure-html/rmp-corpus-visual-tokens-ratings-1.png" alt="Distribution of tokens by course rating." width="85%"><p class="caption">
@@ -477,141 +481,141 @@ Figure 3: Distribution of tokens by course rating.
 </div>
 <p>The boxplot in Figure <a href="#fig:rmp-corpus-visual-tokens-ratings">3</a> suggests that in fact students who rate a course lower tend to write more. We can feel confident in making this assessment as the notches in the boxplot do not overlap between ‘high’ and ‘low’ course ratings. This finding may jibe with intuition –if a student takes the time to rate a course they don’t like they want to say why. There may be other explanations, but this is a finding of some interest.</p>
 </div>
-<div id="keyness-analysis" class="section level4">
-<h4 class="hasAnchor">
-<a href="#keyness-analysis" class="anchor"></a>Keyness analysis</h4>
+<div class="section level4">
+<h4 id="keyness-analysis">Keyness analysis<a class="anchor" aria-label="anchor" href="#keyness-analysis"></a>
+</h4>
 <p>Now let’s take a look at words themselves and compare those words that are more indicative of either ‘high’ or ‘low’ course ratings. This is called a keyness analysis.</p>
 <p>First we will need to create a tokens object. We will tokenize the corpus by words removing punctuation and numbers and lowercasing the tokens.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rmp_tokens</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_corpus</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># corpus object</span>
-  <span class="fu"><a href="https://quanteda.io/reference/tokens.html">tokens</a></span><span class="op">(</span>what <span class="op">=</span> <span class="st">"word"</span>, <span class="co"># tokenize by words</span>
+  <span class="va">rmp_corpus</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># corpus object</span>
+  <span class="fu"><a href="https://quanteda.io/reference/tokens.html" class="external-link">tokens</a></span><span class="op">(</span>what <span class="op">=</span> <span class="st">"word"</span>, <span class="co"># tokenize by words</span>
          remove_punct <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># remove punctuation</span>
-         remove_numbers <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># remove numbers</span>
-  <span class="fu"><a href="https://quanteda.io/reference/tokens_tolower.html">tokens_tolower</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># lowercase the tokens</span></code></pre></div>
+         remove_numbers <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># remove numbers</span>
+  <span class="fu"><a href="https://quanteda.io/reference/tokens_tolower.html" class="external-link">tokens_tolower</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># lowercase the tokens</span></code></pre></div>
 <p>Then we convert this tokens object to a document-frequency matrix (dfm) using the raw counts (with no term weights).</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rmp_dfm</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_tokens</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># tokens object</span>
-  <span class="fu"><a href="https://quanteda.io/reference/dfm.html">dfm</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># create document-frequency matrix</span></code></pre></div>
-<p>With our <code>rmp_dfm</code> we can use the <code><a href="https://quanteda.io/reference/textstat_keyness.html">textstat_keyness()</a></code> function to get the most indicative features. We specify a target sub-corpus (‘high’) to use as a comparison. Since we only have two levels (‘high’ and ‘low’) the reference sub-corpus will be ‘low.’ We can visualize the contrasts with the <code><a href="https://rdrr.io/pkg/quanteda.textplots/man/textplot_keyness.html">textplot_keyness()</a></code> function. We will retrieve the top 25 most contrastive terms.</p>
+  <span class="va">rmp_tokens</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># tokens object</span>
+  <span class="fu"><a href="https://quanteda.io/reference/dfm.html" class="external-link">dfm</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># create document-frequency matrix</span></code></pre></div>
+<p>With our <code>rmp_dfm</code> we can use the <code><a href="https://quanteda.io/reference/textstat_keyness.html" class="external-link">textstat_keyness()</a></code> function to get the most indicative features. We specify a target sub-corpus (‘high’) to use as a comparison. Since we only have two levels (‘high’ and ‘low’) the reference sub-corpus will be ‘low’. We can visualize the contrasts with the <code><a href="https://rdrr.io/pkg/quanteda.textplots/man/textplot_keyness.html" class="external-link">textplot_keyness()</a></code> function. We will retrieve the top 25 most contrastive terms.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rmp_dfm</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://quanteda.io/reference/textstat_keyness.html">textstat_keyness</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">rmp_dfm</span><span class="op">$</span><span class="va">course_rating</span> <span class="op">==</span> <span class="st">"high"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># keyness measures</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/quanteda.textplots/man/textplot_keyness.html">textplot_keyness</a></span><span class="op">(</span>show_legend <span class="op">=</span> <span class="cn">FALSE</span>, n <span class="op">=</span> <span class="fl">25</span>, labelsize <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span> <span class="co"># plot most contrastive terms</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Chi-squared statistic"</span>,
+<code class="sourceCode R"><span class="va">rmp_dfm</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://quanteda.io/reference/textstat_keyness.html" class="external-link">textstat_keyness</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">rmp_dfm</span><span class="op">$</span><span class="va">course_rating</span> <span class="op">==</span> <span class="st">"high"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># keyness measures</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/quanteda.textplots/man/textplot_keyness.html" class="external-link">textplot_keyness</a></span><span class="op">(</span>show_legend <span class="op">=</span> <span class="cn">FALSE</span>, n <span class="op">=</span> <span class="fl">25</span>, labelsize <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span> <span class="co"># plot most contrastive terms</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Chi-squared statistic"</span>,
       title <span class="op">=</span> <span class="st">"Term keyness"</span>, 
        subtitle <span class="op">=</span> <span class="st">"Course ratings: high versus low"</span><span class="op">)</span> <span class="co"># labels</span></code></pre></div>
 <p><img src="recipe_11_files/figure-html/rmp-keyness-high-1.png" width="85%" style="display: block; margin: auto;">
-Nothing too surprising here. Courses rated high have terms like ‘great,’ ‘best,’ ‘awesome,’ etc. while low-rated courses contain terms like ‘not,’ ‘worst, ’avoid,’ etc.</p>
+Nothing too surprising here. Courses rated high have terms like ‘great’, ‘best’, ‘awesome’, etc. while low-rated courses contain terms like ‘not’, ‘worst, ’avoid’, etc.</p>
 <p>Now we used words as our terms in this analysis but it may be interesting to see if there are two-word sequences, bigrams, that may be contrastive and show something more interesting and/ or unexpected.</p>
-<p>Let’s create a new document-frequency matrix containing bigrams. We can just pass the <code>rmp_tokens</code> object to <code><a href="https://quanteda.io/reference/tokens_ngrams.html">tokens_ngrams()</a></code> before then converting the result to a document-frequency matrix.</p>
+<p>Let’s create a new document-frequency matrix containing bigrams. We can just pass the <code>rmp_tokens</code> object to <code><a href="https://quanteda.io/reference/tokens_ngrams.html" class="external-link">tokens_ngrams()</a></code> before then converting the result to a document-frequency matrix.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rmp_dfm_bigrams</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_tokens</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># tokens object</span>
-  <span class="fu"><a href="https://quanteda.io/reference/tokens_ngrams.html">tokens_ngrams</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># create 2-term ngrams (bigrams)</span>
-  <span class="fu"><a href="https://quanteda.io/reference/dfm.html">dfm</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># create document-frequency matrix</span></code></pre></div>
+  <span class="va">rmp_tokens</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># tokens object</span>
+  <span class="fu"><a href="https://quanteda.io/reference/tokens_ngrams.html" class="external-link">tokens_ngrams</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># create 2-term ngrams (bigrams)</span>
+  <span class="fu"><a href="https://quanteda.io/reference/dfm.html" class="external-link">dfm</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># create document-frequency matrix</span></code></pre></div>
 <p>We can run the same steps as we did for the word-based term keyness analysis.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rmp_dfm_bigrams</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://quanteda.io/reference/textstat_keyness.html">textstat_keyness</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">rmp_dfm_bigrams</span><span class="op">$</span><span class="va">course_rating</span> <span class="op">==</span> <span class="st">"high"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/pkg/quanteda.textplots/man/textplot_keyness.html">textplot_keyness</a></span><span class="op">(</span>show_legend <span class="op">=</span> <span class="cn">FALSE</span>, n <span class="op">=</span> <span class="fl">25</span>, labelsize <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span> <span class="co"># plot most contrastive terms</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Chi-squared statistic"</span>,
+<code class="sourceCode R"><span class="va">rmp_dfm_bigrams</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://quanteda.io/reference/textstat_keyness.html" class="external-link">textstat_keyness</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">rmp_dfm_bigrams</span><span class="op">$</span><span class="va">course_rating</span> <span class="op">==</span> <span class="st">"high"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/quanteda.textplots/man/textplot_keyness.html" class="external-link">textplot_keyness</a></span><span class="op">(</span>show_legend <span class="op">=</span> <span class="cn">FALSE</span>, n <span class="op">=</span> <span class="fl">25</span>, labelsize <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span> <span class="co"># plot most contrastive terms</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Chi-squared statistic"</span>,
       title <span class="op">=</span> <span class="st">"Term keyness (bigrams)"</span>, 
        subtitle <span class="op">=</span> <span class="st">"Course ratings: high versus low"</span><span class="op">)</span> <span class="co"># labels</span></code></pre></div>
 <p><img src="recipe_11_files/figure-html/rmp-keyness-high-bigrams-1.png" width="85%" style="display: block; margin: auto;">
 Again, we see terms which seem expected. However, one bigram catches my interest. The bigram <code>guy_but</code> shows a gendered term. This makes me wonder if there are similarities or differences between the ratings and/ or language associated with the gender of the instructor of the course.</p>
-<p>Let’s explore gendered language and ratings to first. We start by creating a character vector which contains a set of gendered terms, one for males (<code>male</code>) and later one for females (<code>female</code>). We then pass the <code>rmp_tokens</code> object to the <code><a href="https://quanteda.io/reference/tokens_select.html">tokens_keep()</a></code> function. The <code>pattern =</code> argument specifies the terms which we want to identify in documents and the <code>window =</code> argument specifies how many adjacent terms we want to keep that are around our pattern.</p>
+<p>Let’s explore gendered language and ratings to first. We start by creating a character vector which contains a set of gendered terms, one for males (<code>male</code>) and later one for females (<code>female</code>). We then pass the <code>rmp_tokens</code> object to the <code><a href="https://quanteda.io/reference/tokens_select.html" class="external-link">tokens_keep()</a></code> function. The <code>pattern =</code> argument specifies the terms which we want to identify in documents and the <code>window =</code> argument specifies how many adjacent terms we want to keep that are around our pattern.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">male</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"he"</span>, <span class="st">"him"</span>, <span class="st">"his"</span>, <span class="st">"himself"</span>, <span class="st">"mr"</span>, <span class="st">"man"</span>, <span class="st">"guy"</span>, <span class="st">"hes"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">male</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"he"</span>, <span class="st">"him"</span>, <span class="st">"his"</span>, <span class="st">"himself"</span>, <span class="st">"mr"</span>, <span class="st">"man"</span>, <span class="st">"guy"</span>, <span class="st">"hes"</span><span class="op">)</span>
 
 <span class="va">rmp_tokens_male</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_tokens</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># tokens object</span>
-  <span class="fu"><a href="https://quanteda.io/reference/tokens_select.html">tokens_keep</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="va">male</span>, <span class="co"># terms to identify</span>
+  <span class="va">rmp_tokens</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># tokens object</span>
+  <span class="fu"><a href="https://quanteda.io/reference/tokens_select.html" class="external-link">tokens_keep</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="va">male</span>, <span class="co"># terms to identify</span>
               window <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># also keep adjacent 10 terms</span>
 
-<span class="va">rmp_tokens_male</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># preview documents that match one or more of our gendered terms in `male`</span></code></pre></div>
-<pre><code>## Tokens consisting of 6 documents and 4 docvars.
-## 1 :
-## character(0)
-## 
-## 2 :
-## character(0)
-## 
-## 3 :
-## character(0)
-## 
-## 4 :
-## character(0)
-## 
-## 5 :
-##  [1] "professor" "looney"    "has"       "great"     "knowledge" "in"       
-##  [7] "astronomy" "while"     "he"        "can"       "explain"   "them"     
-## [ ... and 33 more ]
-## 
-## 6 :
-##  [1] "looney"      "is"          "a"           "super"       "funny"      
-##  [6] "guy"         "and"         "this"        "class"       "was"        
-## [11] "really"      "interesting"
-## [ ... and 25 more ]</code></pre>
+<span class="va">rmp_tokens_male</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># preview documents that match one or more of our gendered terms in `male`</span></code></pre></div>
+<pre><code><span class="co">## Tokens consisting of 6 documents and 4 docvars.</span>
+<span class="co">## 1 :</span>
+<span class="co">## character(0)</span>
+<span class="co">## </span>
+<span class="co">## 2 :</span>
+<span class="co">## character(0)</span>
+<span class="co">## </span>
+<span class="co">## 3 :</span>
+<span class="co">## character(0)</span>
+<span class="co">## </span>
+<span class="co">## 4 :</span>
+<span class="co">## character(0)</span>
+<span class="co">## </span>
+<span class="co">## 5 :</span>
+<span class="co">##  [1] "professor" "looney"    "has"       "great"     "knowledge" "in"       </span>
+<span class="co">##  [7] "astronomy" "while"     "he"        "can"       "explain"   "them"     </span>
+<span class="co">## [ ... and 33 more ]</span>
+<span class="co">## </span>
+<span class="co">## 6 :</span>
+<span class="co">##  [1] "looney"      "is"          "a"           "super"       "funny"      </span>
+<span class="co">##  [6] "guy"         "and"         "this"        "class"       "was"        </span>
+<span class="co">## [11] "really"      "interesting"</span>
+<span class="co">## [ ... and 25 more ]</span></code></pre>
 <p>The preview of the <code>rmp_tokens_male</code> object shows us that only those documents that match one or more of our terms in <code>male</code> are retained.</p>
 <p>Let’s do this same thing but now for female-oriented gender terms.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">female</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"she"</span>, <span class="st">"her"</span>, <span class="st">"herself"</span>, <span class="st">"ms"</span>, <span class="st">"mrs"</span>, <span class="st">"woman"</span>, <span class="st">"lady"</span>, <span class="st">"shes"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">female</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"she"</span>, <span class="st">"her"</span>, <span class="st">"herself"</span>, <span class="st">"ms"</span>, <span class="st">"mrs"</span>, <span class="st">"woman"</span>, <span class="st">"lady"</span>, <span class="st">"shes"</span><span class="op">)</span>
 
 <span class="va">rmp_tokens_female</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_tokens</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># tokens object</span>
-  <span class="fu"><a href="https://quanteda.io/reference/tokens_select.html">tokens_keep</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="va">female</span>, <span class="co"># terms to identify</span>
+  <span class="va">rmp_tokens</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># tokens object</span>
+  <span class="fu"><a href="https://quanteda.io/reference/tokens_select.html" class="external-link">tokens_keep</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="va">female</span>, <span class="co"># terms to identify</span>
               window <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># also keep adjacent 10 terms</span></code></pre></div>
 <p>We now convert each of our gendered token objects to document-frequency matrices. Then we will only keep documents in the dfm that have gendered language and pull the document variables for each dfm. For each dfm’s document variable data frame we will add a new column <code>gender</code> for the appropriate gendered set. Once that is complete we can combine the two data frames by rows</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rmp_dfm_male</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://quanteda.io/reference/dfm.html">dfm</a></span><span class="op">(</span><span class="va">rmp_tokens_male</span><span class="op">)</span> <span class="co"># dfm for male-gendered terms</span>
+<code class="sourceCode R"><span class="va">rmp_dfm_male</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://quanteda.io/reference/dfm.html" class="external-link">dfm</a></span><span class="op">(</span><span class="va">rmp_tokens_male</span><span class="op">)</span> <span class="co"># dfm for male-gendered terms</span>
 
 <span class="va">rmp_male_docvars</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_dfm_male</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># male-gendered dfm</span>
-  <span class="fu"><a href="https://quanteda.io/reference/dfm_subset.html">dfm_subset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">rmp_dfm_male</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># keep documents with male-gendered terms</span>
-  <span class="fu"><a href="https://quanteda.io/reference/docvars.html">docvars</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># pull the document variables</span>
+  <span class="va">rmp_dfm_male</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># male-gendered dfm</span>
+  <span class="fu"><a href="https://quanteda.io/reference/dfm_subset.html" class="external-link">dfm_subset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">rmp_dfm_male</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># keep documents with male-gendered terms</span>
+  <span class="fu"><a href="https://quanteda.io/reference/docvars.html" class="external-link">docvars</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># pull the document variables</span>
 
 <span class="va">rmp_male_docvars</span><span class="op">$</span><span class="va">gender</span> <span class="op">&lt;-</span> <span class="st">"male"</span> <span class="co"># add a column `gender` and set to 'male'</span>
 
 
-<span class="va">rmp_dfm_female</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://quanteda.io/reference/dfm.html">dfm</a></span><span class="op">(</span><span class="va">rmp_tokens_female</span><span class="op">)</span> <span class="co"># dfm for female-gendered terms</span>
+<span class="va">rmp_dfm_female</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://quanteda.io/reference/dfm.html" class="external-link">dfm</a></span><span class="op">(</span><span class="va">rmp_tokens_female</span><span class="op">)</span> <span class="co"># dfm for female-gendered terms</span>
 
 <span class="va">rmp_female_docvars</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_dfm_female</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># female-gendered dfm</span>
-  <span class="fu"><a href="https://quanteda.io/reference/dfm_subset.html">dfm_subset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">rmp_dfm_female</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># keep documents with female-gendered terms</span>
-  <span class="fu"><a href="https://quanteda.io/reference/docvars.html">docvars</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># pull the document variables</span>
+  <span class="va">rmp_dfm_female</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># female-gendered dfm</span>
+  <span class="fu"><a href="https://quanteda.io/reference/dfm_subset.html" class="external-link">dfm_subset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">rmp_dfm_female</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># keep documents with female-gendered terms</span>
+  <span class="fu"><a href="https://quanteda.io/reference/docvars.html" class="external-link">docvars</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># pull the document variables</span>
 
 <span class="va">rmp_female_docvars</span><span class="op">$</span><span class="va">gender</span> <span class="op">&lt;-</span> <span class="st">"female"</span> <span class="co"># add a column `gender` and set to 'female'</span>
 
 <span class="va">rmp_docvars_gender</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">rmp_male_docvars</span>, <span class="va">rmp_female_docvars</span><span class="op">)</span> <span class="co"># combine by rows</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">rmp_male_docvars</span>, <span class="va">rmp_female_docvars</span><span class="op">)</span> <span class="co"># combine by rows</span>
 
-<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">rmp_docvars_gender</span><span class="op">)</span> <span class="co"># preview combined data frame</span></code></pre></div>
-<pre><code>## Rows: 15,118
-## Columns: 5
-## $ student_id    &lt;dbl&gt; 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 8, 8, 8, 8, …
-## $ student_star  &lt;dbl&gt; 5.0, 5.0, 5.0, 5.0, 4.5, 5.0, 4.0, 4.0, 5.0, 4.5, 5.0, 1…
-## $ course_rating &lt;chr&gt; "high", "high", "high", "high", "high", "high", "high", …
-## $ online        &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, …
-## $ gender        &lt;chr&gt; "male", "male", "male", "male", "male", "male", "male", …</code></pre>
+<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">rmp_docvars_gender</span><span class="op">)</span> <span class="co"># preview combined data frame</span></code></pre></div>
+<pre><code><span class="co">## Rows: 15,118</span>
+<span class="co">## Columns: 5</span>
+<span class="co">## $ student_id    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 8, 8, 8, 8, …</span>
+<span class="co">## $ student_star  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 5.0, 5.0, 5.0, 5.0, 4.5, 5.0, 4.0, 4.0, 5.0, 4.5, 5.0, 1…</span>
+<span class="co">## $ course_rating <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "high", "high", "high", "high", "high", "high", "high", …</span>
+<span class="co">## $ online        <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, …</span>
+<span class="co">## $ gender        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "male", "male", "male", "male", "male", "male", "male", …</span></code></pre>
 <p>We can see that we now have a data frame with 15,118 observations (courses) and 5 variables (including the original metadata and the new <code>gender</code> column).</p>
 <p>Let’s now visualize the relationship between <code>course_rating</code> and <code>gender</code>.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p1</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_docvars_gender</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">course_rating</span>, fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># mappings</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span> <span class="co"># bar plot (no legend)</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Count"</span>, x <span class="op">=</span> <span class="st">"Course rating"</span><span class="op">)</span>
+  <span class="va">rmp_docvars_gender</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">course_rating</span>, fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># mappings</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span> <span class="co"># bar plot (no legend)</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Count"</span>, x <span class="op">=</span> <span class="st">"Course rating"</span><span class="op">)</span>
 
 <span class="va">p2</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_docvars_gender</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">course_rating</span>, fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># mappings</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"fill"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># bar plot</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Proportion"</span>, x <span class="op">=</span> <span class="st">"Course rating"</span>, fill <span class="op">=</span> <span class="st">"Gender"</span><span class="op">)</span>
+  <span class="va">rmp_docvars_gender</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">course_rating</span>, fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># mappings</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"fill"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># bar plot</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Proportion"</span>, x <span class="op">=</span> <span class="st">"Course rating"</span>, fill <span class="op">=</span> <span class="st">"Gender"</span><span class="op">)</span>
 
-<span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>tag_levels <span class="op">=</span> <span class="st">'A'</span><span class="op">)</span></code></pre></div>
+<span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html" class="external-link">plot_annotation</a></span><span class="op">(</span>tag_levels <span class="op">=</span> <span class="st">'A'</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:rmp-dfm-gendered-plots"></span>
 <img src="recipe_11_files/figure-html/rmp-dfm-gendered-plots-1.png" alt="Relationship between course rating and gender." width="85%"><p class="caption">
@@ -621,112 +625,112 @@ Figure 4: Relationship between course rating and gender.
 <p>In Figure <a href="#fig:rmp-dfm-gendered-plots">4</a> B we can clearly see that there appears to be no difference in course rating between documents that have male- or female-oriented terms.</p>
 <p>We can perform a Chi-squared test to verify.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rating_gender_tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span><span class="va">course_rating</span> <span class="op">+</span> <span class="va">gender</span>, data <span class="op">=</span> <span class="va">rmp_docvars_gender</span><span class="op">)</span>  <span class="co"># cross-tabulation</span>
+<code class="sourceCode R"><span class="va">rating_gender_tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="op">~</span><span class="va">course_rating</span> <span class="op">+</span> <span class="va">gender</span>, data <span class="op">=</span> <span class="va">rmp_docvars_gender</span><span class="op">)</span>  <span class="co"># cross-tabulation</span>
 
-<span class="va">c1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="va">rating_gender_tab</span><span class="op">)</span>  <span class="co"># chi-squared test</span>
+<span class="va">c1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/chisq.test.html" class="external-link">chisq.test</a></span><span class="op">(</span><span class="va">rating_gender_tab</span><span class="op">)</span>  <span class="co"># chi-squared test</span>
 
 <span class="va">c1</span><span class="op">$</span><span class="va">p.value</span> <span class="op">&lt;</span> <span class="fl">0.05</span>  <span class="co"># verify p-value</span></code></pre></div>
-<pre><code>## [1] FALSE</code></pre>
+<pre><code><span class="co">## [1] FALSE</span></code></pre>
 <p>So the rating (‘high’ versus ‘low’) given to a course does not seem to differ given the appearance of gendered terms.</p>
 <p>The second step is to explore gendered terms and potential language associations. We will again use a keyness analysis, but this time we will use gendered terms.</p>
 <p>Looking at documents with male-gendered terms we will need to create a reference sub-corpus –that is documents that do not have male-gendered terms. Note this will include documents with female-gendered terms and documents with no gendered terms at all.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rmp_tokens_male_reference</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_tokens</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># tokens object</span>
-  <span class="fu"><a href="https://quanteda.io/reference/tokens_select.html">tokens_remove</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="va">male</span>, window <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># remove male-gendered terms</span>
-  <span class="fu"><a href="https://quanteda.io/reference/dfm.html">dfm</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># create document-frequency matrix</span></code></pre></div>
+  <span class="va">rmp_tokens</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># tokens object</span>
+  <span class="fu"><a href="https://quanteda.io/reference/tokens_select.html" class="external-link">tokens_remove</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="va">male</span>, window <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># remove male-gendered terms</span>
+  <span class="fu"><a href="https://quanteda.io/reference/dfm.html" class="external-link">dfm</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># create document-frequency matrix</span></code></pre></div>
 <p>We join the male-gendered target sub-corpus and the reference corpus but before we do we add a column <code>type</code> to both the ‘target’ and ‘reference’ document-frequency matrices so that we can specify the target when we perform the keyness analysis.</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rmp_dfm_male</span><span class="op">$</span><span class="va">type</span> <span class="op">&lt;-</span> <span class="st">"target"</span>  <span class="co"># set 'target'</span>
 <span class="va">rmp_tokens_male_reference</span><span class="op">$</span><span class="va">type</span> <span class="op">=</span> <span class="st">"reference"</span>  <span class="co"># set 'reference'</span>
 
-<span class="va">rmp_dfm_male_keyness</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">rmp_dfm_male</span>, <span class="va">rmp_tokens_male_reference</span><span class="op">)</span>  <span class="co"># combine by rows</span></code></pre></div>
-<p>Now we can generate the keyness measures with <code><a href="https://quanteda.io/reference/textstat_keyness.html">textstat_keyness()</a></code> and plot the most constrastive terms. Note that I’ve removed the gendered terms with <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> and also removed terms less than three characters (to get rid of any prepositions, pronouns, etc.).</p>
+<span class="va">rmp_dfm_male_keyness</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">rmp_dfm_male</span>, <span class="va">rmp_tokens_male_reference</span><span class="op">)</span>  <span class="co"># combine by rows</span></code></pre></div>
+<p>Now we can generate the keyness measures with <code><a href="https://quanteda.io/reference/textstat_keyness.html" class="external-link">textstat_keyness()</a></code> and plot the most constrastive terms. Note that I’ve removed the gendered terms with <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> and also removed terms less than three characters (to get rid of any prepositions, pronouns, etc.).</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">keyness_target_male</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_dfm_male_keyness</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://quanteda.io/reference/textstat_keyness.html">textstat_keyness</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">rmp_dfm_male_keyness</span><span class="op">$</span><span class="va">type</span> <span class="op">==</span> <span class="st">"target"</span><span class="op">)</span> <span class="co"># keyness measures</span>
+  <span class="va">rmp_dfm_male_keyness</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://quanteda.io/reference/textstat_keyness.html" class="external-link">textstat_keyness</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">rmp_dfm_male_keyness</span><span class="op">$</span><span class="va">type</span> <span class="op">==</span> <span class="st">"target"</span><span class="op">)</span> <span class="co"># keyness measures</span>
 
-<span class="va">keyness_target_male</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">feature</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">male</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># remove male-gendered terms</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nchar.html">nchar</a></span><span class="op">(</span><span class="va">feature</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># remove short terms (&lt; 3 characters)</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/quanteda.textplots/man/textplot_keyness.html">textplot_keyness</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>  <span class="co"># plot the indicative features.</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Chi-squared statistic"</span>,
+<span class="va">keyness_target_male</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">feature</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">male</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># remove male-gendered terms</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">feature</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># remove short terms (&lt; 3 characters)</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/quanteda.textplots/man/textplot_keyness.html" class="external-link">textplot_keyness</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>  <span class="co"># plot the indicative features.</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Chi-squared statistic"</span>,
       title <span class="op">=</span> <span class="st">"Term keyness"</span>, 
        subtitle <span class="op">=</span> <span class="st">"Gendered documents: male versus others"</span><span class="op">)</span> <span class="co"># labels</span></code></pre></div>
 <p><img src="recipe_11_files/figure-html/rmp-keyness-male-1.png" width="85%" style="display: block; margin: auto;">
-Here we see that male gendered documents have a series of indicative features that are particularly telling: ‘funny,’ ‘jokes,’ ‘hilarious,’ ‘cool,’ ‘smart,’ ‘nice,’ and ‘cares.’ The bulk of these point to documents with male-oriented gender terms as also noting the jovial personality of the instructor. There’s not much we can make out of the ‘reference’ terms as they are a mixed-gendered bag of female-gendered terms and documents with no gendered terms.</p>
+Here we see that male gendered documents have a series of indicative features that are particularly telling: ‘funny’, ‘jokes’, ‘hilarious’, ‘cool’, ‘smart’, ‘nice’, and ‘cares’. The bulk of these point to documents with male-oriented gender terms as also noting the jovial personality of the instructor. There’s not much we can make out of the ‘reference’ terms as they are a mixed-gendered bag of female-gendered terms and documents with no gendered terms.</p>
 <p>Let’s now run the same analysis, but this time on female-gendered terms.</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rmp_tokens_female_reference</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_tokens</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://quanteda.io/reference/tokens_select.html">tokens_remove</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="va">female</span>, window <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>  <span class="co"># remove female-gendered terms</span>
-  <span class="fu"><a href="https://quanteda.io/reference/dfm.html">dfm</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># create document-frequency matrix</span>
+  <span class="va">rmp_tokens</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://quanteda.io/reference/tokens_select.html" class="external-link">tokens_remove</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="va">female</span>, window <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>  <span class="co"># remove female-gendered terms</span>
+  <span class="fu"><a href="https://quanteda.io/reference/dfm.html" class="external-link">dfm</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># create document-frequency matrix</span>
 
 <span class="va">rmp_dfm_female</span><span class="op">$</span><span class="va">type</span> <span class="op">&lt;-</span> <span class="st">"target"</span> <span class="co"># set 'target'</span>
 <span class="va">rmp_tokens_female_reference</span><span class="op">$</span><span class="va">type</span> <span class="op">=</span> <span class="st">"reference"</span> <span class="co"># set 'reference'</span>
   
 <span class="va">rmp_dfm_female_keyness</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">rmp_dfm_female</span>, <span class="va">rmp_tokens_female_reference</span><span class="op">)</span> <span class="co"># combine by rows</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">rmp_dfm_female</span>, <span class="va">rmp_tokens_female_reference</span><span class="op">)</span> <span class="co"># combine by rows</span>
 
 <span class="va">keyness_target_female</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_dfm_female_keyness</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://quanteda.io/reference/textstat_keyness.html">textstat_keyness</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">rmp_dfm_female_keyness</span><span class="op">$</span><span class="va">type</span> <span class="op">==</span> <span class="st">"target"</span><span class="op">)</span> <span class="co"># keyness measures</span>
+  <span class="va">rmp_dfm_female_keyness</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://quanteda.io/reference/textstat_keyness.html" class="external-link">textstat_keyness</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">rmp_dfm_female_keyness</span><span class="op">$</span><span class="va">type</span> <span class="op">==</span> <span class="st">"target"</span><span class="op">)</span> <span class="co"># keyness measures</span>
 
-<span class="va">keyness_target_female</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">feature</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">female</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># remove female-gendered terms</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nchar.html">nchar</a></span><span class="op">(</span><span class="va">feature</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># remove short terms (&lt; 3 characters)</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/quanteda.textplots/man/textplot_keyness.html">textplot_keyness</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># plot the indicative features.</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Chi-squared statistic"</span>,
+<span class="va">keyness_target_female</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">feature</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">female</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># remove female-gendered terms</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">feature</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># remove short terms (&lt; 3 characters)</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/quanteda.textplots/man/textplot_keyness.html" class="external-link">textplot_keyness</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># plot the indicative features.</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Chi-squared statistic"</span>,
       title <span class="op">=</span> <span class="st">"Term keyness"</span>, 
        subtitle <span class="op">=</span> <span class="st">"Gendered documents: male versus others"</span><span class="op">)</span> <span class="co"># labels</span></code></pre></div>
 <p><img src="recipe_11_files/figure-html/rmp-keyness-female-1.png" width="85%" style="display: block; margin: auto;">
-In the indicative terms for female-gendered documents we see a bit more of a mixed bag. We have potentially two groups of interest: positive traits such as ‘sweet,’ ‘wonderful,’ ‘nice,’ ‘helpful,’ etc. and negative traits such as ‘rude’ and ‘feminist’ (I’m assuming this term is negative in this context).</p>
+In the indicative terms for female-gendered documents we see a bit more of a mixed bag. We have potentially two groups of interest: positive traits such as ‘sweet’, ‘wonderful’, ‘nice’, ‘helpful’, etc. and negative traits such as ‘rude’ and ‘feminist’ (I’m assuming this term is negative in this context).</p>
 </div>
-<div id="sentiment-analysis" class="section level4">
-<h4 class="hasAnchor">
-<a href="#sentiment-analysis" class="anchor"></a>Sentiment analysis</h4>
+<div class="section level4">
+<h4 id="sentiment-analysis">Sentiment analysis<a class="anchor" aria-label="anchor" href="#sentiment-analysis"></a>
+</h4>
 <p>The findings from these two keyness analysis for gendered terms makes me wonder if there are differences in the sentiment of the comments and how these sentiments may or may not relate to the course rating.</p>
-<p>Let’s perform a simple dictionary approach to sentiment analysis on this dataset. First we need to get a sentiment lexicon. I’ve chosen to use the NRC Word-Emotion Association Lexicon <span class="citation">(<a href="#ref-Mohammad2013" role="doc-biblioref">Mohammad and Turney 2013</a>)</span> which can be loaed from the textdata package <span class="citation">(<a href="#ref-R-textdata" role="doc-biblioref">Hvitfeldt 2020</a>)</span>. This lexicon contains 13,875 words classified for “positive,” “joy,” “trust,” “anticipation,” “surprise,” “negative,” “anger,” “fear,” “disgust,” and “sadness.”</p>
-<p>Once we have the sentiment lexicon in quanteda dictionary format, we then use the <code><a href="https://quanteda.io/reference/tokens_lookup.html">tokens_lookup()</a></code> function to label a tokens object with sentiment for those words that appear in both the tokens and dictionary objects. We do this for both the <code>rmp_tokens_male</code> and <code>rmp_tokens_female</code> tokens objects. Then I convert both to dfm objects, generate frequency measures (where the sentiments are the features), then create a barplot contrasting the course ratings. There is a lot going on in the code to generate the plots. You can refer to the <a href="https://ggplot2.tidyverse.org/index.html">ggplot2 documentation</a> for more information.</p>
+<p>Let’s perform a simple dictionary approach to sentiment analysis on this dataset. First we need to get a sentiment lexicon. I’ve chosen to use the NRC Word-Emotion Association Lexicon <span class="citation">(<a href="#ref-Mohammad2013" role="doc-biblioref">Mohammad and Turney 2013</a>)</span> which can be loaed from the textdata package <span class="citation">(<a href="#ref-R-textdata" role="doc-biblioref">Hvitfeldt 2020</a>)</span>. This lexicon contains 13,875 words classified for “positive”, “joy”, “trust”, “anticipation”, “surprise”, “negative”, “anger”, “fear”, “disgust”, and “sadness”.</p>
+<p>Once we have the sentiment lexicon in quanteda dictionary format, we then use the <code><a href="https://quanteda.io/reference/tokens_lookup.html" class="external-link">tokens_lookup()</a></code> function to label a tokens object with sentiment for those words that appear in both the tokens and dictionary objects. We do this for both the <code>rmp_tokens_male</code> and <code>rmp_tokens_female</code> tokens objects. Then I convert both to dfm objects, generate frequency measures (where the sentiments are the features), then create a barplot contrasting the course ratings. There is a lot going on in the code to generate the plots. You can refer to the <a href="https://ggplot2.tidyverse.org/index.html" class="external-link">ggplot2 documentation</a> for more information.</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sentiment_dictionary</span> <span class="op">&lt;-</span> 
-  <span class="fu">textdata</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/textdata/man/lexicon_nrc.html">lexicon_nrc</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># load the nrc lexicon</span>
-  <span class="fu"><a href="https://quanteda.io/reference/as.dictionary.html">as.dictionary</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># convert the data frame to a dictionary object</span>
+  <span class="fu">textdata</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/textdata/man/lexicon_nrc.html" class="external-link">lexicon_nrc</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># load the nrc lexicon</span>
+  <span class="fu"><a href="https://quanteda.io/reference/as.dictionary.html" class="external-link">as.dictionary</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># convert the data frame to a dictionary object</span>
 
 <span class="va">rmp_tokens_male_sentiment</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_tokens_male</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://quanteda.io/reference/tokens_lookup.html">tokens_lookup</a></span><span class="op">(</span>dictionary <span class="op">=</span> <span class="va">sentiment_dictionary</span><span class="op">)</span> <span class="co"># add sentiment labels</span>
+  <span class="va">rmp_tokens_male</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://quanteda.io/reference/tokens_lookup.html" class="external-link">tokens_lookup</a></span><span class="op">(</span>dictionary <span class="op">=</span> <span class="va">sentiment_dictionary</span><span class="op">)</span> <span class="co"># add sentiment labels</span>
 
 <span class="va">p1</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_tokens_male_sentiment</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://quanteda.io/reference/dfm.html">dfm</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># create dfm</span>
-  <span class="fu"><a href="https://quanteda.io/reference/textstat_frequency.html">textstat_frequency</a></span><span class="op">(</span>groups <span class="op">=</span> <span class="va">course_rating</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># generate frequency measures</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>feature_fct <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">feature</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"positive"</span>, <span class="st">"joy"</span>, <span class="st">"trust"</span>, <span class="st">"anticipation"</span>, <span class="st">"surprise"</span>, <span class="st">"negative"</span>, <span class="st">"anger"</span>, <span class="st">"fear"</span>, <span class="st">"disgust"</span>, <span class="st">"sadness"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># reorder features from positive to negative</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">feature_fct</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># grouping parameter</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>prop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">frequency</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">frequency</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># create proportions scores </span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">feature_fct</span>, y <span class="op">=</span> <span class="va">frequency</span>, fill <span class="op">=</span> <span class="va">group</span>, label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">prop</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># mappings</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, position <span class="op">=</span> <span class="st">"fill"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># proportion bar plot</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_label</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"fill"</span>, vjust <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="co"># add proportions labels</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Male instructor word sentiment"</span>, fill <span class="op">=</span> <span class="st">"Course rating"</span>, y <span class="op">=</span> <span class="st">"Proportion"</span>, x <span class="op">=</span> <span class="st">""</span><span class="op">)</span> <span class="co"># labels</span>
+  <span class="va">rmp_tokens_male_sentiment</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://quanteda.io/reference/dfm.html" class="external-link">dfm</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># create dfm</span>
+  <span class="fu"><a href="https://quanteda.io/reference/textstat_frequency.html" class="external-link">textstat_frequency</a></span><span class="op">(</span>groups <span class="op">=</span> <span class="va">course_rating</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># generate frequency measures</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>feature_fct <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">feature</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"positive"</span>, <span class="st">"joy"</span>, <span class="st">"trust"</span>, <span class="st">"anticipation"</span>, <span class="st">"surprise"</span>, <span class="st">"negative"</span>, <span class="st">"anger"</span>, <span class="st">"fear"</span>, <span class="st">"disgust"</span>, <span class="st">"sadness"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># reorder features from positive to negative</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">feature_fct</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># grouping parameter</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>prop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">frequency</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">frequency</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># create proportions scores </span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">feature_fct</span>, y <span class="op">=</span> <span class="va">frequency</span>, fill <span class="op">=</span> <span class="va">group</span>, label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">prop</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># mappings</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, position <span class="op">=</span> <span class="st">"fill"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># proportion bar plot</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_label</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"fill"</span>, vjust <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="co"># add proportions labels</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Male instructor word sentiment"</span>, fill <span class="op">=</span> <span class="st">"Course rating"</span>, y <span class="op">=</span> <span class="st">"Proportion"</span>, x <span class="op">=</span> <span class="st">""</span><span class="op">)</span> <span class="co"># labels</span>
 
 <span class="va">rmp_tokens_female_sentiment</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_tokens_female</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://quanteda.io/reference/tokens_lookup.html">tokens_lookup</a></span><span class="op">(</span>dictionary <span class="op">=</span> <span class="va">sentiment_dictionary</span><span class="op">)</span> <span class="co"># add sentiment labels</span>
+  <span class="va">rmp_tokens_female</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://quanteda.io/reference/tokens_lookup.html" class="external-link">tokens_lookup</a></span><span class="op">(</span>dictionary <span class="op">=</span> <span class="va">sentiment_dictionary</span><span class="op">)</span> <span class="co"># add sentiment labels</span>
 
 <span class="va">p2</span> <span class="op">&lt;-</span> 
-  <span class="va">rmp_tokens_female_sentiment</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://quanteda.io/reference/dfm.html">dfm</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># create dfm</span>
-  <span class="fu"><a href="https://quanteda.io/reference/textstat_frequency.html">textstat_frequency</a></span><span class="op">(</span>groups <span class="op">=</span> <span class="va">course_rating</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># generate frequency</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>feature_fct <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">feature</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"positive"</span>, <span class="st">"joy"</span>, <span class="st">"trust"</span>, <span class="st">"anticipation"</span>, <span class="st">"surprise"</span>, <span class="st">"negative"</span>, <span class="st">"anger"</span>, <span class="st">"fear"</span>, <span class="st">"disgust"</span>, <span class="st">"sadness"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># reorder features from positive to negative</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">feature_fct</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># grouping parameter</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>prop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">frequency</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">frequency</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># create proportion scores</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">feature_fct</span>, y <span class="op">=</span> <span class="va">frequency</span>, fill <span class="op">=</span> <span class="va">group</span>, label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">prop</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># mappings</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, position <span class="op">=</span> <span class="st">"fill"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># proportion bar plot</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_label</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"fill"</span>, vjust <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="co"># add proportion labels</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Female instructor word sentiment"</span>, fill <span class="op">=</span> <span class="st">"Course rating"</span>, y <span class="op">=</span> <span class="st">"Proportion"</span>, x <span class="op">=</span> <span class="st">"Sentiment"</span><span class="op">)</span> <span class="co"># labels</span>
+  <span class="va">rmp_tokens_female_sentiment</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://quanteda.io/reference/dfm.html" class="external-link">dfm</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># create dfm</span>
+  <span class="fu"><a href="https://quanteda.io/reference/textstat_frequency.html" class="external-link">textstat_frequency</a></span><span class="op">(</span>groups <span class="op">=</span> <span class="va">course_rating</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># generate frequency</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>feature_fct <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">feature</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"positive"</span>, <span class="st">"joy"</span>, <span class="st">"trust"</span>, <span class="st">"anticipation"</span>, <span class="st">"surprise"</span>, <span class="st">"negative"</span>, <span class="st">"anger"</span>, <span class="st">"fear"</span>, <span class="st">"disgust"</span>, <span class="st">"sadness"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># reorder features from positive to negative</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">feature_fct</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># grouping parameter</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>prop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">frequency</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">frequency</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># create proportion scores</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">feature_fct</span>, y <span class="op">=</span> <span class="va">frequency</span>, fill <span class="op">=</span> <span class="va">group</span>, label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">prop</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># mappings</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, position <span class="op">=</span> <span class="st">"fill"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># proportion bar plot</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_label</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"fill"</span>, vjust <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="co"># add proportion labels</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Female instructor word sentiment"</span>, fill <span class="op">=</span> <span class="st">"Course rating"</span>, y <span class="op">=</span> <span class="st">"Proportion"</span>, x <span class="op">=</span> <span class="st">"Sentiment"</span><span class="op">)</span> <span class="co"># labels</span>
 
-<span class="va">p1</span> <span class="op">/</span> <span class="va">p2</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>tag_levels <span class="op">=</span> <span class="st">'A'</span><span class="op">)</span></code></pre></div>
+<span class="va">p1</span> <span class="op">/</span> <span class="va">p2</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html" class="external-link">plot_annotation</a></span><span class="op">(</span>tag_levels <span class="op">=</span> <span class="st">'A'</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:rmp-sentiment-analysis"></span>
 <img src="recipe_11_files/figure-html/rmp-sentiment-analysis-1.png" alt="Sentiment analysis for male- and female-gendered documents and relationship with course ratings." width="85%"><p class="caption">
@@ -737,55 +741,53 @@ Figure 5: Sentiment analysis for male- and female-gendered documents and relatio
 </div>
 </div>
 </div>
-<div id="summary" class="section level2">
-<h2 class="hasAnchor">
-<a href="#summary" class="anchor"></a>Summary</h2>
+<div class="section level2">
+<h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
+</h2>
 <p>In this Recipe, we started with the Rate My Professor dataset. We steppe through the process of getting oriented with the dataset, preparing the dataset for analysis, and then conducting three exploratory analysis types: frequency, keyness, and sentiment. We made some interesting findings: 1) students tend to use more words when they rate the course lower, 2) students do not appear to rate courses with male or female instructors differently, 3) there is some indication that there are word types which are used more to describe male and female instructors, and 4) although course ratings to not seem to be associated with the language of student comments, it is noted that there is a potential relationship between stronger negatively charged words used to describe female instructors’ courses.</p>
 <p>There is so much more that could be done with this dataset, but this should be enough to pique your interest in exploratory data analysis.</p>
 </div>
-<div id="references" class="section level2 unnumbered">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<div class="section level2 unnumbered">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-R-quanteda" class="csl-entry">
-Benoit, Kenneth, Kohei Watanabe, Haiyan Wang, Paul Nulty, Adam Obeng, Stefan Müller, Akitaka Matsuo, and William Lowe. 2021. <em>Quanteda: Quantitative Analysis of Textual Data</em>. <a href="https://quanteda.io">https://quanteda.io</a>.
+Benoit, Kenneth, Kohei Watanabe, Haiyan Wang, Paul Nulty, Adam Obeng, Stefan Müller, Akitaka Matsuo, and William Lowe. 2022. <em>Quanteda: Quantitative Analysis of Textual Data</em>. <a href="https://quanteda.io" class="external-link">https://quanteda.io</a>.
 </div>
 <div id="ref-He2020" class="csl-entry">
-He, Jibo. 2020. <span>“Big Data Set from RateMyProfessor.com for Professors’ Teaching Evaluation”</span> 2 (March). <a href="https://doi.org/10.17632/fvtfjyvw7d.2">https://doi.org/10.17632/fvtfjyvw7d.2</a>.
+He, Jibo. 2020. <span>“Big Data Set from RateMyProfessor.com for Professors’ Teaching Evaluation”</span> 2 (March). <a href="https://doi.org/10.17632/fvtfjyvw7d.2" class="external-link">https://doi.org/10.17632/fvtfjyvw7d.2</a>.
 </div>
 <div id="ref-R-textdata" class="csl-entry">
-Hvitfeldt, Emil. 2020. <em>Textdata: Download and Load Various Text Datasets</em>. <a href="https://github.com/EmilHvitfeldt/textdata">https://github.com/EmilHvitfeldt/textdata</a>.
+Hvitfeldt, Emil. 2020. <em>Textdata: Download and Load Various Text Datasets</em>. <a href="https://github.com/EmilHvitfeldt/textdata" class="external-link">https://github.com/EmilHvitfeldt/textdata</a>.
 </div>
 <div id="ref-Mohammad2013" class="csl-entry">
-Mohammad, Saif M., and Peter D. Turney. 2013. <span>“Crowdsourcing a Word-Emotion Association Lexicon.”</span> <em>Computational Intelligence</em> 29 (3): 436–65. <a href="https://doi.org/10.1111/j.1467-8640.2012.00460.x">https://doi.org/10.1111/j.1467-8640.2012.00460.x</a>.
+Mohammad, Saif M., and Peter D. Turney. 2013. <span>“Crowdsourcing a Word-Emotion Association Lexicon.”</span> <em>Computational Intelligence</em> 29 (3): 436–65. <a href="https://doi.org/10.1111/j.1467-8640.2012.00460.x" class="external-link">https://doi.org/10.1111/j.1467-8640.2012.00460.x</a>.
 </div>
 </div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
-
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
-      <footer><div class="copyright">
-  <p>Developed by Jerid Francom.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p></p>
+<p>Developed by Jerid Francom.</p>
 </div>
 
-<div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+<div class="pkgdown-footer-right">
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
   
 
+  
 
   </body>
 </html>

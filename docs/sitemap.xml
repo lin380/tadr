@@ -1,31 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://lin380.github.io/tadr/index.html</loc>
-  </url>
-  <url>
-    <loc>https://lin380.github.io/tadr/reference/brown.html</loc>
-  </url>
-  <url>
-    <loc>https://lin380.github.io/tadr/reference/europarle_sample.html</loc>
-  </url>
-  <url>
-    <loc>https://lin380.github.io/tadr/reference/get_compressed_data.html</loc>
-  </url>
-  <url>
-    <loc>https://lin380.github.io/tadr/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>https://lin380.github.io/tadr/reference/sms.html</loc>
-  </url>
-  <url>
-    <loc>https://lin380.github.io/tadr/reference/swda.html</loc>
+    <loc>https://lin380.github.io/tadr/404.html</loc>
   </url>
   <url>
     <loc>https://lin380.github.io/tadr/articles/guide_1.html</loc>
   </url>
   <url>
     <loc>https://lin380.github.io/tadr/articles/guide_2.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/articles/guide_3.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/articles/index.html</loc>
   </url>
   <url>
     <loc>https://lin380.github.io/tadr/articles/recipe_1.html</loc>
@@ -55,9 +43,78 @@
     <loc>https://lin380.github.io/tadr/articles/recipe_7.html</loc>
   </url>
   <url>
+    <loc>https://lin380.github.io/tadr/articles/recipe_8/curate_data_rmp.html</loc>
+  </url>
+  <url>
     <loc>https://lin380.github.io/tadr/articles/recipe_8.html</loc>
   </url>
   <url>
     <loc>https://lin380.github.io/tadr/articles/recipe_9.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/authors.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/index.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/reference/brown.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/reference/europarle_sample.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/reference/get_compressed_data.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/reference/sms.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/reference/swda.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/tutorials/01-r-programming-basics.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/tutorials/02-working-with-tibbles.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/tutorials/03-isolating-data-with-dplyr.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/tutorials/04-deriving-info-with-dplyr.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/tutorials/05-data-visualization-basics.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/tutorials/06-exploratory-data-analysis.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/tutorials/07-intro-to-iteration.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/tutorials/08-map.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/tutorials/09-how-to-write-a-function.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/tutorials/10-reshape-data.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/tutorials/11-separate-and-unite-columns.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/tutorials/12-join-datasets.html</loc>
+  </url>
+  <url>
+    <loc>https://lin380.github.io/tadr/tutorials/index.html</loc>
   </url>
 </urlset>
